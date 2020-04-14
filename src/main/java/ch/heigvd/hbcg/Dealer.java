@@ -1,8 +1,6 @@
 package ch.heigvd.hbcg;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class Dealer {
@@ -31,23 +29,23 @@ public class Dealer {
 
     public Set<Card> draw(){
 
-        Set<Card> tempCard = new HashSet<>(5);
+        Set<Card> board = new HashSet<>(5);
 
         if(count == 0){
             //Flop
             deck.draw();
             for(int i= 0; i < 3; i++){
-                tempCard.add(deck.draw());
+                board.add(deck.draw());
                 count++;
             }
         }else{
             //Turn/River
             count++;
             deck.draw();
-            tempCard.add(deck.draw());
+            board.add(deck.draw());
         }
 
-        return tempCard;
+        return board;
     }
 
 }
