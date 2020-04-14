@@ -1,3 +1,4 @@
+package ch.heigvd.hbcg;
 
 import javax.swing.JSlider;
 
@@ -67,6 +68,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         background_table = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jScrollBar1 = new javax.swing.JScrollBar();
         messageToSend = new javax.swing.JTextField();
         messageToDisplay = new javax.swing.JScrollPane();
         messageArea = new javax.swing.JTextArea();
@@ -79,6 +81,7 @@ public class NewJFrame extends javax.swing.JFrame {
         background_frame = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(1500, 1500));
         setPreferredSize(new java.awt.Dimension(1003, 860));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -93,24 +96,24 @@ public class NewJFrame extends javax.swing.JFrame {
         carte1.setMinimumSize(new java.awt.Dimension(100, 70));
         carte1.setPreferredSize(new java.awt.Dimension(100, 70));
         getContentPane().add(carte1);
-        carte1.setBounds(370, 200, 70, 90);
+        carte1.setBounds(370, 210, 70, 90);
 
         carte2.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\2_trefle.png")); // NOI18N
         carte2.setText("jLabel2");
         getContentPane().add(carte2);
-        carte2.setBounds(420, 200, 70, 90);
+        carte2.setBounds(425, 210, 70, 90);
 
         carte3.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\3_trefle.png")); // NOI18N
         getContentPane().add(carte3);
-        carte3.setBounds(480, 200, 70, 90);
+        carte3.setBounds(480, 210, 70, 90);
 
         carte4.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\4_trefle.png")); // NOI18N
         getContentPane().add(carte4);
-        carte4.setBounds(530, 200, 70, 90);
+        carte4.setBounds(535, 210, 70, 90);
 
         carte5.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\5_trefle.png")); // NOI18N
         getContentPane().add(carte5);
-        carte5.setBounds(590, 200, 70, 90);
+        carte5.setBounds(590, 210, 70, 90);
 
         pos1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,6 +298,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel22.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\send.png")); // NOI18N
         getContentPane().add(jLabel22);
         jLabel22.setBounds(450, 775, 30, 40);
+        getContentPane().add(jScrollBar1);
+        jScrollBar1.setBounds(477, 570, 20, 200);
 
         messageToSend.setText("Saisissez votre texte ici...");
         messageToSend.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -388,7 +393,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(background_frame);
-        background_frame.setBounds(-5, -6, 990, 830);
+        background_frame.setBounds(-5, -6, 1000, 830);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -399,7 +404,12 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void slider_miserStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_slider_miserStateChanged
         //@TODO on est obligé de miser au moins 1 fois la big blind, il faut vérifier cela sur le Slider
- //a supprimer
+        valueSlider.setText(String.valueOf(slider_miser.getValue()));
+        if(slider_miser.getValue() > 0)
+           b_miser.setEnabled(true);
+        else
+            b_miser.setEnabled(false);
+        
     }//GEN-LAST:event_slider_miserStateChanged
 
     private void pos2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pos2MouseReleased
@@ -443,11 +453,15 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_b_seCoucherActionPerformed
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_miserActionPerformed
-        System.out.print("Je mise mon compte épargne!");
+        messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : \n");
     }//GEN-LAST:event_b_miserActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        jScrollBar1.setValue(100);
         messageArea.setText("Bienvenue à la table !\n");
+        valueSlider.setText("0");
+        slider_miser.setValue(0);
+        b_miser.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
     private void messageToSendMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_messageToSendMouseReleased
@@ -466,7 +480,10 @@ public class NewJFrame extends javax.swing.JFrame {
     private void valueSliderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_valueSliderActionPerformed
      if(!valueSlider.getText().equals("")) {
             slider_miser.setValue(Integer.valueOf(valueSlider.getText()));
-                    
+            if(Integer.valueOf(valueSlider.getText()) > 0)
+                b_miser.setEnabled(true);
+            else
+                b_miser.setEnabled(false);
             System.out.print(Integer.valueOf(valueSlider.getText()));
 
         }    }//GEN-LAST:event_valueSliderActionPerformed
@@ -552,6 +569,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JTextArea messageArea;
     private javax.swing.JScrollPane messageToDisplay;
     private javax.swing.JTextField messageToSend;
