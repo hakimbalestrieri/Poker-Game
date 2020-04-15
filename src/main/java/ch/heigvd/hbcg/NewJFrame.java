@@ -1,3 +1,4 @@
+package ch.heigvd.hbcg;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JSlider;

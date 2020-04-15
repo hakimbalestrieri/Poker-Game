@@ -1,3 +1,4 @@
+package ch.heigvd.hbcg;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,55 +27,66 @@ public class Connexion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        username = new javax.swing.JTextField();
+        password = new javax.swing.JPasswordField();
+        l_connexion = new javax.swing.JLabel();
+        b_inscription = new javax.swing.JLabel();
+        l_username = new javax.swing.JLabel();
+        b_connexion = new javax.swing.JLabel();
+        l_password = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(415, 338));
         getContentPane().setLayout(null);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(180, 110, 150, 22);
-        getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(180, 160, 150, 22);
+        getContentPane().add(username);
+        username.setBounds(180, 110, 150, 22);
+        getContentPane().add(password);
+        password.setBounds(180, 160, 150, 22);
 
-        jLabel4.setFont(new java.awt.Font("Yu Gothic Medium", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Connexion");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(140, 50, 160, 40);
+        l_connexion.setFont(new java.awt.Font("Yu Gothic Medium", 0, 24)); // NOI18N
+        l_connexion.setForeground(new java.awt.Color(255, 255, 255));
+        l_connexion.setText("Connexion");
+        getContentPane().add(l_connexion);
+        l_connexion.setBounds(140, 50, 160, 40);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\registration.png")); // NOI18N
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(70, 220, 91, 50);
+        b_inscription.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\registration.png")); // NOI18N
+        b_inscription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                b_inscriptionMouseReleased(evt);
+            }
+        });
+        getContentPane().add(b_inscription);
+        b_inscription.setBounds(70, 220, 91, 50);
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
-        jLabel2.setText("Utilisateur");
-        jLabel2.setPreferredSize(new java.awt.Dimension(53, 22));
-        getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 110, 70, 16);
+        l_username.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
+        l_username.setForeground(new java.awt.Color(255, 255, 255));
+        l_username.setText("Utilisateur");
+        l_username.setPreferredSize(new java.awt.Dimension(53, 22));
+        getContentPane().add(l_username);
+        l_username.setBounds(70, 110, 70, 16);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\login.png")); // NOI18N
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(280, 220, 50, 50);
+        b_connexion.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\login.png")); // NOI18N
+        getContentPane().add(b_connexion);
+        b_connexion.setBounds(280, 220, 50, 50);
 
-        jLabel3.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
-        jLabel3.setText("Mot de passe");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(70, 160, 90, 20);
+        l_password.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
+        l_password.setForeground(new java.awt.Color(255, 255, 255));
+        l_password.setText("Mot de passe");
+        getContentPane().add(l_password);
+        l_password.setBounds(70, 160, 90, 20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
-        jLabel1.setText("jLabel1");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 400, 300);
+        background.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
+        background.setText("jLabel1");
+        getContentPane().add(background);
+        background.setBounds(0, 0, 400, 300);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void b_inscriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_inscriptionMouseReleased
+        JFrameInscription f = new JFrameInscription();
+    }//GEN-LAST:event_b_inscriptionMouseReleased
 
     /**
      * @param args the command line arguments
@@ -112,13 +124,13 @@ public class Connexion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel b_connexion;
+    private javax.swing.JLabel b_inscription;
+    private javax.swing.JLabel background;
+    private javax.swing.JLabel l_connexion;
+    private javax.swing.JLabel l_password;
+    private javax.swing.JLabel l_username;
+    private javax.swing.JPasswordField password;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
