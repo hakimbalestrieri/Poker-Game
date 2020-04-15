@@ -1,5 +1,5 @@
-package ch.heigvd.hbcg;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JSlider;
 
 /*
@@ -65,10 +65,10 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        background_table = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
+        croupier = new javax.swing.JLabel();
         jScrollBar1 = new javax.swing.JScrollBar();
+        background_table = new javax.swing.JLabel();
+        b_sendMessage = new javax.swing.JLabel();
         messageToSend = new javax.swing.JTextField();
         messageToDisplay = new javax.swing.JScrollPane();
         messageArea = new javax.swing.JTextArea();
@@ -285,26 +285,36 @@ public class NewJFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(560, 390, 70, 70);
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\croupier.png")); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(470, 30, 70, 80);
+        croupier.setForeground(new java.awt.Color(255, 255, 255));
+        croupier.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\croupier.png")); // NOI18N
+        getContentPane().add(croupier);
+        croupier.setBounds(470, 30, 70, 80);
+        getContentPane().add(jScrollBar1);
+        jScrollBar1.setBounds(477, 570, 20, 200);
 
         background_table.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\poker_table.png")); // NOI18N
         getContentPane().add(background_table);
         background_table.setBounds(140, -60, 970, 620);
         background_table.getAccessibleContext().setAccessibleName("background");
 
-        jLabel22.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\send.png")); // NOI18N
-        getContentPane().add(jLabel22);
-        jLabel22.setBounds(450, 775, 30, 40);
-        getContentPane().add(jScrollBar1);
-        jScrollBar1.setBounds(477, 570, 20, 200);
+        b_sendMessage.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\send.png")); // NOI18N
+        b_sendMessage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_sendMessageMouseClicked(evt);
+            }
+        });
+        getContentPane().add(b_sendMessage);
+        b_sendMessage.setBounds(450, 775, 30, 40);
 
         messageToSend.setText("Saisissez votre texte ici...");
         messageToSend.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 messageToSendMouseReleased(evt);
+            }
+        });
+        messageToSend.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                messageToSendKeyPressed(evt);
             }
         });
         getContentPane().add(messageToSend);
@@ -334,7 +344,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(b_seCoucher);
-        b_seCoucher.setBounds(590, 620, 130, 23);
+        b_seCoucher.setBounds(590, 620, 130, 22);
 
         b_miser.setText("Miser");
         b_miser.setMaximumSize(new java.awt.Dimension(85, 23));
@@ -383,7 +393,7 @@ public class NewJFrame extends javax.swing.JFrame {
         montant_mise.setForeground(new java.awt.Color(255, 255, 255));
         montant_mise.setText("CHF");
         getContentPane().add(montant_mise);
-        montant_mise.setBounds(840, 690, 90, 14);
+        montant_mise.setBounds(840, 690, 90, 16);
 
         background_frame.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
         background_frame.setText("jLabel6");
@@ -458,7 +468,7 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         jScrollBar1.setValue(100);
-        messageArea.setText("Bienvenue à la table !\n");
+        messageArea.setText("Croupier : Bienvenue à la table !\n");
         valueSlider.setText("0");
         slider_miser.setValue(0);
         b_miser.setEnabled(false);
@@ -495,6 +505,21 @@ public class NewJFrame extends javax.swing.JFrame {
             System.out.print(Integer.valueOf(valueSlider.getText()));
 
         }    }//GEN-LAST:event_valueSliderFocusLost
+
+    private void messageToSendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageToSendKeyPressed
+        if (evt.getKeyCode()== KeyEvent.VK_ENTER){
+              submitMessage();
+        }
+    }//GEN-LAST:event_messageToSendKeyPressed
+
+    private void b_sendMessageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_sendMessageMouseClicked
+        submitMessage();
+    }//GEN-LAST:event_b_sendMessageMouseClicked
+    
+    public void submitMessage() {
+        messageArea.setText(messageArea.getText() + "User : " + messageToSend.getText() + "\n");
+        messageToSend.setText("");
+    }
     
     public void sitDown(int position) {
         System.out.print(position);
@@ -539,6 +564,7 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_miser;
     private javax.swing.JButton b_seCoucher;
+    private javax.swing.JLabel b_sendMessage;
     private javax.swing.JButton b_suivre;
     private javax.swing.JLabel background_frame;
     private javax.swing.JLabel background_table;
@@ -547,7 +573,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel carte3;
     private javax.swing.JLabel carte4;
     private javax.swing.JLabel carte5;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel croupier;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -561,7 +587,6 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
