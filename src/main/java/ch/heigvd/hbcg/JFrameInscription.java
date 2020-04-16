@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+
 class JFrameInscription extends JFrame {
 
     // Components of the Form 
@@ -38,24 +40,24 @@ class JFrameInscription extends JFrame {
     // with default values. 
     public JFrameInscription() {
         setTitle("Registration Form");
-        setBounds(300, 90, 450, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setBounds(300, 90, 450, 550);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
 
         c = getContentPane();
         c.setLayout(null);
 
 
-        lTitle = new JLabel("Registration Form");
-        lTitle.setFont(new Font("Arial", Font.PLAIN, 30));
+        lTitle = new JLabel("Formulaire d'enregistrement");
+        lTitle.setFont(new Font("Arial", Font.PLAIN, 24));
         lTitle.setForeground(new Color(255, 255, 255));
         lTitle.setSize(300, 30);
-        lTitle.setLocation(105, 30);
+        lTitle.setLocation(80, 30);
         c.add(lTitle);
 
-        lUsername = new JLabel("Username");
-        lUsername.setFont(new Font("Arial", Font.PLAIN, 20));
-        lUsername.setSize(100, 20);
+        lUsername = new JLabel("Nom d'utilisateur");
+        lUsername.setFont(new Font("Arial", Font.PLAIN, 15));
+        lUsername.setSize(150, 20);
         lUsername.setForeground(new Color(255, 255, 255));
         lUsername.setLocation(50, 100);
         c.add(lUsername);
@@ -66,8 +68,8 @@ class JFrameInscription extends JFrame {
         tUsername.setLocation(200, 100);
         c.add(tUsername);
 
-        lPassword = new JLabel("Password");
-        lPassword.setFont(new Font("Arial", Font.PLAIN, 20));
+        lPassword = new JLabel("Mot de passe");
+        lPassword.setFont(new Font("Arial", Font.PLAIN, 15));
         lPassword.setSize(100, 20);
         lPassword.setForeground(new Color(255, 255, 255));
         lPassword.setLocation(50, 150);
@@ -79,14 +81,14 @@ class JFrameInscription extends JFrame {
         tPassword.setLocation(200, 150);
         c.add(tPassword);
 
-        lGender = new JLabel("Gender");
-        lGender.setFont(new Font("Arial", Font.PLAIN, 20));
+        lGender = new JLabel("Sexe");
+        lGender.setFont(new Font("Arial", Font.PLAIN, 15));
         lGender.setSize(100, 20);
         lGender.setForeground(new Color(255, 255, 255));
         lGender.setLocation(50, 200);
         c.add(lGender);
 
-        tGender = new JRadioButton("Male");
+        tGender = new JRadioButton("Homme");
         tGender.setFont(new Font("Arial", Font.PLAIN, 15));
         tGender.setSelected(true);
         tGender.setSize(75, 20);
@@ -94,7 +96,7 @@ class JFrameInscription extends JFrame {
         tGender.setLocation(200, 200);
         c.add(tGender);
 
-        tFemale = new JRadioButton("Female");
+        tFemale = new JRadioButton("Femme");
         tFemale.setFont(new Font("Arial", Font.PLAIN, 15));
         tFemale.setSelected(false);
         tFemale.setForeground(new Color(255, 255, 255));
@@ -108,9 +110,9 @@ class JFrameInscription extends JFrame {
         System.out.println(gengp.getSelection().getActionCommand());
 
 
-        lBirthday = new JLabel("DOB");
+        lBirthday = new JLabel("Naissance");
         lBirthday.setForeground(new Color(255, 255, 255));
-        lBirthday.setFont(new Font("Arial", Font.PLAIN, 20));
+        lBirthday.setFont(new Font("Arial", Font.PLAIN, 15));
         lBirthday.setSize(100, 20);
         lBirthday.setLocation(50, 250);
         c.add(lBirthday);
@@ -161,9 +163,9 @@ class JFrameInscription extends JFrame {
         cYear.setLocation(320, 250);
         c.add(cYear);
 
-        lAddress = new JLabel("Address");
+        lAddress = new JLabel("Adresse");
         lAddress.setForeground(new Color(255, 255, 255));
-        lAddress.setFont(new Font("Arial", Font.PLAIN, 20));
+        lAddress.setFont(new Font("Arial", Font.PLAIN, 15));
         lAddress.setSize(100, 20);
         lAddress.setLocation(50, 300);
         c.add(lAddress);
@@ -175,32 +177,49 @@ class JFrameInscription extends JFrame {
         tAddress.setLineWrap(true);
         c.add(tAddress);
 
-        cTermsAndConditions = new JCheckBox("Accept Terms And Conditions.");
+        cTermsAndConditions = new JCheckBox("Accepter les conditions générales d'utilisation");
         cTermsAndConditions.setFont(new Font("Arial", Font.PLAIN, 15));
         cTermsAndConditions.setForeground(new Color(255, 255, 255));
-        cTermsAndConditions.setSize(250, 20);
+        cTermsAndConditions.setSize(350, 20);
         cTermsAndConditions.setLocation(50, 400);
         c.add(cTermsAndConditions);
 
-        bSubmit = new JButton("Submit");
+        bSubmit = new JButton("Envoyer");
         bSubmit.setFont(new Font("Arial", Font.PLAIN, 15));
         bSubmit.setSize(100, 20);
         bSubmit.setLocation(150, 450);
         bSubmit.addActionListener(e -> {
+            int returnValue;
             //Lancer inscription
             //Si fail alors message d'erreur (donc méthode inscription renvoie un bool)
             //Si réussi alors ca ferme la fenetre d'inscription et lance la vue
-         /*   try {
-                ControllerInscription.createInscription(tUsername.getText(), tAddress.getText(), tPassword.getText(),
+            try {
+                returnValue = ControllerInscription.createInscription(tUsername.getText(), tAddress.getText(), tPassword.getText(),
                         cTermsAndConditions.isSelected(), cDay.getSelectedItem(),
                         cMonth.getSelectedItem(), cYear.getSelectedItem(), getSelectedButtonText(gengp));
-            } catch (IOException ex) {
+
+                switch (returnValue) {
+                    case -3: JOptionPane.showMessageDialog(this,"Veuillez saisir tous les champs","Champs incomplets" , ERROR_MESSAGE);
+                    break;
+                    case -2: JOptionPane.showMessageDialog(this, "Vous devez cocher les conditions générales d'utilisations", "CGV", ERROR_MESSAGE);
+                        break;
+                    case -1: JOptionPane.showMessageDialog(this, "Vous devez être majeur afin de vous inscrire", "Age", ERROR_MESSAGE);
+                        break;
+                    case 0: JOptionPane.showMessageDialog(this, "Cet utilisateur existe déjà", "Utilisateur déjà existant", ERROR_MESSAGE);
+                        break;
+                    case 1: JOptionPane.showMessageDialog(this, "Inscription saisie avec succès");
+                            dispose();
+                        break;
+                    default:
+                }
+
+            } catch (Exception ex) {
                 ex.printStackTrace();
-            }*/
+            }
         });
         c.add(bSubmit);
 
-        reset = new JButton("Reset");
+        reset = new JButton("Effacer");
         reset.setFont(new Font("Arial", Font.PLAIN, 15));
         reset.setSize(100, 20);
         reset.setLocation(270, 450);

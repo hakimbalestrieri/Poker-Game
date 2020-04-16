@@ -5,6 +5,13 @@ package ch.heigvd.hbcg;
  * and open the template in the editor.
  */
 
+import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+
 /**
  *
  * @author Hakim
@@ -40,9 +47,20 @@ public class Connexion extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(415, 338));
         getContentPane().setLayout(null);
         getContentPane().add(username);
-        username.setBounds(180, 110, 150, 22);
+        username.setBounds(180, 105, 150, 22);
+        username.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
+        password.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent evt) {
+                passwordKeyPressed(evt);
+            }
+        });
         getContentPane().add(password);
-        password.setBounds(180, 160, 150, 22);
+        password.setBounds(180, 155, 150, 22);
 
         l_connexion.setFont(new java.awt.Font("Yu Gothic Medium", 0, 24)); // NOI18N
         l_connexion.setForeground(new java.awt.Color(255, 255, 255));
@@ -69,6 +87,13 @@ public class Connexion extends javax.swing.JFrame {
         b_connexion.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\login.png")); // NOI18N
         getContentPane().add(b_connexion);
         b_connexion.setBounds(280, 220, 50, 50);
+        b_connexion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                login(e);
+            }
+        });
+
 
         l_password.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
         l_password.setForeground(new java.awt.Color(255, 255, 255));
@@ -83,6 +108,30 @@ public class Connexion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void passwordKeyPressed(KeyEvent evt) {
+        if (evt.getKeyCode()== KeyEvent.VK_ENTER){
+            login(null);
+        }
+    }
+
+    private void login(MouseEvent event) {
+        try {
+            boolean result = ControllerLogin.logUser(username.getText(), password.getPassword());
+            if(result) {
+                JOptionPane.showMessageDialog(this, "Connexion réussie");
+                dispose();
+                //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
+                new NewJFrame().setVisible(true);
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Identifiants incorrects", "Connexion", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private void b_inscriptionMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_inscriptionMouseReleased
         JFrameInscription f = new JFrameInscription();

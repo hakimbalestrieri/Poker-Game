@@ -81,6 +81,7 @@ public class NewJFrame extends javax.swing.JFrame {
         montant_mise = new javax.swing.JLabel();
         background_frame = new javax.swing.JLabel();
 
+        setResizable(false);
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(1500, 1500));
@@ -505,7 +506,8 @@ public class NewJFrame extends javax.swing.JFrame {
                     
             System.out.print(Integer.valueOf(valueSlider.getText()));
 
-        }    }//GEN-LAST:event_valueSliderFocusLost
+        }
+    }//GEN-LAST:event_valueSliderFocusLost
 
     private void messageToSendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageToSendKeyPressed
         if (evt.getKeyCode()== KeyEvent.VK_ENTER){
