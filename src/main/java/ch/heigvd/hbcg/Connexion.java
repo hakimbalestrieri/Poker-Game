@@ -41,7 +41,7 @@ public class Connexion extends javax.swing.JFrame {
         Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Large.PNG"));
         ImageIcon icon = new ImageIcon(image);
         setIconImage(icon.getImage());
-
+        setResizable(false);
 
 
         username = new javax.swing.JTextField();
@@ -99,7 +99,16 @@ public class Connexion extends javax.swing.JFrame {
         b_connexion.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\login.png")); // NOI18N
         getContentPane().add(b_connexion);
         b_connexion.setBounds(280, 280, 50, 50);
-
+        b_connexion.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    login(e);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         l_password.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); // NOI18N
         l_password.setForeground(new java.awt.Color(255, 255, 255));
         l_password.setText("Mot de passe");

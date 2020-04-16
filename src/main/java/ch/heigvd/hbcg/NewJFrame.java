@@ -1,5 +1,6 @@
 package ch.heigvd.hbcg;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.JSlider;
 
@@ -67,6 +68,7 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         croupier = new javax.swing.JLabel();
+        logo = new javax.swing.JLabel();
         jScrollBar1 = new javax.swing.JScrollBar();
         background_table = new javax.swing.JLabel();
         b_sendMessage = new javax.swing.JLabel();
@@ -82,10 +84,10 @@ public class NewJFrame extends javax.swing.JFrame {
         background_frame = new javax.swing.JLabel();
 
         setResizable(false);
+        setMaximumSize(new Dimension(1500,1500));
+        setPreferredSize(new Dimension(1003,1000));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1500, 1500));
-        setPreferredSize(new java.awt.Dimension(1003, 860));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -98,24 +100,24 @@ public class NewJFrame extends javax.swing.JFrame {
         carte1.setMinimumSize(new java.awt.Dimension(100, 70));
         carte1.setPreferredSize(new java.awt.Dimension(100, 70));
         getContentPane().add(carte1);
-        carte1.setBounds(370, 210, 70, 90);
+        carte1.setBounds(360, 350, 70, 90);
 
         carte2.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\2_trefle.png")); // NOI18N
         carte2.setText("jLabel2");
         getContentPane().add(carte2);
-        carte2.setBounds(425, 210, 70, 90);
+        carte2.setBounds(420, 350, 70, 90);
 
         carte3.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\3_trefle.png")); // NOI18N
         getContentPane().add(carte3);
-        carte3.setBounds(480, 210, 70, 90);
+        carte3.setBounds(470, 350, 70, 90);
 
         carte4.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\4_trefle.png")); // NOI18N
         getContentPane().add(carte4);
-        carte4.setBounds(535, 210, 70, 90);
+        carte4.setBounds(530, 350, 70, 90);
 
         carte5.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\5_trefle.png")); // NOI18N
         getContentPane().add(carte5);
-        carte5.setBounds(590, 210, 70, 90);
+        carte5.setBounds(580, 350, 70, 90);
 
         pos1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -124,7 +126,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos1);
-        pos1.setBounds(840, 120, 90, 80);
+        pos1.setBounds(830, 260, 90, 80);
 
         pos2.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -133,7 +135,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos2);
-        pos2.setBounds(870, 230, 90, 80);
+        pos2.setBounds(860, 370, 90, 80);
 
         pos3.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -142,7 +144,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos3);
-        pos3.setBounds(840, 340, 90, 80);
+        pos3.setBounds(830, 480, 90, 80);
 
         pos4.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,7 +153,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos4);
-        pos4.setBounds(730, 430, 90, 80);
+        pos4.setBounds(720, 570, 90, 80);
 
         pos5.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -160,7 +162,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos5);
-        pos5.setBounds(590, 430, 90, 80);
+        pos5.setBounds(580, 570, 90, 80);
 
         pos6.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,7 +171,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos6);
-        pos6.setBounds(410, 430, 90, 80);
+        pos6.setBounds(400, 570, 90, 80);
 
         pos7.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -178,7 +180,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos7);
-        pos7.setBounds(240, 420, 90, 80);
+        pos7.setBounds(230, 560, 90, 80);
 
         pos8.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -187,7 +189,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos8);
-        pos8.setBounds(120, 360, 90, 80);
+        pos8.setBounds(110, 500, 90, 80);
 
         pos9.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -196,7 +198,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos9);
-        pos9.setBounds(70, 240, 90, 80);
+        pos9.setBounds(60, 380, 90, 80);
 
         pos10.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\oval.png")); // NOI18N
         pos10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,98 +207,102 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(pos10);
-        pos10.setBounds(90, 120, 90, 80);
+        pos10.setBounds(80, 260, 90, 80);
 
         jLabel4.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(720, 390, 70, 70);
+        jLabel4.setBounds(710, 530, 70, 70);
 
         jLabel5.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel5);
-        jLabel5.setBounds(700, 380, 70, 70);
+        jLabel5.setBounds(690, 520, 70, 70);
 
         jLabel6.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(820, 310, 70, 70);
+        jLabel6.setBounds(810, 450, 70, 70);
 
         jLabel7.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel7);
-        jLabel7.setBounds(800, 300, 70, 70);
+        jLabel7.setBounds(790, 440, 70, 70);
 
         jLabel8.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel8);
-        jLabel8.setBounds(840, 210, 70, 70);
+        jLabel8.setBounds(830, 350, 70, 70);
 
         jLabel9.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel9);
-        jLabel9.setBounds(820, 200, 70, 70);
+        jLabel9.setBounds(810, 340, 70, 70);
 
         jLabel10.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel10);
-        jLabel10.setBounds(820, 80, 70, 70);
+        jLabel10.setBounds(810, 220, 70, 70);
 
         jLabel11.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel11);
-        jLabel11.setBounds(800, 70, 70, 70);
+        jLabel11.setBounds(790, 210, 70, 70);
 
         jLabel12.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel12);
-        jLabel12.setBounds(400, 390, 70, 70);
+        jLabel12.setBounds(390, 530, 70, 70);
 
         jLabel13.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel13);
-        jLabel13.setBounds(380, 380, 70, 70);
+        jLabel13.setBounds(370, 520, 70, 70);
 
         jLabel14.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel14);
-        jLabel14.setBounds(230, 380, 70, 70);
+        jLabel14.setBounds(220, 520, 70, 70);
 
         jLabel15.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel15);
-        jLabel15.setBounds(210, 370, 70, 70);
+        jLabel15.setBounds(200, 510, 70, 70);
 
         jLabel16.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel16);
-        jLabel16.setBounds(110, 330, 70, 70);
+        jLabel16.setBounds(100, 470, 70, 70);
 
         jLabel17.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel17);
-        jLabel17.setBounds(90, 320, 70, 70);
+        jLabel17.setBounds(80, 460, 70, 70);
 
         jLabel18.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel18);
-        jLabel18.setBounds(60, 210, 70, 70);
+        jLabel18.setBounds(50, 350, 70, 70);
 
         jLabel19.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel19);
-        jLabel19.setBounds(40, 200, 70, 70);
+        jLabel19.setBounds(30, 340, 70, 70);
 
         jLabel20.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel20);
-        jLabel20.setBounds(80, 80, 70, 70);
+        jLabel20.setBounds(70, 220, 70, 70);
 
         jLabel21.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel21);
-        jLabel21.setBounds(60, 70, 70, 70);
+        jLabel21.setBounds(50, 210, 70, 70);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(580, 400, 70, 70);
+        jLabel2.setBounds(570, 540, 70, 70);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(560, 390, 70, 70);
+        jLabel3.setBounds(550, 530, 70, 70);
 
         croupier.setForeground(new java.awt.Color(255, 255, 255));
         croupier.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\croupier.png")); // NOI18N
         getContentPane().add(croupier);
-        croupier.setBounds(470, 30, 70, 80);
+        croupier.setBounds(460, 170, 70, 80);
+
+        logo.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\Logos\\final\\allSizes\\medium.png")); // NOI18N
+        getContentPane().add(logo);
+        logo.setBounds(400, 30, 200, 162);
         getContentPane().add(jScrollBar1);
-        jScrollBar1.setBounds(477, 570, 20, 200);
+        jScrollBar1.setBounds(480, 710, 20, 200);
 
         background_table.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\poker_table.png")); // NOI18N
         getContentPane().add(background_table);
-        background_table.setBounds(140, -60, 970, 620);
+        background_table.setBounds(130, 80, 970, 620);
         background_table.getAccessibleContext().setAccessibleName("background");
 
         b_sendMessage.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\send.png")); // NOI18N
@@ -306,7 +312,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(b_sendMessage);
-        b_sendMessage.setBounds(450, 775, 30, 40);
+        b_sendMessage.setBounds(440, 920, 30, 40);
 
         messageToSend.setText("Saisissez votre texte ici...");
         messageToSend.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -320,7 +326,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(messageToSend);
-        messageToSend.setBounds(0, 770, 500, 50);
+        messageToSend.setBounds(0, 910, 500, 50);
 
         messageArea.setEditable(false);
         messageArea.setColumns(20);
@@ -330,14 +336,14 @@ public class NewJFrame extends javax.swing.JFrame {
         messageToDisplay.setViewportView(messageArea);
 
         getContentPane().add(messageToDisplay);
-        messageToDisplay.setBounds(0, 570, 500, 200);
+        messageToDisplay.setBounds(0, 710, 500, 200);
 
         b_suivre.setText("Suivre");
         b_suivre.setMaximumSize(new java.awt.Dimension(85, 23));
         b_suivre.setMinimumSize(new java.awt.Dimension(85, 23));
         b_suivre.setPreferredSize(new java.awt.Dimension(85, 23));
         getContentPane().add(b_suivre);
-        b_suivre.setBounds(830, 620, 110, 23);
+        b_suivre.setBounds(830, 770, 110, 23);
 
         b_seCoucher.setText("Se coucher");
         b_seCoucher.addActionListener(new java.awt.event.ActionListener() {
@@ -346,7 +352,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(b_seCoucher);
-        b_seCoucher.setBounds(590, 620, 130, 22);
+        b_seCoucher.setBounds(590, 770, 130, 22);
 
         b_miser.setText("Miser");
         b_miser.setMaximumSize(new java.awt.Dimension(85, 23));
@@ -358,7 +364,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(b_miser);
-        b_miser.setBounds(720, 620, 110, 23);
+        b_miser.setBounds(720, 770, 110, 23);
 
         valueSlider.setMaximumSize(new java.awt.Dimension(85, 23));
         valueSlider.setMinimumSize(new java.awt.Dimension(85, 23));
@@ -379,7 +385,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(valueSlider);
-        valueSlider.setBounds(720, 680, 100, 30);
+        valueSlider.setBounds(720, 830, 100, 30);
 
         slider_miser.setMaximumSize(new java.awt.Dimension(255, 26));
         slider_miser.setMinimumSize(new java.awt.Dimension(255, 26));
@@ -390,12 +396,12 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(slider_miser);
-        slider_miser.setBounds(590, 640, 350, 26);
+        slider_miser.setBounds(590, 790, 350, 26);
 
         montant_mise.setForeground(new java.awt.Color(255, 255, 255));
         montant_mise.setText("CHF");
         getContentPane().add(montant_mise);
-        montant_mise.setBounds(840, 690, 90, 16);
+        montant_mise.setBounds(840, 840, 90, 16);
 
         background_frame.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
         background_frame.setText("jLabel6");
@@ -405,7 +411,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(background_frame);
-        background_frame.setBounds(-5, -6, 1000, 830);
+        background_frame.setBounds(-5, -6, 1000, 970);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -473,6 +479,7 @@ public class NewJFrame extends javax.swing.JFrame {
         messageArea.setText("Croupier : Bienvenue à la table !\n");
         valueSlider.setText("0");
         slider_miser.setValue(0);
+        slider_miser.setMaximum(10000); //@TODO definir le maximum de mise pour chaque table
         b_miser.setEnabled(false);
     }//GEN-LAST:event_formWindowOpened
 
@@ -598,6 +605,7 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollBar jScrollBar1;
+    private javax.swing.JLabel logo;
     private javax.swing.JTextArea messageArea;
     private javax.swing.JScrollPane messageToDisplay;
     private javax.swing.JTextField messageToSend;
