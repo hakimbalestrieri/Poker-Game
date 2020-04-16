@@ -2,7 +2,6 @@ package ch.heigvd.hbcg;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import javax.swing.JSlider;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -94,6 +93,9 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().setLayout(null);
+
+
+
 
         carte1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\resizedEtArrondie\\final\\1_trefle.png")); // NOI18N
         carte1.setMaximumSize(new java.awt.Dimension(100, 70));
@@ -312,7 +314,7 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(b_sendMessage);
-        b_sendMessage.setBounds(440, 920, 30, 40);
+        b_sendMessage.setBounds(440, 915, 30, 40);
 
         messageToSend.setText("Saisissez votre texte ici...");
         messageToSend.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -527,8 +529,11 @@ public class NewJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_b_sendMessageMouseClicked
     
     public void submitMessage() {
-        messageArea.setText(messageArea.getText() + "User : " + messageToSend.getText() + "\n");
-        messageToSend.setText("");
+        String message = messageToSend.getText();
+        if(!message.isEmpty()) {
+            messageArea.setText(messageArea.getText() + "User : " + message + "\n");
+            messageToSend.setText("");
+        }
     }
     
     public void sitDown(int position) {
@@ -570,6 +575,10 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
     }
+
+
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_miser;
