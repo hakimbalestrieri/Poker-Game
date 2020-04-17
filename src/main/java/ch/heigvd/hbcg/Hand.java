@@ -15,6 +15,7 @@ public class Hand {
     }
 
     public void updateRankingHand(){
+        /*TODO il faut qu'on récupère la liste des cartes dévoilées du board car notre force dépend de celles-ci */
         //rankingCard = RankingCards.HIGH_CARD;
     }
 

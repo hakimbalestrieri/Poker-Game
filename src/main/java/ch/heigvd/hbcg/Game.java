@@ -14,7 +14,7 @@ public class Game {
     }
 
     public Game(){
-        dealer = new Dealer();
+        dealer = new Dealer(); //initialise un Dealer et son deck
     }
 
     public static void main(String[] args) {
@@ -24,7 +24,6 @@ public class Game {
     private void start(){
         //Distribution des cartes aux joueurs présents
         dealer.distribue();
-
     }
 
 }

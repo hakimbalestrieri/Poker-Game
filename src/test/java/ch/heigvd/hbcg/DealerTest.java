@@ -1,5 +1,6 @@
 package ch.heigvd.hbcg;
 
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +17,6 @@ class DealerTest {
 
     @Test
     void distribue() {
-
     }
 
     @Test

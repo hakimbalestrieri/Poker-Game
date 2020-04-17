@@ -1,10 +1,7 @@
 package ch.heigvd.hbcg;
 
 import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,14 +14,18 @@ import java.util.Calendar;
 public class ControllerInscription {
 
 
-    public static int createInscription(String username, String password, String address, boolean termsConditions, Object day,
+    public static int createInscription(String username, String address, String password, boolean termsConditions, Object day,
                                         Object month, Object year, String gender) throws IOException {
 
+        //Vérifier que tous les champs sont remplis
+        if(username.equals("") || password.equals("") || address.equals(""))
+            return -3;
+        //Vérification de l'age
         Period period = Period.between(
                 LocalDate.of(
                         Integer.valueOf(String.valueOf(year)), Integer.valueOf(String.valueOf(month)),
                         Integer.valueOf(String.valueOf(day))), LocalDate.now());
-        if(termsConditions) {
+        if(!termsConditions) {
             return -2;
         }
 
@@ -38,25 +39,38 @@ public class ControllerInscription {
         StringBuilder toWrite = new StringBuilder();
         toWrite.append(username);
         toWrite.append(';');
-        //toWrite.append()
+        toWrite.append(password);
+        toWrite.append(';');
+        toWrite.append(day);
+        toWrite.append(';');
+        toWrite.append(month);
+        toWrite.append(';');
+        toWrite.append(year);
+        toWrite.append(';');
+        toWrite.append(address);
+        toWrite.append(';');
+        toWrite.append(gender + "\n");
 
+
+        OutputStream os = null;
         try {
-            Files.write(Paths.get("users.txt"), "the text".getBytes(), StandardOpenOption.APPEND);
-        }catch (IOException e) {
-            //exception handling left as an exercise for the reader
+            os = new FileOutputStream(new File("users.txt"), true);
+            os.write(String.valueOf(toWrite).getBytes(), 0, toWrite.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                os.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
         return 1;
     }
 
     public static boolean checkIfUserExist(String name) throws IOException {
 
-        /*final String FILE_NAME = "users.txt";
-        String content = Files.readString(Paths.get(FILE_NAME), StandardCharsets.US_ASCII);
-
-        if(content.toLowerCase().indexOf(name.toLowerCase()) != -1) {
-            System.out.println("mot trouvé");
-        }
-        return content.contains(name); //user existe pas donc ok*/
         final String FILE_NAME = "users.txt";
         final String SPLITTER = ";";
         BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
