@@ -245,7 +245,7 @@ class JFrameInscription extends JFrame {
 
 
         background = new JLabel("");
-        background.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png")); // NOI18N
         background.setBounds(0, 0, 1000, 800);
 
         c.add(background);

@@ -21,6 +21,8 @@ import java.net.URL;
  */
 public class Connexion extends javax.swing.JFrame {
 
+    private PokerPlayer pokerPlayer;
+
     /**
      * Creates new form Connexion
      */
@@ -80,7 +82,7 @@ public class Connexion extends javax.swing.JFrame {
                 }
             }
         });
-        b_inscription.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\registration.png")); // NOI18N
+        b_inscription.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\registration.png")); // NOI18N
         b_inscription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 b_inscriptionMouseReleased(evt);
@@ -96,7 +98,7 @@ public class Connexion extends javax.swing.JFrame {
         getContentPane().add(l_username);
         l_username.setBounds(70, 180, 70, 16);
 
-        b_connexion.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\login.png")); // NOI18N
+        b_connexion.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\login.png")); // NOI18N
         getContentPane().add(b_connexion);
         b_connexion.setBounds(280, 280, 50, 50);
         b_connexion.addMouseListener(new MouseAdapter() {
@@ -115,11 +117,11 @@ public class Connexion extends javax.swing.JFrame {
         getContentPane().add(l_password);
         l_password.setBounds(70, 220, 90, 20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\Logos\\final\\allSizes\\medium.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\Logos\\final\\allSizes\\medium.png")); // NOI18N
         getContentPane().add(jLabel1);
         jLabel1.setBounds(94, 20, 230, 140);
 
-        background.setIcon(new javax.swing.ImageIcon("D:\\Bureau\\HEIG-VD\\2eme\\2eme_semestre\\GEN\\PROJET_OFFICIEL\\poker\\src\\main\\resources\\background_fond.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png")); // NOI18N
         background.setText("jLabel1");
         getContentPane().add(background);
         background.setBounds(0, 0, 400, 360);
@@ -141,7 +143,12 @@ public class Connexion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Connexion réussie");
             dispose();
             //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
-            new NewJFrame().setVisible(true);
+
+            //new NewJFrame().setVisible(true);
+            pokerPlayer = new PokerPlayer(username.getText());
+            new NewJFrame(pokerPlayer).setVisible(true);
+            pokerPlayer.receive();
+
         }
         else {
             JOptionPane.showMessageDialog(this, "Identifiants incorrects", "Connexion", JOptionPane.ERROR_MESSAGE);
