@@ -2,9 +2,14 @@ package ch.heigvd.hbcg;
 
 import java.util.*;
 
+/**
+ * Classe Deck
+ * Represente une liste de cartes
+ * @authors Gomes & Balestrieri
+ */
 public class Deck {
 
-    private List<Card> cards;
+    private Set<Card> cards;
 
     public Deck(){
         randomDeck();
@@ -12,21 +17,29 @@ public class Deck {
 
     private void randomDeck() {
 
-        cards = new ArrayList<>();
+        cards = new HashSet<>();
         for (Colors color : Colors.values()) {
             for (Numbers number : Numbers.values()) {
                 cards.add(new Card(color, number));
             }
         }
 
-        Collections.shuffle(cards);
-
     }
 
     public Card draw(){
-        return cards.remove(cards.size() - 1);
+
+        Card card = null;
+        Iterator it = cards.iterator();
+        if(it.hasNext()) {
+            card = (Card) it.next();
+            it.remove();
+        }
+        return card;
     }
 
+    public int size(){
+        return cards.size();
+    }
 }
 
 

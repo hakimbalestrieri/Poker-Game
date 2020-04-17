@@ -17,9 +17,11 @@ public class Dealer {
     }
 
     public void distribue(){
+
         Set<Player> playerList = Game.getPlayers();
         //Distribue deux cartes à chaque joueurs
         //TODO : Penser à factory la distribution
+
         for (Player player: playerList){
             player.receiveCard(deck.draw());
         }
