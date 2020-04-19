@@ -27,8 +27,6 @@ public class NewJFrame extends JFrame implements UserInterface {
 
     public NewJFrame(PokerPlayer pokerPlayer) {
 
-
-
         if(pokerPlayer != null){
 
             initComponents();
@@ -46,7 +44,7 @@ public class NewJFrame extends JFrame implements UserInterface {
         //this.pokerItem = pokerItem;
        // messageToSend.setText(pokerItem.toString());
         System.out.println("DISPLAY SUR FENETRE");
-        messageArea.append(pokerItem.toString());
+        messageArea.append(pokerItem.toString() + "\n");
     }
 
     /**

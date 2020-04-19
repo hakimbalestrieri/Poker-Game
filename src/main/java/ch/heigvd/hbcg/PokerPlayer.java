@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-public class PokerPlayer {
+public class PokerPlayer implements Runnable {
 
     private UserInterface userInterface;
     private Socket socket;
@@ -15,10 +16,11 @@ public class PokerPlayer {
     private String pseudo;
 
     public static void main(String[] args) {
-        PokerPlayer pokerPlayer = new PokerPlayer();
+        PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
         new NewJFrame(pokerPlayer);
-        //pokerPlayer.receive();
+        pokerPlayer.receive();
     }
+
 
     public PokerPlayer(String pseudo){
 
@@ -36,6 +38,10 @@ public class PokerPlayer {
                 e.printStackTrace();
             }
         }
+
+        new Thread(this).start();
+       //new NewJFrame(this);
+     //  this.receive();
        // receive();
     }
 
@@ -65,9 +71,10 @@ public class PokerPlayer {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-    }
 
+        }
+
+    }
     public void setUserInterface(UserInterface userInterface) {
         this.userInterface = userInterface;
     }
@@ -86,5 +93,10 @@ public class PokerPlayer {
 
     public String getPseudo() {
         return pseudo;
+    }
+
+    @Override
+    public void run() {
+        this.receive();
     }
 }

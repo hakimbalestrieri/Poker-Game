@@ -145,9 +145,11 @@ public class Connexion extends javax.swing.JFrame {
             //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
 
             //new NewJFrame().setVisible(true);
+           // pokerPlayer = new PokerPlayer(username.getText());
+            //new NewJFrame(pokerPlayer).setVisible(true);
             pokerPlayer = new PokerPlayer(username.getText());
-            new NewJFrame(pokerPlayer).setVisible(true);
-            pokerPlayer.receive();
+            new NewJFrame(pokerPlayer);
+      //      pokerPlayer.receive();
 
         }
         else {
