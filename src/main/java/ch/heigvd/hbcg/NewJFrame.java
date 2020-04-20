@@ -557,7 +557,7 @@ public class NewJFrame extends JFrame implements UserInterface {
         String message = messageToSend.getText();
         if(!message.isEmpty()) {
 
-            messageArea.setText(messageArea.getText() + pokerPlayer.getPseudo() + ": " + message + "\n");
+          //  messageArea.setText(messageArea.getText() + pokerPlayer.getPseudo() + ": " + message + "\n");
             messageToSend.setText("");
             pokerPlayer.send(message);
         }
