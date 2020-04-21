@@ -49,8 +49,9 @@ public class ControllerInscription {
         toWrite.append(';');
         toWrite.append(address);
         toWrite.append(';');
-        toWrite.append(gender + "\n");
-
+        toWrite.append(gender.equals("Homme") ? 1 : 0 );
+        toWrite.append(';');
+        toWrite.append("1000" + "\n");
 
         OutputStream os = null;
         try {

@@ -40,11 +40,11 @@ public class NewJFrame extends JFrame implements UserInterface {
     }
 
     @Override
-    public void display(PokerItem pokerItem){
+    public void display(PlayerInfo playerInfo){
         //this.pokerItem = pokerItem;
        // messageToSend.setText(pokerItem.toString());
         System.out.println("DISPLAY SUR FENETRE");
-        messageArea.append(pokerItem.toString() + "\n");
+        messageArea.append(playerInfo.toString() + "\n");
     }
 
     /**
@@ -128,23 +128,28 @@ public class NewJFrame extends JFrame implements UserInterface {
         carte1.setPreferredSize(new java.awt.Dimension(100, 70));
         getContentPane().add(carte1);
         carte1.setBounds(360, 350, 70, 90);
+        carte1.setVisible(false);
 
         carte2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\2_trefle.png")); // NOI18N
         carte2.setText("jLabel2");
         getContentPane().add(carte2);
         carte2.setBounds(420, 350, 70, 90);
+        carte2.setVisible(false);
 
         carte3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\3_trefle.png")); // NOI18N
         getContentPane().add(carte3);
         carte3.setBounds(470, 350, 70, 90);
+        carte3.setVisible(false);
 
         carte4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\4_trefle.png")); // NOI18N
         getContentPane().add(carte4);
         carte4.setBounds(530, 350, 70, 90);
+        carte4.setVisible(false);
 
         carte5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\5_trefle.png")); // NOI18N
         getContentPane().add(carte5);
         carte5.setBounds(580, 350, 70, 90);
+        carte5.setVisible(false);
 
         pos1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); // NOI18N
         pos1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -239,82 +244,102 @@ public class NewJFrame extends JFrame implements UserInterface {
         jLabel4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel4);
         jLabel4.setBounds(710, 530, 70, 70);
+        jLabel4.setVisible(false);
 
         jLabel5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel5);
         jLabel5.setBounds(690, 520, 70, 70);
+        jLabel5.setVisible(false);
 
         jLabel6.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel6);
         jLabel6.setBounds(810, 450, 70, 70);
+        jLabel6.setVisible(false);
 
         jLabel7.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel7);
         jLabel7.setBounds(790, 440, 70, 70);
+        jLabel7.setVisible(false);
 
         jLabel8.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel8);
         jLabel8.setBounds(830, 350, 70, 70);
+        jLabel8.setVisible(false);
 
         jLabel9.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel9);
         jLabel9.setBounds(810, 340, 70, 70);
+        jLabel9.setVisible(false);
 
         jLabel10.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel10);
         jLabel10.setBounds(810, 220, 70, 70);
+        jLabel10.setVisible(false);
 
         jLabel11.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel11);
         jLabel11.setBounds(790, 210, 70, 70);
+        jLabel11.setVisible(false);
 
         jLabel12.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel12);
         jLabel12.setBounds(390, 530, 70, 70);
+        jLabel12.setVisible(false);
 
         jLabel13.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel13);
         jLabel13.setBounds(370, 520, 70, 70);
+        jLabel13.setVisible(false);
 
         jLabel14.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel14);
         jLabel14.setBounds(220, 520, 70, 70);
+        jLabel14.setVisible(false);
 
         jLabel15.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel15);
         jLabel15.setBounds(200, 510, 70, 70);
+        jLabel15.setVisible(false);
 
         jLabel16.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel16);
         jLabel16.setBounds(100, 470, 70, 70);
+        jLabel16.setVisible(false);
 
         jLabel17.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel17);
         jLabel17.setBounds(80, 460, 70, 70);
+        jLabel17.setVisible(false);
 
         jLabel18.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel18);
         jLabel18.setBounds(50, 350, 70, 70);
+        jLabel18.setVisible(false);
 
         jLabel19.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel19);
         jLabel19.setBounds(30, 340, 70, 70);
+        jLabel19.setVisible(false);
 
         jLabel20.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel20);
         jLabel20.setBounds(70, 220, 70, 70);
+        jLabel20.setVisible(false);
 
         jLabel21.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel21);
         jLabel21.setBounds(50, 210, 70, 70);
+        jLabel21.setVisible(false);
 
         jLabel2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel2);
         jLabel2.setBounds(570, 540, 70, 70);
+        jLabel2.setVisible(false);
 
         jLabel3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); // NOI18N
         getContentPane().add(jLabel3);
         jLabel3.setBounds(550, 530, 70, 70);
+        jLabel3.setVisible(false);
 
         croupier.setForeground(new java.awt.Color(255, 255, 255));
         croupier.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\croupier.png")); // NOI18N
@@ -564,6 +589,42 @@ public class NewJFrame extends JFrame implements UserInterface {
     }
     
     public void sitDown(int position) {
+
+        final String filenameIcon = "src\\main\\resources\\user_male.png";
+
+        switch(position){
+            case 1 :
+                pos1.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 2 :
+                pos2.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 3 :
+                pos3.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 4 :
+                pos4.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 5 :
+                pos5.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 6 :
+                pos6.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 7 :
+                pos7.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 8 :
+                pos8.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 9 :
+                pos9.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+            case 10:
+                pos10.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                break;
+
+        }
         System.out.print(position);
     }
     

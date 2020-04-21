@@ -24,11 +24,11 @@ public class PokerHandler implements Runnable {
 
     public void run(){
 
-        PokerItem pokerItem;
+        PlayerInfo playerInfo;
 
         try {
-            while ((pokerItem = (PokerItem) in.readObject()) != null) {
-                pokerServer.send(pokerItem);
+            while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
+                pokerServer.send(playerInfo);
             }
             System.out.println("fin");
         } catch (SocketException | ClassNotFoundException e) {
@@ -45,7 +45,7 @@ public class PokerHandler implements Runnable {
 
     }
 
-    public void send(PokerItem pokerItem) throws IOException {
-        out.writeObject(pokerItem);
+    public void send(PlayerInfo playerInfo) throws IOException {
+        out.writeObject(playerInfo);
     }
 }

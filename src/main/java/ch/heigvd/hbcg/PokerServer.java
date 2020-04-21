@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class PokerServer {
 
-    private PokerItem pokerItem = new PokerItem("TEST", "TEST");
+    private PlayerInfo playerInfo = new PlayerInfo("TEST", "TEST");
     private ArrayList<PokerHandler> handlers;
     private PokerHandler pokerHandler;
     private PokerHandler currentPlayer;
@@ -38,11 +38,11 @@ public class PokerServer {
         }
     }
 
-    public void send(PokerItem pokerItem) throws IOException {
+    public void send(PlayerInfo playerInfo) throws IOException {
        // currentPlayer.send(pokerItem);
 
         for(PokerHandler handler : handlers){
-            handler.send(pokerItem);
+            handler.send(playerInfo);
         }
     }
 

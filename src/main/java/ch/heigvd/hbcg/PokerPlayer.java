@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class PokerPlayer implements Runnable {
@@ -14,19 +13,20 @@ public class PokerPlayer implements Runnable {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private String pseudo;
+    private PlayerInfo playerInfo;
 
     public static void main(String[] args) {
-        PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
-        new NewJFrame(pokerPlayer);
-        pokerPlayer.receive();
+       // PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
+        //new NewJFrame(pokerPlayer);
+       // pokerPlayer.receive();
     }
 
 
-    public PokerPlayer(String pseudo){
+    public PokerPlayer(PlayerInfo playerInfo){
 
-        if(pseudo != null){
+        if(playerInfo != null){
 
-            this.pseudo = pseudo;
+            this.playerInfo = playerInfo;
 
             try {
                 socket = new Socket("localhost", 6669);
@@ -60,11 +60,11 @@ public class PokerPlayer implements Runnable {
     }
 
     public void receive() {
-        PokerItem pokerItem = null;
+        PlayerInfo playerInfo = null;
         try {
             System.out.println("Je tente de display");
-            while ((pokerItem = (PokerItem) in.readObject()) != null) {
-                userInterface.display(pokerItem);
+            while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
+                userInterface.display(playerInfo);
                 System.out.println("DISPLAY un truc");
             }
         } catch (IOException e) {
@@ -81,14 +81,14 @@ public class PokerPlayer implements Runnable {
 
     public void send(String message) {
         try {
-            out.writeObject(new PokerItem(pseudo, message));
+            out.writeObject(new PlayerInfo(playerInfo.getPseudoEmetteur(), message));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void display(PokerItem pokerItem){
-        userInterface.display(pokerItem);
+    public void display(PlayerInfo playerInfo){
+        userInterface.display(playerInfo);
     }
 
     public String getPseudo() {
