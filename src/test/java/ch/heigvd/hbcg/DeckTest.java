@@ -1,6 +1,8 @@
 package ch.heigvd.hbcg;
 
 
+import ch.heigvd.hbcg.model.Card;
+import ch.heigvd.hbcg.model.Deck;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;

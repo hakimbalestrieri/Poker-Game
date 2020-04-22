@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
 
+    //TODO : A implementer
+
     @Test
     void updateRankingHand() {
     }

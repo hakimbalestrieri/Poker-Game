@@ -1,15 +1,16 @@
-package ch.heigvd.hbcg;
+package ch.heigvd.hbcg.view;
+
+import ch.heigvd.hbcg.controller.ControllerInscription;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
-class JFrameInscription extends JFrame {
+class InscriptionFrame extends JFrame {
 
     // Components of the Form 
     private Container c;
@@ -38,7 +39,7 @@ class JFrameInscription extends JFrame {
 
     // constructor, to initialize the components 
     // with default values. 
-    public JFrameInscription() {
+    public InscriptionFrame() {
         setTitle("Registration Form");
         setBounds(300, 90, 450, 550);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -273,6 +274,6 @@ class JFrameInscription extends JFrame {
 class Inscription {
 
     public static void main(String[] args) throws Exception {
-        JFrameInscription f = new JFrameInscription();
+        InscriptionFrame f = new InscriptionFrame();
     }
 } 

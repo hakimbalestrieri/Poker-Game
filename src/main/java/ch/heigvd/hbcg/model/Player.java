@@ -1,4 +1,4 @@
-package ch.heigvd.hbcg;
+package ch.heigvd.hbcg.model;
 
 public class Player {
 

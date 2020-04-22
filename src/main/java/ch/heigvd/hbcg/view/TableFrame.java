@@ -1,4 +1,8 @@
-package ch.heigvd.hbcg;
+package ch.heigvd.hbcg.view;
+
+import ch.heigvd.hbcg.model.PlayerInfo;
+import ch.heigvd.hbcg.model.PokerPlayer;
+import ch.heigvd.hbcg.model.UserInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,18 +18,11 @@ import java.awt.event.KeyEvent;
  *
  * @author Hakim
  */
-public class NewJFrame extends JFrame implements UserInterface {
+public class TableFrame extends JFrame implements UserInterface {
 
     private PokerPlayer pokerPlayer;
 
-    /**
-     * Creates new form NewJFrame
-     */
-   /* public NewJFrame() {
-        initComponents();
-    }*/
-
-    public NewJFrame(PokerPlayer pokerPlayer) {
+    public TableFrame(PokerPlayer pokerPlayer) {
 
         if(pokerPlayer != null){
 
@@ -646,13 +643,13 @@ public class NewJFrame extends JFrame implements UserInterface {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TableFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TableFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TableFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TableFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

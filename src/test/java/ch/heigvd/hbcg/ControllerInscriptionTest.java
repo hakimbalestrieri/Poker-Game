@@ -1,5 +1,6 @@
 package ch.heigvd.hbcg;
 
+import ch.heigvd.hbcg.controller.ControllerInscription;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class ControllerInscriptionTest {
     void createInscription() {
         try {
             //premiere inscription, l'utilisateur n'existe pas encore
-            assertEquals(1,ControllerInscription.createInscription("testUser", "chemindutest", "password", true, 24,10,1993,"Homme"));
+            assertEquals(1, ControllerInscription.createInscription("testUser", "chemindutest", "password", true, 24,10,1993,"Homme"));
             //seconde inscription, l'utilisateur existe déjà et devrait renvoyer 0
             assertEquals(0, ControllerInscription.createInscription("testUser", "chemindutest", "password", true, 24,10,1993,"Homme"));
             //apres ce test il faut supprimer la dernière ligne du fichier pour pouvoir lancer ce test à nouveau dans de bonnes conditions.
@@ -38,7 +39,4 @@ class ControllerInscriptionTest {
         }
     }
 
-    @Test
-    void checkIfUserExist() {
-    }
 }

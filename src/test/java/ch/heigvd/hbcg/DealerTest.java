@@ -1,12 +1,13 @@
 package ch.heigvd.hbcg;
 
 
+import ch.heigvd.hbcg.model.Dealer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DealerTest {
+
+    //TODO : A implementer
 
     private Dealer dealer;
 

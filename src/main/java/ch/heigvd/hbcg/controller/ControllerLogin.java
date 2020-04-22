@@ -1,4 +1,4 @@
-package ch.heigvd.hbcg;
+package ch.heigvd.hbcg.controller;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

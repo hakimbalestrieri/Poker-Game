@@ -1,4 +1,4 @@
-package ch.heigvd.hbcg;
+package ch.heigvd.hbcg.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +18,7 @@ public class Game {
     }
 
     public static void main(String[] args) {
+        //TODO A implementer
         new Game();
     }
 
