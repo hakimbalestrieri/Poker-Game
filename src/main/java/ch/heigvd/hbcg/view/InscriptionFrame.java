@@ -12,7 +12,6 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
 class InscriptionFrame extends JFrame {
 
-    // Components of the Form 
     private Container c;
     private JLabel lTitle;
     private JLabel lUsername;
@@ -37,8 +36,7 @@ class InscriptionFrame extends JFrame {
     private JTextArea resadd;
     private JLabel background;
 
-    // constructor, to initialize the components 
-    // with default values. 
+
     public InscriptionFrame() {
         setTitle("Registration Form");
         setBounds(300, 90, 450, 550);
@@ -122,7 +120,7 @@ class InscriptionFrame extends JFrame {
         ArrayList<String> days_tmp = new ArrayList<String>();
         for (int day = 1; day < 31; day++) {
             if (day < 10) {
-                days_tmp.add("0" + String.valueOf(day));
+                days_tmp.add("0" + day);
             } else {
                 days_tmp.add(String.valueOf(day));
             }
@@ -138,7 +136,7 @@ class InscriptionFrame extends JFrame {
         ArrayList<String> months_tmp = new ArrayList<String>();
         for (int month = 1; month < 13; month++) {
             if (month < 10) {
-                months_tmp.add("0" + String.valueOf(month));
+                months_tmp.add("0" + month);
             } else {
                 months_tmp.add(String.valueOf(month));
             }
@@ -158,7 +156,6 @@ class InscriptionFrame extends JFrame {
         }
         cYear = new JComboBox(years_tmp.toArray());
 
-        //   cYear = new JComboBox(years);
         cYear.setFont(new Font("Arial", Font.PLAIN, 15));
         cYear.setSize(80, 20);
         cYear.setLocation(320, 250);
@@ -191,9 +188,6 @@ class InscriptionFrame extends JFrame {
         bSubmit.setLocation(150, 450);
         bSubmit.addActionListener(e -> {
             int returnValue;
-            //Lancer inscription
-            //Si fail alors message d'erreur (donc méthode inscription renvoie un bool)
-            //Si réussi alors ca ferme la fenetre d'inscription et lance la vue
             try {
                 returnValue = ControllerInscription.createInscription(tUsername.getText(), tAddress.getText(), tPassword.getText(),
                         cTermsAndConditions.isSelected(), cDay.getSelectedItem(),
@@ -246,7 +240,7 @@ class InscriptionFrame extends JFrame {
 
 
         background = new JLabel("");
-        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png")); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png"));
         background.setBounds(0, 0, 1000, 800);
 
         c.add(background);
@@ -270,10 +264,9 @@ class InscriptionFrame extends JFrame {
 
 }
 
-// Driver Code 
 class Inscription {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         InscriptionFrame f = new InscriptionFrame();
     }
 } 

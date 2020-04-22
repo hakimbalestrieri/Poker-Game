@@ -92,7 +92,7 @@ public class PokerPlayer implements Runnable {
     }
 
     public String getPseudo() {
-        return pseudo;
+        return playerInfo.getPseudoEmetteur();
     }
 
     @Override
