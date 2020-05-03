@@ -6,11 +6,12 @@ import java.util.Set;
 public class Game {
 
     private static Set<Card> boardCard = new HashSet<>(5);
+    private static Set<PokerPlayer> pokerPlayers = new HashSet<>(10);
     private static Set<Player> players = new HashSet<>(10);
     private Dealer dealer;
 
-    public static Set<Player> getPlayers() {
-        return players;
+     static Set<Player> getPlayers() {
+       return players;
     }
 
     public Game(){

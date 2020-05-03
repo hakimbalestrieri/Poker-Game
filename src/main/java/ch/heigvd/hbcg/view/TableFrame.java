@@ -1,25 +1,25 @@
 package ch.heigvd.hbcg.view;
 
-import ch.heigvd.hbcg.model.PlayerInfo;
-import ch.heigvd.hbcg.model.PokerPlayer;
-import ch.heigvd.hbcg.model.UserInterface;
+import ch.heigvd.hbcg.model.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.InputMethodListener;
 import java.awt.event.KeyEvent;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- *
  * @author Hakim Balestrieri, Christian Gomes
  */
 public class TableFrame extends JFrame implements UserInterface {
 
     private PokerPlayer pokerPlayer;
+    private Set<Integer> positions = new HashSet();
 
     public TableFrame(PokerPlayer pokerPlayer) {
 
         if(pokerPlayer != null){
-
             initComponents();
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
@@ -29,12 +29,30 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-    @Override
-    public void display(PlayerInfo playerInfo){
-        System.out.println("DISPLAY SUR FENETRE");
-        messageArea.append(playerInfo.toString() + "\n");
-    }
 
+    @Override
+     public void display(PlayerInfo playerInfo){
+
+        switch (playerInfo.getAction()){
+
+            case SIT_DOWN:
+                //Synchro place
+                System.out.println("Quelqu'n s'est assis");
+                sitDown(playerInfo.getPosition(),true);
+                System.out.println("Quelqu'n s'est assis");
+                break;
+
+            case MESSAGE:
+                //Affichage message
+                System.out.println("J'ecris un message");
+                messageArea.append(playerInfo.toString() + "\n");
+                break;
+
+            default:
+                System.out.println("Aucune action");
+        }
+
+    }
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -101,8 +119,6 @@ public class TableFrame extends JFrame implements UserInterface {
             }
         });
         getContentPane().setLayout(null);
-
-
 
 
         carte1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\1_trefle.png")); 
@@ -431,9 +447,7 @@ public class TableFrame extends JFrame implements UserInterface {
         pack();
     }
 
-    private void pos1MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(1);
-    }
+
 
     private void slider_miserStateChanged(javax.swing.event.ChangeEvent evt) {
         //@TODO on est obligé de miser au moins 1 fois la big blind, il faut vérifier cela sur le Slider
@@ -445,40 +459,44 @@ public class TableFrame extends JFrame implements UserInterface {
         
     }
 
+    private void pos1MouseReleased(java.awt.event.MouseEvent evt) {
+        sitDown(1,false);
+    }
+
     private void pos2MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(2);
+        sitDown(2,false);
     }
 
     private void pos3MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(3);
+       sitDown(3,false);
     }
 
     private void pos4MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(4);
+       sitDown(4,false);
     }
 
     private void pos5MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(5);
+       sitDown(5,false);
     }
 
     private void pos6MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(6);
+       sitDown(6,false);
     }
 
     private void pos7MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(7);
+       sitDown(7,false);
     }
 
     private void pos8MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(8);
+       sitDown(8,false);
     }
 
     private void pos9MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(9);
+       sitDown(9,false);
     }
 
     private void pos10MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(10);
+       sitDown(10,false);
     }
 
     private void b_seCoucherActionPerformed(java.awt.event.ActionEvent evt) {
@@ -545,48 +563,59 @@ public class TableFrame extends JFrame implements UserInterface {
         String message = messageToSend.getText();
         if(!message.isEmpty()) {
             messageToSend.setText("");
-            pokerPlayer.send(message);
+            pokerPlayer.getPlayerInfo().setAction(Actions.MESSAGE);
+            pokerPlayer.getPlayerInfo().setMessage(message);
+            pokerPlayer.send(pokerPlayer.getPlayerInfo());
         }
     }
-    
-    public void sitDown(int position) {
+
+    public void sitDown(int position, boolean placeAdversaire) {
 
         final String filenameIcon = "src\\main\\resources\\user_male.png";
 
-        switch(position){
-            case 1 :
-                pos1.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 2 :
-                pos2.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 3 :
-                pos3.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 4 :
-                pos4.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 5 :
-                pos5.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 6 :
-                pos6.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 7 :
-                pos7.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 8 :
-                pos8.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 9 :
-                pos9.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
-            case 10:
-                pos10.setIcon(new javax.swing.ImageIcon(filenameIcon));
-                break;
+        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayerInfo().getPosition() == 0) {
+            positions.add(position);
+            if(!placeAdversaire){
+                pokerPlayer.getPlayerInfo().setPosition(position); //si joueur quitte partie (remove position)
+                pokerPlayer.getPlayerInfo().setAction(Actions.SIT_DOWN);
+                pokerPlayer.send(pokerPlayer.getPlayerInfo());
+            }
+            switch (position) {
+                case 1:
+                    pos1.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 2:
+                    pos2.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 3:
+                    pos3.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 4:
+                    pos4.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 5:
+                    pos5.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 6:
+                    pos6.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 7:
+                    pos7.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 8:
+                    pos8.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 9:
+                    pos9.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+                case 10:
+                    pos10.setIcon(new javax.swing.ImageIcon(filenameIcon));
+                    break;
+            }
 
         }
-        System.out.print(position);
+
+        //System.out.print(position);
     }
     
     /**

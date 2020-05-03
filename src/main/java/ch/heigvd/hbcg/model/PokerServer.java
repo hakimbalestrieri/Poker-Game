@@ -30,10 +30,9 @@ public class PokerServer {
             System.out.println("Client connecté");
             pokerHandler = new PokerHandler(socket,this);
             handlers.add(pokerHandler);
-            /*  if(handlers.size() == 1){
-                currentPlayer = pokerHandler;
-                currentPlayer.send(pokerItem);
-            }*/
+            if(handlers.size() >= 2){
+              new Game();
+            }
 
         }
     }

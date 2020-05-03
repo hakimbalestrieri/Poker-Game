@@ -12,7 +12,6 @@ public class PokerPlayer implements Runnable {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private String pseudo;
     private PlayerInfo playerInfo;
 
     public static void main(String[] args) {
@@ -45,20 +44,6 @@ public class PokerPlayer implements Runnable {
        // receive();
     }
 
-    public PokerPlayer() {
-
-        System.out.println("APPEL POKERPLAYER VIDE ()");
-       /* try {
-            socket = new Socket("localhost", 6669);
-            out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-    }
-
     public void receive() {
         PlayerInfo playerInfo = null;
         try {
@@ -79,15 +64,24 @@ public class PokerPlayer implements Runnable {
         this.userInterface = userInterface;
     }
 
-    public void send(String message) {
+   /* public void send(String message) {
         try {
             out.writeObject(new PlayerInfo(playerInfo.getPseudoEmetteur(), message));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }*/
+
+     public void send(PlayerInfo playerInfo){
+        try {
+            out.writeObject(new PlayerInfo(playerInfo));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void display(PlayerInfo playerInfo){
+
+     public void display(PlayerInfo playerInfo){
         userInterface.display(playerInfo);
     }
 
@@ -98,5 +92,10 @@ public class PokerPlayer implements Runnable {
     @Override
     public void run() {
         this.receive();
+    }
+
+
+    public PlayerInfo getPlayerInfo(){
+        return playerInfo;
     }
 }
