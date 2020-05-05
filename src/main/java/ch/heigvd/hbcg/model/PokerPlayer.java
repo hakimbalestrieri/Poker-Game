@@ -12,7 +12,8 @@ public class PokerPlayer implements Runnable {
     private Socket socket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
-    private PlayerInfo playerInfo;
+    private Player player;
+    private Game game;
 
     public static void main(String[] args) {
        // PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
@@ -20,12 +21,16 @@ public class PokerPlayer implements Runnable {
        // pokerPlayer.receive();
     }
 
+    public void setGame(Game game) {
+        this.game = game;
+    }
 
-    public PokerPlayer(PlayerInfo playerInfo){
+    public PokerPlayer(Player player){
 
-        if(playerInfo != null){
+        if(player != null){
 
-            this.playerInfo = playerInfo;
+            this.player = player;
+         //   this.player.setPokerPlayer(this);
 
             try {
                 socket = new Socket("localhost", 6669);
@@ -39,17 +44,17 @@ public class PokerPlayer implements Runnable {
         }
 
         new Thread(this).start();
-       //new NewJFrame(this);
-     //  this.receive();
-       // receive();
+        // new NewJFrame(this);
+        // this.receive();
+        // receive();
     }
 
     public void receive() {
-        PlayerInfo playerInfo = null;
+        Player player = null;
         try {
             System.out.println("Je tente de display");
-            while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
-                userInterface.display(playerInfo);
+            while ((player = (Player) in.readObject()) != null) {
+                userInterface.display(player);
                 System.out.println("DISPLAY un truc");
             }
         } catch (IOException e) {
@@ -72,21 +77,20 @@ public class PokerPlayer implements Runnable {
         }
     }*/
 
-     public void send(PlayerInfo playerInfo){
+     public void send(Player player){
         try {
-            out.writeObject(new PlayerInfo(playerInfo));
+            out.writeObject(new Player(player));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-     public void display(PlayerInfo playerInfo){
-        userInterface.display(playerInfo);
+     public void display(Player player){
+        userInterface.display(player);
     }
 
     public String getPseudo() {
-        return playerInfo.getPseudoEmetteur();
+        return player.getPseudoEmetteur();
     }
 
     @Override
@@ -94,8 +98,7 @@ public class PokerPlayer implements Runnable {
         this.receive();
     }
 
-
-    public PlayerInfo getPlayerInfo(){
-        return playerInfo;
+    public Player getPlayer(){
+        return player;
     }
 }

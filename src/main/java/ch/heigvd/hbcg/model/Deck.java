@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Deck {
 
-    private Set<Card> cards;
+    private List<Card> cards;
 
     public Deck(){
         randomDeck();
@@ -17,13 +17,14 @@ public class Deck {
 
     private void randomDeck() {
 
-        cards = new HashSet<>();
+        cards = new ArrayList<>();
         for (Colors color : Colors.values()) {
             for (Numbers number : Numbers.values()) {
                 cards.add(new Card(color, number));
             }
         }
 
+        Collections.shuffle(cards);
     }
 
     public Card draw(){

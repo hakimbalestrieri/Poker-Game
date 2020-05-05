@@ -1,6 +1,7 @@
 package ch.heigvd.hbcg.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Dealer {
@@ -11,19 +12,18 @@ public class Dealer {
     private static int count = 0;
 
     public Dealer(){
-        new Deck();
+        deck = new Deck();
     }
 
-    public void distribue(){
+    public void distribue(List<Player> playerInfo){
 
-        Set<Player> playerList = Game.getPlayers();
         //Distribue deux cartes à chaque joueurs
         //TODO : Penser à factory la distribution
 
-        for (Player player: playerList){
+        for (Player player: playerInfo){
             player.receiveCard(deck.draw());
         }
-        for (Player player: playerList){
+        for (Player player: playerInfo){
             player.receiveCard(deck.draw());
         }
 

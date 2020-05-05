@@ -4,7 +4,6 @@ import ch.heigvd.hbcg.model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.InputMethodListener;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,28 +30,111 @@ public class TableFrame extends JFrame implements UserInterface {
 
 
     @Override
-     public void display(PlayerInfo playerInfo){
+     public void display(Player player){
 
-        switch (playerInfo.getAction()){
+        if(player == null) System.out.println("Tu es nul");
+
+        System.out.println(player.getAction() + "display");
+
+        switch (player.getAction()){
+
+            case CONNECTION:
+                messageArea.append("Le joueur " + player.getPseudoEmetteur() + " rejoint la partie \n");
+                break;
 
             case SIT_DOWN:
                 //Synchro place
                 System.out.println("Quelqu'n s'est assis");
-                sitDown(playerInfo.getPosition(),true);
+                sitDown(player.getPosition(),true);
                 System.out.println("Quelqu'n s'est assis");
                 break;
 
             case MESSAGE:
                 //Affichage message
                 System.out.println("J'ecris un message");
-                messageArea.append(playerInfo.toString() + "\n");
+                messageArea.append(player.toString() + "\n");
                 break;
-
+            case START_GAME:
+                showCards(pokerPlayer.getPlayer().getPosition());
+                break;
             default:
                 System.out.println("Aucune action");
         }
 
     }
+
+    private void showCards(int position){
+
+        String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
+        ImageIcon image1 = new javax.swing.ImageIcon(file + pokerPlayer.getPlayer().getPlayerHand().getCard1() + ".png");
+        ImageIcon image2 = new javax.swing.ImageIcon(file + pokerPlayer.getPlayer().getPlayerHand().getCard1() + ".png");
+
+        switch (position){
+            case 1:
+                jLabel10.setIcon(image1);
+                jLabel11.setIcon(image2);
+                jLabel10.setVisible(true);
+                jLabel11.setVisible(true);
+                break;
+            case 2:
+                jLabel8.setIcon(image1);
+                jLabel9.setIcon(image2);
+                jLabel8.setVisible(true);
+                jLabel9.setVisible(true);
+                break;
+            case 3:
+                jLabel6.setIcon(image1);
+                jLabel7.setIcon(image2);
+                jLabel6.setVisible(true);
+                jLabel7.setVisible(true);
+                break;
+            case 4:
+                jLabel4.setIcon(image1);
+                jLabel5.setIcon(image2);
+                jLabel4.setVisible(true);
+                jLabel5.setVisible(true);
+                break;
+            case 5:
+                jLabel2.setIcon(image1);
+                jLabel3.setIcon(image2);
+                jLabel2.setVisible(true);
+                jLabel3.setVisible(true);
+                break;
+            case 6:
+                jLabel12.setIcon(image1);
+                jLabel13.setIcon(image2);
+                jLabel12.setVisible(true);
+                jLabel13.setVisible(true);
+                break;
+            case 7:
+                jLabel14.setIcon(image1);
+                jLabel15.setIcon(image2);
+                jLabel14.setVisible(true);
+                jLabel15.setVisible(true);
+                break;
+            case 8:
+                jLabel16.setIcon(image1);
+                jLabel17.setIcon(image2);
+                jLabel16.setVisible(true);
+                jLabel17.setVisible(true);
+                break;
+            case 9:
+                jLabel18.setIcon(image1);
+                jLabel19.setIcon(image2);
+                jLabel18.setVisible(true);
+                jLabel19.setVisible(true);
+                break;
+            case 10:
+                jLabel20.setIcon(image1);
+                jLabel21.setIcon(image2);
+                jLabel20.setVisible(true);
+                jLabel21.setVisible(true);
+                break;
+            default:
+        }
+
+    }
+
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -121,7 +203,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().setLayout(null);
 
 
-        carte1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\1_trefle.png")); 
+        carte1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\one_trefle.png"));
         carte1.setMaximumSize(new java.awt.Dimension(100, 70));
         carte1.setMinimumSize(new java.awt.Dimension(100, 70));
         carte1.setPreferredSize(new java.awt.Dimension(100, 70));
@@ -129,23 +211,23 @@ public class TableFrame extends JFrame implements UserInterface {
         carte1.setBounds(360, 350, 70, 90);
         carte1.setVisible(false);
 
-        carte2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\2_trefle.png")); 
+        carte2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\two_trefle.png"));
         carte2.setText("jLabel2");
         getContentPane().add(carte2);
         carte2.setBounds(420, 350, 70, 90);
         carte2.setVisible(false);
 
-        carte3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\3_trefle.png")); 
+        carte3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\three_trefle.png"));
         getContentPane().add(carte3);
         carte3.setBounds(470, 350, 70, 90);
         carte3.setVisible(false);
 
-        carte4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\4_trefle.png")); 
+        carte4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\four_trefle.png"));
         getContentPane().add(carte4);
         carte4.setBounds(530, 350, 70, 90);
         carte4.setVisible(false);
 
-        carte5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\5_trefle.png")); 
+        carte5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\final\\five_trefle.png"));
         getContentPane().add(carte5);
         carte5.setBounds(580, 350, 70, 90);
         carte5.setVisible(false);
@@ -563,9 +645,9 @@ public class TableFrame extends JFrame implements UserInterface {
         String message = messageToSend.getText();
         if(!message.isEmpty()) {
             messageToSend.setText("");
-            pokerPlayer.getPlayerInfo().setAction(Actions.MESSAGE);
-            pokerPlayer.getPlayerInfo().setMessage(message);
-            pokerPlayer.send(pokerPlayer.getPlayerInfo());
+            pokerPlayer.getPlayer().setAction(Actions.MESSAGE);
+            pokerPlayer.getPlayer().setMessage(message);
+            pokerPlayer.send(pokerPlayer.getPlayer());
         }
     }
 
@@ -573,12 +655,12 @@ public class TableFrame extends JFrame implements UserInterface {
 
         final String filenameIcon = "src\\main\\resources\\user_male.png";
 
-        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayerInfo().getPosition() == 0) {
+        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayer().getPosition() == 0) {
             positions.add(position);
             if(!placeAdversaire){
-                pokerPlayer.getPlayerInfo().setPosition(position); //si joueur quitte partie (remove position)
-                pokerPlayer.getPlayerInfo().setAction(Actions.SIT_DOWN);
-                pokerPlayer.send(pokerPlayer.getPlayerInfo());
+                pokerPlayer.getPlayer().setPosition(position); //si joueur quitte partie (remove position)
+                pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
+                pokerPlayer.send(pokerPlayer.getPlayer());
             }
             switch (position) {
                 case 1:

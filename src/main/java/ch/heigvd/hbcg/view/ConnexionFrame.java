@@ -1,6 +1,7 @@
 package ch.heigvd.hbcg.view;
 
 import ch.heigvd.hbcg.controller.ControllerLogin;
+import ch.heigvd.hbcg.model.Actions;
 import ch.heigvd.hbcg.model.PokerPlayer;
 import ch.heigvd.hbcg.utils.UtilsFileReader;
 
@@ -23,7 +24,6 @@ public class ConnexionFrame extends javax.swing.JFrame {
     public ConnexionFrame() {
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
@@ -134,9 +134,10 @@ public class ConnexionFrame extends javax.swing.JFrame {
             //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
 
             //Mettre à jour les infos du playerInfo avec le fichier sauvegardé en local
-
             pokerPlayer = new PokerPlayer(UtilsFileReader.getPlayerInfo(username.getText()));
+            pokerPlayer.getPlayer().setAction(Actions.CONNECTION);
             new TableFrame(pokerPlayer);
+            pokerPlayer.send(pokerPlayer.getPlayer());
       //      pokerPlayer.receive();
 
         }
