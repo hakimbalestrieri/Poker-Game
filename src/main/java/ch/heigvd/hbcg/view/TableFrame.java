@@ -5,6 +5,8 @@ import ch.heigvd.hbcg.model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,11 +18,14 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private PokerPlayer pokerPlayer;
     private Set<Integer> positions = new HashSet();
-
+    private Game game;
     public TableFrame(PokerPlayer pokerPlayer) {
 
         if(pokerPlayer != null){
+
             initComponents();
+            game = PokerServer.getGame();
+            game.addPlayerToGame(pokerPlayer);
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
             pokerPlayer.getPlayer().setJFrame(this);
@@ -531,6 +536,15 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(background_frame);
         background_frame.setBounds(-5, -6, 1000, 970);
 
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                //@todo remove player
+                System.out.println("on ferme l'appli");
+                super.windowClosing(e);
+            }
+        });
+
         pack();
     }
 
@@ -726,6 +740,10 @@ public class TableFrame extends JFrame implements UserInterface {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TableFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     private javax.swing.JButton b_miser;
