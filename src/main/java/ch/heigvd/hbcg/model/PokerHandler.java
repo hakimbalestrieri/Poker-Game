@@ -14,9 +14,7 @@ public class PokerHandler implements Runnable {
     private Socket socket;
     private Player currentPlayer;
 
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
+  //  private PokerPlayer pokerPlayer;
 
     public PokerHandler(Socket socket, PokerServer pokerServer) throws IOException {
 
@@ -34,6 +32,8 @@ public class PokerHandler implements Runnable {
         try {
             while ((player = (Player) in.readObject()) != null) {
                 currentPlayer = player;
+               // pokerPlayer = player.getPokerPlayer();
+                //currentPlayer = new Player(player);
                 pokerServer.send(player);
             }
             System.out.println("fin");
@@ -52,6 +52,12 @@ public class PokerHandler implements Runnable {
     }
 
     public void send(Player player) throws IOException {
+       // currentPlayer = player;
+        System.out.println("Send[Handler] : " + player.getAction());
         out.writeObject(player);
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
     }
 }

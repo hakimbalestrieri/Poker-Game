@@ -1,8 +1,11 @@
 package ch.heigvd.hbcg.model;
 
+import ch.heigvd.hbcg.view.TableFrame;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -13,7 +16,6 @@ public class PokerPlayer implements Runnable {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private Player player;
-    private Game game;
 
     public static void main(String[] args) {
        // PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
@@ -21,16 +23,11 @@ public class PokerPlayer implements Runnable {
        // pokerPlayer.receive();
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     public PokerPlayer(Player player){
 
         if(player != null){
 
             this.player = player;
-         //   this.player.setPokerPlayer(this);
 
             try {
                 socket = new Socket("localhost", 6669);
@@ -50,11 +47,12 @@ public class PokerPlayer implements Runnable {
     }
 
     public void receive() {
-        Player player = null;
+        Player player_ = null;
         try {
             System.out.println("Je tente de display");
-            while ((player = (Player) in.readObject()) != null) {
-                userInterface.display(player);
+            while ((player_ = (Player) in.readObject()) != null) {
+                System.out.println("receive[player] : " + player_.getAction());
+                userInterface.display(player_);
                 System.out.println("DISPLAY un truc");
             }
         } catch (IOException e) {
@@ -69,15 +67,8 @@ public class PokerPlayer implements Runnable {
         this.userInterface = userInterface;
     }
 
-   /* public void send(String message) {
-        try {
-            out.writeObject(new PlayerInfo(playerInfo.getPseudoEmetteur(), message));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
      public void send(Player player){
+        // Player _player = new Player(player);
         try {
             out.writeObject(new Player(player));
         } catch (IOException e) {
@@ -101,4 +92,5 @@ public class PokerPlayer implements Runnable {
     public Player getPlayer(){
         return player;
     }
+
 }

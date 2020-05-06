@@ -13,6 +13,7 @@ import java.util.Set;
  */
 public class TableFrame extends JFrame implements UserInterface {
 
+
     private PokerPlayer pokerPlayer;
     private Set<Integer> positions = new HashSet();
 
@@ -22,8 +23,10 @@ public class TableFrame extends JFrame implements UserInterface {
             initComponents();
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
+            pokerPlayer.getPlayer().setJFrame(this);
             this.setVisible(true);
             System.out.println("New frame de " + pokerPlayer.getPseudo());
+            setTitle(pokerPlayer.getPseudo());
         }
 
     }
@@ -46,7 +49,7 @@ public class TableFrame extends JFrame implements UserInterface {
                 //Synchro place
                 System.out.println("Quelqu'n s'est assis");
                 sitDown(player.getPosition(),true);
-                System.out.println("Quelqu'n s'est assis");
+               // System.out.println("Quelqu'n s'est assis");
                 break;
 
             case MESSAGE:
@@ -55,7 +58,7 @@ public class TableFrame extends JFrame implements UserInterface {
                 messageArea.append(player.toString() + "\n");
                 break;
             case START_GAME:
-                showCards(pokerPlayer.getPlayer().getPosition());
+                showCards(player);
                 break;
             default:
                 System.out.println("Aucune action");
@@ -63,13 +66,15 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-    private void showCards(int position){
+   // public void showCards(){
+     public void showCards(Player player){
 
+         //int position = this.pokerPlayer.getPlayer().getPosition();
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
-        ImageIcon image1 = new javax.swing.ImageIcon(file + pokerPlayer.getPlayer().getPlayerHand().getCard1() + ".png");
-        ImageIcon image2 = new javax.swing.ImageIcon(file + pokerPlayer.getPlayer().getPlayerHand().getCard1() + ".png");
+        ImageIcon image1 = new javax.swing.ImageIcon(file + player.getPlayerHand().getCard1() + ".png");
+        ImageIcon image2 = new javax.swing.ImageIcon(file + player.getPlayerHand().getCard2() + ".png");
 
-        switch (position){
+        switch (player.getPosition()){
             case 1:
                 jLabel10.setIcon(image1);
                 jLabel11.setIcon(image2);
@@ -657,9 +662,10 @@ public class TableFrame extends JFrame implements UserInterface {
 
         if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayer().getPosition() == 0) {
             positions.add(position);
+            pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
             if(!placeAdversaire){
                 pokerPlayer.getPlayer().setPosition(position); //si joueur quitte partie (remove position)
-                pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
+                //pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
                 pokerPlayer.send(pokerPlayer.getPlayer());
             }
             switch (position) {

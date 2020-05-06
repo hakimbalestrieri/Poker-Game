@@ -19,11 +19,12 @@ public class Dealer {
 
         //Distribue deux cartes à chaque joueurs
         //TODO : Penser à factory la distribution
-
         for (Player player: playerInfo){
+            System.out.println("Phase 1 - Je distribue une carte à " + player.getPseudoEmetteur());
             player.receiveCard(deck.draw());
         }
         for (Player player: playerInfo){
+            System.out.println("Phase 2 - Je distribue une carte à " + player.getPseudoEmetteur());
             player.receiveCard(deck.draw());
         }
 

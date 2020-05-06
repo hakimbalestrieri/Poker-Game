@@ -1,5 +1,7 @@
 package ch.heigvd.hbcg.model;
 
+import ch.heigvd.hbcg.view.TableFrame;
+
 import java.io.Serializable;
 
 public class Player implements Serializable {
@@ -15,7 +17,7 @@ public class Player implements Serializable {
     private Hand playerHand = new Hand();
     private boolean bigBlind = false;
     private boolean actif = true;
-    private Game game;
+    private TableFrame tableFrame;
 
     private PokerHandler pokerHandler;
 
@@ -23,37 +25,41 @@ public class Player implements Serializable {
         return playerHand;
     }
 
-    public void addGame(Game game){
-
-        if(this.game == null || this.game != game ){
-            this.game = game;
-        }
-    }
-
     public Player(String pseudoEmetteur, String message, double credit, boolean genre) {
+
         this.pseudoEmetteur = pseudoEmetteur;
         this.message = message;
         this.credit = credit;
         this.genre = genre;
     }
 
-    public Player(String pseudoEmetteur, String message) {
+    /*public Player(String pseudoEmetteur, String message) {
         this.pseudoEmetteur = pseudoEmetteur;
         this.message = message;
-    }
+    }*/
 
     public Player(Player player) {
+
         this.pseudoEmetteur = player.getPseudoEmetteur();
         this.message = player.getMessage();
         this.position = player.getPosition();
         this.action = player.getAction();
+       // this.pokerPlayer = player.getPokerPlayer();
+
+        if(player.getPlayerHand().size() != 0){
+            for (int i = 0; i < player.getPlayerHand().size(); i++){
+                playerHand.add(player.getPlayerHand().getCard(i));
+            }
+        }
+
+       // this.pokerPlayer = player.getPokerPlayer();
     }
 
-    public Player(PokerHandler pokerHandler) {
+   /* public Player(PokerHandler pokerHandler) {
         this.pokerHandler = pokerHandler;
-    }
+    }*/
 
-    private String getMessage() {
+    public String getMessage() {
         return message;
     }
 
@@ -104,5 +110,21 @@ public class Player implements Serializable {
 
     public PokerPlayer getPokerPlayer() {
         return pokerPlayer;
+    }
+
+    public double getCredit() {
+        return credit;
+    }
+
+    public boolean getGenre() {
+        return genre;
+    }
+
+    public void setJFrame(TableFrame tableFrame) {
+        this.tableFrame = tableFrame;
+    }
+
+    public TableFrame getTableFrame(){
+        return tableFrame;
     }
 }

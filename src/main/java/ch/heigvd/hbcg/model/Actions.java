@@ -1,6 +1,8 @@
 package ch.heigvd.hbcg.model;
 
-public enum Actions {
+import java.io.Serializable;
+
+public enum Actions implements Serializable {
     MESSAGE,
     SIT_DOWN,
     CONNECTION,

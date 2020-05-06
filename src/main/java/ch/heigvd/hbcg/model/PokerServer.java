@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 public class PokerServer {
 
-    private Set<Player> listPlayers = new HashSet<>();
+    private List<PokerPlayer> listClients = new ArrayList<>();
     private ArrayList<PokerHandler> handlers;
-    private PokerHandler pokerHandler;
+    private PokerHandler currentPlayer;
     private Game game;
     private boolean started = false;
 
@@ -22,7 +21,11 @@ public class PokerServer {
 
     public PokerServer(){
         handlers = new ArrayList<>();
-        game = new Game(this);
+        //game = new Game();
+    }
+
+    public ArrayList<PokerHandler> getHandlers() {
+        return handlers;
     }
 
     private void receive() throws IOException {
@@ -33,22 +36,27 @@ public class PokerServer {
 
             Socket socket = serverSocket.accept();
             System.out.println("Client connecté");
-            pokerHandler = new PokerHandler(socket,this);
-           //Player newPlayer = new Player(pokerHandler);
-           //listOfPlayers.add(newPlayer);
-            handlers.add(pokerHandler);
-            //game.getPokerPlayers().add(pokerHandler.getPlayer());
+            currentPlayer = new PokerHandler(socket,this);
+            //Player newPlayer = new Player(pokerHandler);
+            //listOfPlayers.add(pokerHandler);
+            handlers.add(currentPlayer);
 
-
-           //game.getPokerPlayers().add(//joueurs)
-          /*  if(!started && handlers.size() == 2){
+           // Player newPlayer = new Player(currentPlayer);
+            //listPlayers.add(newPlayer);
+            if(handlers.size() == 2){
+                //System.out.println("2 Handlers");
+                //   game = new Game(handlers);
+                //System.out.println("Game created");
+            }
+            //game.getPokerPlayers().add(pokerHandler.getPlayer());-
+            //game.getPokerPlayers().add(//joueurs)
+            /*if(!started && handlers.size() == 2){
                 System.out.println("2 joueurs");
                 //new Game();
                 //game.start();
                 new Game(listOfPlayers).start();
                 started = true;
             }*/
-
         }
     }
 
@@ -60,16 +68,21 @@ public class PokerServer {
        /* if(player.getAction() == Actions.SIT_DOWN){
             listOfPlayers.add(player);
         }**/
-        System.out.println(player.getPlayerHand().getCard1());
-
 
         for(PokerHandler handler : handlers){
+            //player.setPokerPlayer(handler.getPokerPlayer());
+          //  handler.setPokerPlayer(player.getPokerPlayer());
+            System.out.println("pokerPlayer sur serveur : " + player.getAction());
             handler.send(player);
         }
 
+        //if(!started && handlers.size() == 2 && checkAllSit(listPlayers)){
+        System.out.println(checkAllSit(handlers));
         if(!started && handlers.size() == 2 && checkAllSit(handlers)){
             //game.addPlayers(handlers);
-            game.addPlayers(handlers);
+            System.out.println("Tout le monde est assis");
+            game = new Game(handlers);
+            game.setServer(this);
             started = true;
             game.start();
         }
@@ -88,12 +101,16 @@ public class PokerServer {
         }*/
     }
 
-    private boolean checkAllSit(ArrayList<PokerHandler> handlers){
-        for (PokerHandler handler :handlers) {
+     private boolean checkAllSit(List<PokerHandler> handlers){
+
+        System.out.println("Taille : " + handlers.size());
+
+        for (PokerHandler handler : handlers) {
             if(handler.getCurrentPlayer().getAction() != Actions.SIT_DOWN){
                 return false;
             }
         }
+
         return true;
     }
 
