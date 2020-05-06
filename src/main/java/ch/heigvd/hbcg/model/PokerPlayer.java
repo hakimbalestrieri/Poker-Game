@@ -18,9 +18,6 @@ public class PokerPlayer implements Runnable {
     private Player player;
 
     public static void main(String[] args) {
-       // PokerPlayer pokerPlayer = new PokerPlayer("PseudoNull");
-        //new NewJFrame(pokerPlayer);
-       // pokerPlayer.receive();
     }
 
     public PokerPlayer(Player player){
@@ -41,9 +38,7 @@ public class PokerPlayer implements Runnable {
         }
 
         new Thread(this).start();
-        // new NewJFrame(this);
-        // this.receive();
-        // receive();
+
     }
 
     public void receive() {

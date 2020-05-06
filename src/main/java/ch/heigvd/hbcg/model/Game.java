@@ -26,8 +26,7 @@ public class Game implements Runnable{
         for(int i = 0; i < handlers.size(); i++){
             //System.out.println(handlers.get(i).getCurrentPlayer());
             pokerPlayers.add(i, handlers.get(i).getCurrentPlayer());
-          //  pokerPlayers.get(i).setPokerPlayer(handlers.get(i).getPokerPlayer());
-            //System.out.println("liste : " + handlers.get(i).getCurrentPlayer());
+
         }
     }
 
@@ -40,14 +39,6 @@ public class Game implements Runnable{
     public int sizePlayers(){
         return pokerPlayers.size();
     }
-
-    public void start(Set<Player> listPlayers){
-        System.out.println(listPlayers.size());
-        //Distribution des cartes aux joueurs présents
-        //dealer.distribue(pokerPlayers);
-        //System.out.println(pokerPlayers.size());
-     }
-
 
     @Override
     public void run() {
@@ -76,14 +67,11 @@ public class Game implements Runnable{
                     try {
                         System.out.println(pokerServer);
                         pokerServer.send(new Player(pokerPlayers.get(0)));
-                        //pokerServer.send(new Player(pokerPlayers.get(0)));
+
                     } catch (IOException  e) {
                         e.printStackTrace();
                     }
 
-                    //System.out.println(pokerPlayers.get(0).getPokerPlayer());
-                   // pokerPlayers.get(0).getPokerPlayer().getTableFrame().showCards();
-                   // pokerPlayers.get(0).getPokerPlayer().send(pokerPlayers.get(0).getPokerPlayer().getPlayer());
                     break;
                 case 2:
                     try {
@@ -119,21 +107,7 @@ public class Game implements Runnable{
          thread.start();
 
          System.out.println("Je start le thread de game");
-        // System.out.println(pokerPlayers.size());
-         //dealer.distribue(pokerPlayers);
 
-        /* System.out.println(pokerPlayers.get(0).getPlayerHand());
-         System.out.println(pokerPlayers.get(1).getPlayerHand());
-         setActionAllPlayers(Actions.START_GAME);
-         System.out.println(pokerPlayers.get(0).getAction() + "start");
-
-         System.out.println(pokerPlayers.get(0).getPlayerHand().getCard1() + " card avant start");
-        // pokerServer.send(pokerPlayers.get(0));
-         pokerPlayers.get(0).getPokerPlayer().send(pokerPlayers.get(1));
-         //pokerPlayers.get(0).getPokerPlayer().send(pokerPlayers.get(0));
-         // pokerPlayers.get(0).getPokerPlayer().send(pokerPlayers.get(0));
-        // pokerPlayer.send(pokerPlayer.getPlayer());
-        */
 
     }
 

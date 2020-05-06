@@ -29,17 +29,8 @@ public class Deck {
 
     public Card draw(){
 
-        /*Card card = null;
-        Iterator it = cards.iterator();
-        if(it.hasNext()) {
-            card = (Card) it.next();
-            it.remove();
-        }
-
-        */
-        Card card = null;
+        Card card;
         card = cards.get(0);
-        System.out.println(card);
         cards.remove(0);
         return card;
     }

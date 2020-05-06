@@ -41,37 +41,13 @@ public class PokerServer {
             //listOfPlayers.add(pokerHandler);
             handlers.add(currentPlayer);
 
-           // Player newPlayer = new Player(currentPlayer);
-            //listPlayers.add(newPlayer);
-            if(handlers.size() == 2){
-                //System.out.println("2 Handlers");
-                //   game = new Game(handlers);
-                //System.out.println("Game created");
-            }
-            //game.getPokerPlayers().add(pokerHandler.getPlayer());-
-            //game.getPokerPlayers().add(//joueurs)
-            /*if(!started && handlers.size() == 2){
-                System.out.println("2 joueurs");
-                //new Game();
-                //game.start();
-                new Game(listOfPlayers).start();
-                started = true;
-            }*/
         }
     }
 
     public void send(Player player) throws IOException {
 
-       // currentPlayer = player;
-      //  game.getPokerPlayers().add(player);
-        //System.out.println(game.sizePlayers());
-       /* if(player.getAction() == Actions.SIT_DOWN){
-            listOfPlayers.add(player);
-        }**/
-
         for(PokerHandler handler : handlers){
-            //player.setPokerPlayer(handler.getPokerPlayer());
-          //  handler.setPokerPlayer(player.getPokerPlayer());
+
             System.out.println("pokerPlayer sur serveur : " + player.getAction());
             handler.send(player);
         }
@@ -87,18 +63,6 @@ public class PokerServer {
             game.start();
         }
 
-       /*if(player.getAction() == Actions.SIT_DOWN){
-           player.addGame(game);
-           listPlayers.add(player);
-
-       }/*
-        if(handlers.size() == 2){
-            game.start(listPlayers);
-        }
-        /*if(started) {
-            started = false;
-            game.start();
-        }*/
     }
 
      private boolean checkAllSit(List<PokerHandler> handlers){
