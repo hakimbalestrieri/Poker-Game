@@ -24,11 +24,11 @@ public class TableFrame extends JFrame implements UserInterface {
         if(pokerPlayer != null){
 
             initComponents();
-            game = PokerServer.getGame();
-            game.addPlayerToGame(pokerPlayer);
+          //  game = PokerServer.getGame();
+           // game.addPlayerToGame(pokerPlayer);
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
-            pokerPlayer.getPlayer().setJFrame(this);
+        //    pokerPlayer.getPlayer().setJFrame(this);
             this.setVisible(true);
             System.out.println("New frame de " + pokerPlayer.getPseudo());
             setTitle(pokerPlayer.getPseudo());
