@@ -19,7 +19,8 @@ public class UtilsFileReader {
         while ((ligne = br.readLine()) != null) {
             String[] dataTab = ligne.split(SPLITTER);
             if (username.equals(dataTab[0])) {
-                Player player = new Player(dataTab[0],"",Double.valueOf(dataTab[7]),Boolean.valueOf(dataTab[6]));
+                Player player = new Player();
+                player.setPlayerInfo(dataTab[0],"",Double.valueOf(dataTab[7]),Boolean.valueOf(dataTab[6]));
                 return player;
             }
         }

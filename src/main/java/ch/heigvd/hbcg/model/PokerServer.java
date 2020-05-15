@@ -1,85 +1,84 @@
 package ch.heigvd.hbcg.model;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PokerServer {
 
-    private List<PokerPlayer> listClients = new ArrayList<>();
-    private ArrayList<PokerHandler> handlers;
-    private PokerHandler currentPlayer;
+    public static final int PORT = 6669;
     private Game game;
+    //private ExecutorService pool;
+    private List<PokerClientHandler> listClients = new ArrayList<>();
     private boolean started = false;
+    // private List<Player> listPlayers = new ArrayList<>();
 
-    public static void main(String[] args) throws IOException {
-        new PokerServer().receive();
+    public static void main(String[] args) {
+        new PokerServer().runServer();
     }
 
-    public PokerServer(){
-        handlers = new ArrayList<>();
-        //game = new Game();
-    }
+    private void runServer(){
 
-    public ArrayList<PokerHandler> getHandlers() {
-        return handlers;
-    }
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 
-    private void receive() throws IOException {
+            //   pool = Executors.newFixedThreadPool(10);
+            System.out.println("Server is listening on port " + PORT);
 
-        ServerSocket serverSocket = new ServerSocket(6669);
+            while (true) {
 
-        while(true){
+                Socket socket = serverSocket.accept();
+                System.out.println("New client connected");
+                PokerClientHandler pokerClientHandler = new PokerClientHandler(socket,this);
+                listClients.add(pokerClientHandler);
+                pokerClientHandler.start();
+            }
 
-            Socket socket = serverSocket.accept();
-            System.out.println("Client connecté");
-            currentPlayer = new PokerHandler(socket,this);
-            //Player newPlayer = new Player(pokerHandler);
-            //listOfPlayers.add(pokerHandler);
-            handlers.add(currentPlayer);
-
+        } catch (IOException ex) {
+            System.out.println("Server exception: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
-    public void send(Player player) throws IOException {
 
-        for(PokerHandler handler : handlers){
+    public void send(PlayerInfo playerInfo) throws IOException {
 
-            System.out.println("pokerPlayer sur serveur : " + player.getAction());
-            handler.send(player);
+        //Est-ce que les infos sont à jour dans le handler ?
+        for(PokerClientHandler handler : listClients){
+            handler.sendOnHandler(playerInfo);
         }
 
-        //if(!started && handlers.size() == 2 && checkAllSit(listPlayers)){
-        System.out.println(checkAllSit(handlers));
-        if(!started && handlers.size() == 2 && checkAllSit(handlers)){
-            //game.addPlayers(handlers);
-            System.out.println("Tout le monde est assis");
-            game = new Game(handlers);
-            game.setServer(this);
+
+
+        if(!started && listClients.size() == 2 && checkPlayerAreSit(listClients)){
             started = true;
-            game.start();
+            System.out.println("GAME IS STARTED");
+            startGame();
         }
-
     }
 
-     private boolean checkAllSit(List<PokerHandler> handlers){
+    private void startGame() throws IOException {
 
-        System.out.println("Taille : " + handlers.size());
+        game = new Game(listClients,this);
+    }
 
-        for (PokerHandler handler : handlers) {
-            if(handler.getCurrentPlayer().getAction() != Actions.SIT_DOWN){
+    public void remove(PokerClientHandler handler){
+        listClients.remove(handler);
+    }
+
+
+    private boolean checkPlayerAreSit(List<PokerClientHandler> handlers){
+
+        for(PokerClientHandler handler : handlers){
+            if(handler.getPlayerInfo().getAction() != Actions.SIT_DOWN){
                 return false;
             }
         }
-
         return true;
     }
-
-    public void remove(PokerHandler pokerHandler){
-        handlers.remove(pokerHandler);
-    }
-
 }

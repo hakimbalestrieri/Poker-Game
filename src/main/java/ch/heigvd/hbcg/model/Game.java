@@ -1,35 +1,134 @@
 package ch.heigvd.hbcg.model;
 
-import ch.heigvd.hbcg.view.TableFrame;
-
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.TimerTask;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-public class Game implements Runnable{
+public class Game {
 
-    private Set<Card> boardCard = new HashSet<>();
-    private List<Player> pokerPlayers = new ArrayList<>();
+    private List<Card> boardCard = new ArrayList<>();
+    private List<PlayerInfo> pokerPlayers = new ArrayList<>();
     private Dealer dealer;
     private PokerServer pokerServer;
-    private Thread thread;
     private static int i = 0;
+    private static String STATE_GAME = "DISTRUBUTION";
+    private Timer timer;
 
-    public void setServer(PokerServer pokerServer){
-        this.pokerServer = pokerServer;
-    }
-
-    public Game(ArrayList<PokerHandler> handlers) {
+    public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
-        for(int i = 0; i < handlers.size(); i++){
-            //System.out.println(handlers.get(i).getCurrentPlayer());
-            pokerPlayers.add(i, handlers.get(i).getCurrentPlayer());
+        pokerServer = server;
 
+        for(int i = 0; i < handlers.size(); i++){
+            pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
+            System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
         }
+        // new Thread(this).start();
+        startGame();
+        //t2.start();
     }
 
+
+
+    private void startGame() throws IOException {
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    switch (STATE_GAME) {
+                        case "DISTRUBUTION":
+                            dealer.distribue(pokerPlayers);
+                            setActionAllPlayers(Actions.START_GAME);
+                            STATE_GAME = "FLOP";
+                            break;
+
+                        case "FLOP":
+
+                            for (int i = 0; i < 3; i++) {
+                                drawBoardCardsAllPlayers(dealer.draw());
+                            }
+
+                            setActionAllPlayers(Actions.FLOP);
+                            STATE_GAME = "TURN";
+                            break;
+
+                        case "TURN":
+                            drawBoardCardsAllPlayers(dealer.draw());
+                            setActionAllPlayers(Actions.TURN);
+                            STATE_GAME = "RIVER";
+                            break;
+
+                        case "RIVER":
+                            drawBoardCardsAllPlayers(dealer.draw());
+                            setActionAllPlayers(Actions.RIVER);
+                            STATE_GAME = "END";
+                            break;
+
+                    }
+
+                    updatePlayers();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+
+            }
+        },0,10000);
+
+
+        //   if(!STATE_GAME.equals("END")) startGame();
+
+    }
+
+    private void drawBoardCardsAllPlayers(Card boardCard){
+
+        this.boardCard.add(boardCard);
+        for(PlayerInfo playerInfo : pokerPlayers){
+            playerInfo.setBoardCards(boardCard);
+        }
+
+    }
+
+    private void setActionAllPlayers(Actions action) throws IOException {
+
+        for(PlayerInfo playerInfo : pokerPlayers){
+            playerInfo.setAction(action);
+        }
+
+    }
+
+    private void updatePlayers() throws IOException {
+
+        for(PlayerInfo playerInfo : pokerPlayers){
+            pokerServer.send(playerInfo);
+        }
+
+    }
+
+    /*Thread t2 = new Thread(new Runnable() {
+
+        @Override
+        public void run() {
+            for(int i = 0; i < 5; i++) {
+                try {
+                    startGame();
+                    Thread.sleep(3000);
+                } catch (InterruptedException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                System.out.println("Thread T2 : "+i);
+            }
+        }
+    });*/
+
+/*
     public static void main(String[] args) {
         //TODO A implementer
         //new Game();
@@ -134,7 +233,7 @@ public class Game implements Runnable{
             }
 
         }
-    }*/
+    }
 
 
     public boolean checkIfExistOnTable(Player currentPlayer){
@@ -166,4 +265,6 @@ public class Game implements Runnable{
     public void addPlayers(Player pokerPlayer) {
         pokerPlayers.add(pokerPlayer);
     }
+    */
+
 }

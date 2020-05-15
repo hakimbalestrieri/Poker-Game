@@ -2,7 +2,7 @@ package ch.heigvd.hbcg.view;
 
 import ch.heigvd.hbcg.controller.ControllerLogin;
 import ch.heigvd.hbcg.model.Actions;
-import ch.heigvd.hbcg.model.PokerPlayer;
+import ch.heigvd.hbcg.model.PokerClient;
 import ch.heigvd.hbcg.utils.UtilsFileReader;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class ConnexionFrame extends javax.swing.JFrame {
 
-    private PokerPlayer pokerPlayer;
+    private PokerClient pokerClient;
 
     public ConnexionFrame() {
         initComponents();
@@ -71,7 +71,7 @@ public class ConnexionFrame extends javax.swing.JFrame {
                 }
             }
         });
-        b_inscription.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\registration.png")); 
+        b_inscription.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\registration.png"));
         b_inscription.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 b_inscriptionMouseReleased(evt);
@@ -80,14 +80,14 @@ public class ConnexionFrame extends javax.swing.JFrame {
         getContentPane().add(b_inscription);
         b_inscription.setBounds(80, 280, 60, 50);
 
-        l_username.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); 
+        l_username.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12));
         l_username.setForeground(new java.awt.Color(255, 255, 255));
         l_username.setText("Utilisateur");
         l_username.setPreferredSize(new java.awt.Dimension(53, 22));
         getContentPane().add(l_username);
         l_username.setBounds(70, 180, 70, 16);
 
-        b_connexion.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\login.png")); 
+        b_connexion.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\login.png"));
         getContentPane().add(b_connexion);
         b_connexion.setBounds(280, 280, 50, 50);
         b_connexion.addMouseListener(new MouseAdapter() {
@@ -100,17 +100,17 @@ public class ConnexionFrame extends javax.swing.JFrame {
                 }
             }
         });
-        l_password.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12)); 
+        l_password.setFont(new java.awt.Font("Yu Gothic Medium", 0, 12));
         l_password.setForeground(new java.awt.Color(255, 255, 255));
         l_password.setText("Mot de passe");
         getContentPane().add(l_password);
         l_password.setBounds(70, 220, 90, 20);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\Logos\\final\\allSizes\\medium.png")); 
+        jLabel1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\Logos\\final\\allSizes\\medium.png"));
         getContentPane().add(jLabel1);
         jLabel1.setBounds(94, 20, 230, 140);
 
-        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png")); 
+        background.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png"));
         background.setText("jLabel1");
         getContentPane().add(background);
         background.setBounds(0, 0, 400, 360);
@@ -134,11 +134,13 @@ public class ConnexionFrame extends javax.swing.JFrame {
             //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
 
             //Mettre à jour les infos du playerInfo avec le fichier sauvegardé en local
-            pokerPlayer = new PokerPlayer(UtilsFileReader.getPlayerInfo(username.getText()));
-            pokerPlayer.getPlayer().setAction(Actions.CONNECTION);
-            new TableFrame(pokerPlayer);
-            pokerPlayer.send(pokerPlayer.getPlayer());
-      //      pokerPlayer.receive();
+            pokerClient = new PokerClient(UtilsFileReader.getPlayerInfo(username.getText()));
+            pokerClient.getPlayer().getPlayerInfo().setAction(Actions.CONNECTION);
+            new TableFrame(pokerClient);
+            pokerClient.sendByClient(pokerClient.getPlayer().getPlayerInfo());
+
+            //pokerPlayer.send(pokerPlayer.getPlayer());
+            //pokerPlayer.receive();
 
         }
         else {

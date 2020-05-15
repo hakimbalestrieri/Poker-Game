@@ -7,6 +7,9 @@ public enum Actions implements Serializable {
     SIT_DOWN,
     CONNECTION,
     START_GAME,
+    FLOP,
+    TURN,
+    RIVER,
     CALL,
     CHECK,
     FOLD

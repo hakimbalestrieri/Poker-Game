@@ -16,54 +16,58 @@ import java.util.Set;
 public class TableFrame extends JFrame implements UserInterface {
 
 
-    private PokerPlayer pokerPlayer;
+    private PokerClient pokerPlayer;
     private Set<Integer> positions = new HashSet();
     private Game game;
-    public TableFrame(PokerPlayer pokerPlayer) {
+    public TableFrame(PokerClient pokerPlayer) {
 
         if(pokerPlayer != null){
-
             initComponents();
-          //  game = PokerServer.getGame();
-           // game.addPlayerToGame(pokerPlayer);
+            //game = PokerServer.getGame();
+            // game.addPlayerToGame(pokerPlayer);
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
-        //    pokerPlayer.getPlayer().setJFrame(this);
+            //   pokerPlayer.getPlayer().setJFrame(this);
             this.setVisible(true);
-            System.out.println("New frame de " + pokerPlayer.getPseudo());
-            setTitle(pokerPlayer.getPseudo());
+            System.out.println("New frame de " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur());
+            setTitle(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur());
         }
 
     }
 
 
     @Override
-     public void display(Player player){
+    public void display(PlayerInfo playerInfo){
 
-        if(player == null) System.out.println("Tu es nul");
+        if(playerInfo == null) System.out.println("Tu es nul");
 
-        System.out.println(player.getAction() + "display");
+        System.out.println(playerInfo.getAction() + "display");
 
-        switch (player.getAction()){
+        switch (playerInfo.getAction()){
 
             case CONNECTION:
-                messageArea.append("Le joueur " + player.getPseudoEmetteur() + " rejoint la partie \n");
+                messageArea.append("Le joueur " + playerInfo.getPseudoEmetteur() + " rejoint la partie \n");
                 break;
 
             case SIT_DOWN:
                 //Synchro place
                 System.out.println("Quelqu'n s'est assis");
-                sitDown(player.getPosition(),true);
-               // System.out.println("Quelqu'n s'est assis");
+                sitDown(playerInfo.getPosition(),true);
+                // System.out.println("Quelqu'n s'est assis");
                 break;
 
             case MESSAGE:
                 //Affichage message
                 System.out.println("J'ecris un message");
-                messageArea.append(player.toString() + "\n");
+                messageArea.append(playerInfo.toString() + "\n");
                 break;
             case START_GAME:
-                showCards(player);
+                showCards(playerInfo);
+                break;
+            case FLOP:
+            case TURN:
+            case RIVER:
+                showBoardCard(playerInfo);
                 break;
             default:
                 System.out.println("Aucune action");
@@ -71,15 +75,55 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-   // public void showCards(){
-     public void showCards(Player player){
+    private void showBoardCard(PlayerInfo playerInfo) {
 
-         //int position = this.pokerPlayer.getPlayer().getPosition();
+        ImageIcon fold1, fold2, fold3, turn, river;
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
-        ImageIcon image1 = new javax.swing.ImageIcon(file + player.getPlayerHand().getCard1() + ".png");
-        ImageIcon image2 = new javax.swing.ImageIcon(file + player.getPlayerHand().getCard2() + ".png");
 
-        switch (player.getPosition()){
+        switch (playerInfo.getAction()){
+            case FLOP :
+                fold1 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(0).toString() + ".png");
+                fold2 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(1).toString() + ".png");
+                fold3 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(2).toString() + ".png");
+                carte1.setIcon(fold1);
+                carte2.setIcon(fold2);
+                carte3.setIcon(fold3);
+                carte1.setVisible(true);
+                carte2.setVisible(true);
+                carte3.setVisible(true);
+                break;
+            case TURN :
+                turn = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(3).toString() + ".png");
+                carte4.setIcon(turn);
+                carte4.setVisible(true);
+                break;
+
+            case RIVER:
+                river = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(4).toString() + ".png");
+                carte5.setIcon(river);
+                carte5.setVisible(true);
+                break;
+        }
+    }
+
+    // public void showCards(){
+    public void showCards(PlayerInfo playerInfo){
+
+        //int position = this.pokerPlayer.getPlayer().getPosition();
+        String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
+        String file2 = "src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools";
+        ImageIcon image1;
+        ImageIcon image2;
+
+        if(playerInfo.getShowCard()){
+            image1 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard1() + ".png");
+            image2 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard2() + ".png");
+        }else{
+            image1 = new javax.swing.ImageIcon(file2 + ".png");
+            image2 = new javax.swing.ImageIcon(file2 + ".png");
+        }
+
+        switch (playerInfo.getPosition()){
             case 1:
                 jLabel10.setIcon(image1);
                 jLabel11.setIcon(image2);
@@ -242,7 +286,7 @@ public class TableFrame extends JFrame implements UserInterface {
         carte5.setBounds(580, 350, 70, 90);
         carte5.setVisible(false);
 
-        pos1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos1.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos1MouseReleased(evt);
@@ -251,7 +295,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos1);
         pos1.setBounds(830, 260, 90, 80);
 
-        pos2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos2MouseReleased(evt);
@@ -260,7 +304,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos2);
         pos2.setBounds(860, 370, 90, 80);
 
-        pos3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos3MouseReleased(evt);
@@ -269,7 +313,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos3);
         pos3.setBounds(830, 480, 90, 80);
 
-        pos4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos4MouseReleased(evt);
@@ -278,7 +322,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos4);
         pos4.setBounds(720, 570, 90, 80);
 
-        pos5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos5MouseReleased(evt);
@@ -287,7 +331,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos5);
         pos5.setBounds(580, 570, 90, 80);
 
-        pos6.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos6.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos6MouseReleased(evt);
@@ -296,7 +340,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos6);
         pos6.setBounds(400, 570, 90, 80);
 
-        pos7.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos7.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos7MouseReleased(evt);
@@ -305,7 +349,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos7);
         pos7.setBounds(230, 560, 90, 80);
 
-        pos8.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos8.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos8MouseReleased(evt);
@@ -314,7 +358,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos8);
         pos8.setBounds(110, 500, 90, 80);
 
-        pos9.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos9.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos9MouseReleased(evt);
@@ -323,7 +367,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos9);
         pos9.setBounds(60, 380, 90, 80);
 
-        pos10.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png")); 
+        pos10.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\oval.png"));
         pos10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 pos10MouseReleased(evt);
@@ -332,123 +376,123 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(pos10);
         pos10.setBounds(80, 260, 90, 80);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel4.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel4);
         jLabel4.setBounds(710, 530, 70, 70);
         jLabel4.setVisible(false);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel5.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel5);
         jLabel5.setBounds(690, 520, 70, 70);
         jLabel5.setVisible(false);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel6.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel6);
         jLabel6.setBounds(810, 450, 70, 70);
         jLabel6.setVisible(false);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel7.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel7);
         jLabel7.setBounds(790, 440, 70, 70);
         jLabel7.setVisible(false);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel8.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel8);
         jLabel8.setBounds(830, 350, 70, 70);
         jLabel8.setVisible(false);
 
-        jLabel9.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel9.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel9);
         jLabel9.setBounds(810, 340, 70, 70);
         jLabel9.setVisible(false);
 
-        jLabel10.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel10.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel10);
         jLabel10.setBounds(810, 220, 70, 70);
         jLabel10.setVisible(false);
 
-        jLabel11.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel11.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel11);
         jLabel11.setBounds(790, 210, 70, 70);
         jLabel11.setVisible(false);
 
-        jLabel12.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel12.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel12);
         jLabel12.setBounds(390, 530, 70, 70);
         jLabel12.setVisible(false);
 
-        jLabel13.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel13.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel13);
         jLabel13.setBounds(370, 520, 70, 70);
         jLabel13.setVisible(false);
 
-        jLabel14.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel14.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel14);
         jLabel14.setBounds(220, 520, 70, 70);
         jLabel14.setVisible(false);
 
-        jLabel15.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel15.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel15);
         jLabel15.setBounds(200, 510, 70, 70);
         jLabel15.setVisible(false);
 
-        jLabel16.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel16.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel16);
         jLabel16.setBounds(100, 470, 70, 70);
         jLabel16.setVisible(false);
 
-        jLabel17.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel17.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel17);
         jLabel17.setBounds(80, 460, 70, 70);
         jLabel17.setVisible(false);
 
-        jLabel18.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel18.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel18);
         jLabel18.setBounds(50, 350, 70, 70);
         jLabel18.setVisible(false);
 
-        jLabel19.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel19.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel19);
         jLabel19.setBounds(30, 340, 70, 70);
         jLabel19.setVisible(false);
 
-        jLabel20.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel20.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel20);
         jLabel20.setBounds(70, 220, 70, 70);
         jLabel20.setVisible(false);
 
-        jLabel21.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel21.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel21);
         jLabel21.setBounds(50, 210, 70, 70);
         jLabel21.setVisible(false);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel2.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel2);
         jLabel2.setBounds(570, 540, 70, 70);
         jLabel2.setVisible(false);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png")); 
+        jLabel3.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools (1).png"));
         getContentPane().add(jLabel3);
         jLabel3.setBounds(550, 530, 70, 70);
         jLabel3.setVisible(false);
 
         croupier.setForeground(new java.awt.Color(255, 255, 255));
-        croupier.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\croupier.png")); 
+        croupier.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\croupier.png"));
         getContentPane().add(croupier);
         croupier.setBounds(460, 170, 70, 80);
 
-        logo.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\Logos\\final\\allSizes\\medium.png")); 
+        logo.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\Logos\\final\\allSizes\\medium.png"));
         getContentPane().add(logo);
         logo.setBounds(400, 30, 200, 162);
         getContentPane().add(jScrollBar1);
         jScrollBar1.setBounds(480, 710, 20, 200);
 
-        background_table.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\poker_table.png")); 
+        background_table.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\poker_table.png"));
         getContentPane().add(background_table);
         background_table.setBounds(130, 80, 970, 620);
         background_table.getAccessibleContext().setAccessibleName("background");
 
-        b_sendMessage.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\send.png")); 
+        b_sendMessage.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\send.png"));
         b_sendMessage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 b_sendMessageMouseClicked(evt);
@@ -526,7 +570,7 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(montant_mise);
         montant_mise.setBounds(840, 840, 90, 16);
 
-        background_frame.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png")); 
+        background_frame.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\background_fond.png"));
         background_frame.setText("jLabel6");
         background_frame.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
@@ -554,10 +598,10 @@ public class TableFrame extends JFrame implements UserInterface {
         //@TODO on est obligé de miser au moins 1 fois la big blind, il faut vérifier cela sur le Slider
         valueSlider.setText(String.valueOf(slider_miser.getValue()));
         if(slider_miser.getValue() > 0)
-           b_miser.setEnabled(true);
+            b_miser.setEnabled(true);
         else
             b_miser.setEnabled(false);
-        
+
     }
 
     private void pos1MouseReleased(java.awt.event.MouseEvent evt) {
@@ -569,35 +613,35 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
     private void pos3MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(3,false);
+        sitDown(3,false);
     }
 
     private void pos4MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(4,false);
+        sitDown(4,false);
     }
 
     private void pos5MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(5,false);
+        sitDown(5,false);
     }
 
     private void pos6MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(6,false);
+        sitDown(6,false);
     }
 
     private void pos7MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(7,false);
+        sitDown(7,false);
     }
 
     private void pos8MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(8,false);
+        sitDown(8,false);
     }
 
     private void pos9MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(9,false);
+        sitDown(9,false);
     }
 
     private void pos10MouseReleased(java.awt.event.MouseEvent evt) {
-       sitDown(10,false);
+        sitDown(10,false);
     }
 
     private void b_seCoucherActionPerformed(java.awt.event.ActionEvent evt) {
@@ -605,7 +649,7 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
-        messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPseudo() + " \n");
+        messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
@@ -631,7 +675,7 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
     private void valueSliderActionPerformed(java.awt.event.ActionEvent evt) {
-     if(!valueSlider.getText().equals("")) {
+        if(!valueSlider.getText().equals("")) {
             slider_miser.setValue(Integer.valueOf(valueSlider.getText()));
             if(Integer.valueOf(valueSlider.getText()) > 0)
                 b_miser.setEnabled(true);
@@ -642,9 +686,9 @@ public class TableFrame extends JFrame implements UserInterface {
         }    }
 
     private void valueSliderFocusLost(java.awt.event.FocusEvent evt) {
-    if(!valueSlider.getText().equals("")) {
+        if(!valueSlider.getText().equals("")) {
             slider_miser.setValue(Integer.valueOf(valueSlider.getText()));
-                    
+
             System.out.print(Integer.valueOf(valueSlider.getText()));
 
         }
@@ -652,21 +696,22 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private void messageToSendKeyPressed(java.awt.event.KeyEvent evt) {
         if (evt.getKeyCode()== KeyEvent.VK_ENTER){
-              submitMessage();
+            submitMessage();
         }
     }
 
     private void b_sendMessageMouseClicked(java.awt.event.MouseEvent evt) {
         submitMessage();
     }
-    
+
     public void submitMessage() {
         String message = messageToSend.getText();
         if(!message.isEmpty()) {
             messageToSend.setText("");
-            pokerPlayer.getPlayer().setAction(Actions.MESSAGE);
-            pokerPlayer.getPlayer().setMessage(message);
-            pokerPlayer.send(pokerPlayer.getPlayer());
+            pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.MESSAGE);
+            pokerPlayer.getPlayer().getPlayerInfo().setMessage(message);
+            pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
+
         }
     }
 
@@ -674,13 +719,13 @@ public class TableFrame extends JFrame implements UserInterface {
 
         final String filenameIcon = "src\\main\\resources\\user_male.png";
 
-        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayer().getPosition() == 0) {
+        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayer().getPlayerInfo().getPosition() == 0) {
             positions.add(position);
-            pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
+            pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.SIT_DOWN);
             if(!placeAdversaire){
-                pokerPlayer.getPlayer().setPosition(position); //si joueur quitte partie (remove position)
+                pokerPlayer.getPlayer().getPlayerInfo().setPosition(position); //si joueur quitte partie (remove position)
                 //pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
-                pokerPlayer.send(pokerPlayer.getPlayer());
+                pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
             }
             switch (position) {
                 case 1:
@@ -719,7 +764,7 @@ public class TableFrame extends JFrame implements UserInterface {
 
         //System.out.print(position);
     }
-    
+
     /**
      * @param args the command line arguments
      */

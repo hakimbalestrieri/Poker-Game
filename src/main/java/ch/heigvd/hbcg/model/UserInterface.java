@@ -1,5 +1,5 @@
 package ch.heigvd.hbcg.model;
 
 public interface UserInterface {
-    void display(Player player);
+    void display(PlayerInfo player);
 }
