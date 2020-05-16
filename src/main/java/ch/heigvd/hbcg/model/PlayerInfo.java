@@ -13,6 +13,7 @@ public class PlayerInfo implements Serializable {
     private boolean genre;
     private int position = 0;
     private Actions action;
+    private double mise;
     private Hand playerHand = new Hand();
     private boolean bigBlind = false;
     private boolean actif = true;
@@ -42,6 +43,10 @@ public class PlayerInfo implements Serializable {
         }
 
         //this.pokerPlayer = player.getPokerPlayer();
+    }
+
+    public void setMise(double mise){
+        this.mise = mise;
     }
 
     public List<Card> getBoardCard() {

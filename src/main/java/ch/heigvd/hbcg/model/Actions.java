@@ -10,6 +10,7 @@ public enum Actions implements Serializable {
     FLOP,
     TURN,
     RIVER,
+    PHASE_MISE,
     CALL,
     CHECK,
     FOLD

@@ -17,7 +17,7 @@ public class Game {
     private Dealer dealer;
     private PokerServer pokerServer;
     private static int i = 0;
-    private static String STATE_GAME = "DISTRUBUTION";
+    private STATE_GAME stageOfGame = STATE_GAME.DISTRIBUTION;
     private Timer timer;
 
     public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
@@ -37,47 +37,56 @@ public class Game {
 
     private void startGame() throws IOException {
 
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                try {
-                    switch (STATE_GAME) {
-                        case "DISTRUBUTION":
-                            dealer.distribue(pokerPlayers);
-                            setActionAllPlayers(Actions.START_GAME);
-                            STATE_GAME = "FLOP";
-                            break;
+                if(pokerServer.getGameStarted()){
+                    try {
+                        switch (stageOfGame) {
 
-                        case "FLOP":
+                            case DISTRIBUTION:
+                                dealer.distribue(pokerPlayers);
+                                setActionAllPlayers(Actions.START_GAME);
+                                stageOfGame = STATE_GAME.FLOP;
+                                break;
 
-                            for (int i = 0; i < 3; i++) {
+                            case MISE_FLOP:
+                                setActionAllPlayers(Actions.PHASE_MISE);
+                                stageOfGame = STATE_GAME.MISE_FLOP;
+                                break;
+
+                            case FLOP:
+                                for (int i = 0; i < 3; i++) {
+                                    drawBoardCardsAllPlayers(dealer.draw());
+                                }
+                                setActionAllPlayers(Actions.FLOP);
+                                stageOfGame = STATE_GAME.TURN;
+                                break;
+
+                            case TURN:
                                 drawBoardCardsAllPlayers(dealer.draw());
-                            }
+                                setActionAllPlayers(Actions.TURN);
+                                stageOfGame = STATE_GAME.RIVER;
+                                break;
 
-                            setActionAllPlayers(Actions.FLOP);
-                            STATE_GAME = "TURN";
-                            break;
+                            case RIVER:
+                                drawBoardCardsAllPlayers(dealer.draw());
+                                setActionAllPlayers(Actions.RIVER);
+                                stageOfGame = STATE_GAME.END;
+                                break;
 
-                        case "TURN":
-                            drawBoardCardsAllPlayers(dealer.draw());
-                            setActionAllPlayers(Actions.TURN);
-                            STATE_GAME = "RIVER";
-                            break;
+                        }
 
-                        case "RIVER":
-                            drawBoardCardsAllPlayers(dealer.draw());
-                            setActionAllPlayers(Actions.RIVER);
-                            STATE_GAME = "END";
-                            break;
+                        updatePlayers();
 
+                    }catch (IOException e){
+                        e.printStackTrace();
                     }
-
-                    updatePlayers();
-                }catch (IOException e){
-                    e.printStackTrace();
                 }
-
+                else{
+                    timer.cancel();
+                }
             }
         },0,10000);
 

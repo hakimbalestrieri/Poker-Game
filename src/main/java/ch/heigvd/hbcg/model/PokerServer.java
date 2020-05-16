@@ -17,6 +17,7 @@ public class PokerServer {
     //private ExecutorService pool;
     private List<PokerClientHandler> listClients = new ArrayList<>();
     private boolean started = false;
+    private double pot = 0;
     // private List<Player> listPlayers = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -53,13 +54,12 @@ public class PokerServer {
             handler.sendOnHandler(playerInfo);
         }
 
-
-
         if(!started && listClients.size() == 2 && checkPlayerAreSit(listClients)){
             started = true;
             System.out.println("GAME IS STARTED");
             startGame();
         }
+
     }
 
     private void startGame() throws IOException {
@@ -80,5 +80,9 @@ public class PokerServer {
             }
         }
         return true;
+    }
+
+    public boolean getGameStarted(){
+        return started;
     }
 }

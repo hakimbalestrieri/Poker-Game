@@ -19,6 +19,9 @@ public class TableFrame extends JFrame implements UserInterface {
     private PokerClient pokerPlayer;
     private Set<Integer> positions = new HashSet();
     private Game game;
+    private boolean isMisedOrChecked = false;
+
+
     public TableFrame(PokerClient pokerPlayer) {
 
         if(pokerPlayer != null){
@@ -69,10 +72,20 @@ public class TableFrame extends JFrame implements UserInterface {
             case RIVER:
                 showBoardCard(playerInfo);
                 break;
+
+            case PHASE_MISE:
+                miserCheck(playerInfo);
             default:
                 System.out.println("Aucune action");
         }
 
+    }
+
+    private void miserCheck(PlayerInfo playerInfo) {
+
+        if(isMisedOrChecked){
+            playerInfo.setMise(Double.valueOf(montant_mise.getText()));
+        }
     }
 
     private void showBoardCard(PlayerInfo playerInfo) {
@@ -650,6 +663,7 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
         messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
+        isMisedOrChecked = true;
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
