@@ -33,7 +33,13 @@ public class Game {
         //t2.start();
     }
 
+    public void updateInfoOfPlayers(List<PokerClientHandler> handlers){
 
+        for(int i = 0; i < handlers.size(); i++){
+            pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
+            System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
+        }
+    }
 
     private void startGame() throws IOException {
 
@@ -53,10 +59,13 @@ public class Game {
 
                             case MISE_FLOP:
                                 setActionAllPlayers(Actions.PHASE_MISE);
-                                stageOfGame = STATE_GAME.MISE_FLOP;
+                                stageOfGame = STATE_GAME.FLOP;
                                 break;
 
                             case FLOP:
+                                System.out.println("Mise P1 : " +  pokerPlayers.get(0).getMise());
+                                System.out.println("Mise P2 : " + pokerPlayers.get(1).getMise());
+
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
                                 }

@@ -126,4 +126,8 @@ public class PlayerInfo implements Serializable {
     public void setBoardCards(Card boardCard) {
         this.boardCard.add(boardCard);
     }
+
+    public double getMise() {
+        return mise;
+    }
 }
