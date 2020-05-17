@@ -16,7 +16,9 @@ public class PokerServer {
     private Game game;
     //private ExecutorService pool;
     private List<PokerClientHandler> listClients = new ArrayList<>();
+    private List<PlayerInfo> currentPlayers = new ArrayList<>();
     private boolean started = false;
+    private boolean updatePlayers = false;
     private double pot = 0;
     // private List<Player> listPlayers = new ArrayList<>();
 
@@ -52,23 +54,51 @@ public class PokerServer {
         //Est-ce que les infos sont à jour dans le handler ?
         for(PokerClientHandler handler : listClients){
             handler.sendOnHandler(playerInfo);
+            addUpdatePlayer(playerInfo);
+        }
+
+        if(updatePlayers){
+            game.updateInfoOfPlayers(currentPlayers);
+            currentPlayers.clear();
         }
 
         if(!started && listClients.size() == 2 && checkPlayerAreSit(listClients)){
             started = true;
             System.out.println("GAME IS STARTED");
             startGame();
+            addUpdatePlayer(playerInfo);
+            currentPlayers.clear();
+            updatePlayers = true;
         }
-
     }
 
     private void startGame() throws IOException {
-
         game = new Game(listClients,this);
     }
 
     public void remove(PokerClientHandler handler){
         listClients.remove(handler);
+    }
+
+    private void addUpdatePlayer(PlayerInfo playerInfo){
+
+       /* if(currentPlayers.size() != 0){
+
+            for(int i = 0; i < currentPlayers.size() ; i++){
+                if(currentPlayers.get(i).getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())){
+                    currentPlayers.set(i,playerInfo);
+                }else{
+                    currentPlayers.add(playerInfo);
+                }
+            }
+        }else{
+            currentPlayers.add(playerInfo);
+        }*/
+       // currentPlayers.clear();
+
+        currentPlayers.add(playerInfo);
+
+
     }
 
 

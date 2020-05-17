@@ -20,7 +20,7 @@ public class TableFrame extends JFrame implements UserInterface {
     private Set<Integer> positions = new HashSet();
     private Game game;
     private boolean isMisedOrChecked = false;
-
+    private PlayerInfo tempPlayerInfo;
 
     public TableFrame(PokerClient pokerPlayer) {
 
@@ -43,6 +43,8 @@ public class TableFrame extends JFrame implements UserInterface {
     public void display(PlayerInfo playerInfo){
 
         if(playerInfo == null) System.out.println("Tu es nul");
+
+        //pokerPlayer.getPlayer().setPlayerInfo(playerInfo);
 
         System.out.println(playerInfo.getAction() + "display");
 
@@ -72,9 +74,11 @@ public class TableFrame extends JFrame implements UserInterface {
             case RIVER:
                 showBoardCard(playerInfo);
                 break;
-
             case PHASE_MISE:
-                miserCheck(playerInfo);
+                pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
+                tempPlayerInfo = playerInfo;
+                //miserCheck(playerInfo);
+                break;
             default:
                 System.out.println("Aucune action");
         }
@@ -84,8 +88,27 @@ public class TableFrame extends JFrame implements UserInterface {
     private void miserCheck(PlayerInfo playerInfo) {
 
         if(isMisedOrChecked){
-            playerInfo.setMise(Double.valueOf(montant_mise.getText()));
+            //System.out.println("VALEUR" + Double.valueOf(montant_mise.getText()));
+            // String montant = StringUtils.substringBefore(valueSlider.getText().su, "CHF");
+
+            //pokerPlayer.getPlayer().getPlayerInfo().setMise(666);
+
+
+            if(playerInfo.getPseudoEmetteur().equals(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur())) {
+                pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
+                pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
+            }
+            isMisedOrChecked = false;
+
+
         }
+
+        //pokerPlayer.getPlayer().getPlayerInfo().setMise(666);
+
+
+
+
+
     }
 
     private void showBoardCard(PlayerInfo playerInfo) {
@@ -663,7 +686,12 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
         messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
-        isMisedOrChecked = true;
+        System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
+        if(pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE){
+            isMisedOrChecked = true;
+            miserCheck(tempPlayerInfo);
+        }
+
     }
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {

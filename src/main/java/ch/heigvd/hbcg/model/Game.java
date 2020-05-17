@@ -14,6 +14,7 @@ public class Game {
 
     private List<Card> boardCard = new ArrayList<>();
     private List<PlayerInfo> pokerPlayers = new ArrayList<>();
+    private List<PlayerInfo> currentPlayers = new ArrayList<>();
     private Dealer dealer;
     private PokerServer pokerServer;
     private static int i = 0;
@@ -33,12 +34,17 @@ public class Game {
         //t2.start();
     }
 
-    public void updateInfoOfPlayers(List<PokerClientHandler> handlers){
+    public void updateInfoOfPlayers(List<PlayerInfo> playerInfos){
 
-        for(int i = 0; i < handlers.size(); i++){
-            pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
-            System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
+        System.out.println("TENTATIVE DE UPDATE avec size de : " + playerInfos.size());
+
+        currentPlayers.clear();
+
+        for(int i = 0; i< playerInfos.size(); i++){
+            currentPlayers.add(playerInfos.get(i));
+            System.out.println("UPDATE PLAYER : " + playerInfos.get(i));
         }
+
     }
 
     private void startGame() throws IOException {
@@ -54,7 +60,7 @@ public class Game {
                             case DISTRIBUTION:
                                 dealer.distribue(pokerPlayers);
                                 setActionAllPlayers(Actions.START_GAME);
-                                stageOfGame = STATE_GAME.FLOP;
+                                stageOfGame = STATE_GAME.MISE_FLOP;
                                 break;
 
                             case MISE_FLOP:
@@ -63,8 +69,8 @@ public class Game {
                                 break;
 
                             case FLOP:
-                                System.out.println("Mise P1 : " +  pokerPlayers.get(0).getMise());
-                                System.out.println("Mise P2 : " + pokerPlayers.get(1).getMise());
+                                System.out.println("Mise P1 : " + currentPlayers.get(0).getMise());
+                                System.out.println("Mise P2 : " + currentPlayers.get(1).getMise());
 
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
@@ -97,7 +103,7 @@ public class Game {
                     timer.cancel();
                 }
             }
-        },0,10000);
+        },0,3000);
 
 
         //   if(!STATE_GAME.equals("END")) startGame();

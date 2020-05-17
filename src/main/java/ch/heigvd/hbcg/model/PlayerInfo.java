@@ -13,7 +13,7 @@ public class PlayerInfo implements Serializable {
     private boolean genre;
     private int position = 0;
     private Actions action;
-    private double mise;
+    private double mise = 0;
     private Hand playerHand = new Hand();
     private boolean bigBlind = false;
     private boolean actif = true;
@@ -28,7 +28,9 @@ public class PlayerInfo implements Serializable {
         this.message = playerInfo.getMessage();
         this.position = playerInfo.getPosition();
         this.action = playerInfo.getAction();
-        //this.pokerPlayer = player.getPokerPlayer();
+        this.mise = playerInfo.getMise();
+        this.showCard = playerInfo.getShowCard();
+
 
         if(playerInfo.getPlayerHand().size() != 0){
             for (int i = 0; i < playerInfo.getPlayerHand().size(); i++){
