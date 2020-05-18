@@ -13,5 +13,6 @@ public enum Actions implements Serializable {
     PHASE_MISE,
     CALL,
     CHECK,
-    FOLD
+    FOLD,
+    END
 }

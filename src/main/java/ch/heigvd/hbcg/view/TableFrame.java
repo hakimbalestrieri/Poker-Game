@@ -20,7 +20,7 @@ public class TableFrame extends JFrame implements UserInterface {
     private Set<Integer> positions = new HashSet();
     private Game game;
     private boolean isMisedOrChecked = false;
-    private PlayerInfo tempPlayerInfo;
+    private boolean isCurrentPlayer = false;
 
     public TableFrame(PokerClient pokerPlayer) {
 
@@ -44,23 +44,30 @@ public class TableFrame extends JFrame implements UserInterface {
 
         if(playerInfo == null) System.out.println("Tu es nul");
 
-        //pokerPlayer.getPlayer().setPlayerInfo(playerInfo);
+        if(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())){
+            pokerPlayer.getPlayer().setPlayerInfo(playerInfo);
+            isCurrentPlayer = true;
+        }else{
+            if(pokerPlayer.getPlayer().getPlayerInfo().getAction() != Actions.PHASE_MISE){
+                isCurrentPlayer = false;
+            }
+        }
 
+        if(isCurrentPlayer) messageArea.append("ACTION ACTUELLE : " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
         System.out.println(playerInfo.getAction() + "display");
 
-        switch (playerInfo.getAction()){
 
+        //Attention - Action du joueur reçu en paramètre et non de celui à qui est la Jframe actuelle
+        switch (playerInfo.getAction()){
             case CONNECTION:
                 messageArea.append("Le joueur " + playerInfo.getPseudoEmetteur() + " rejoint la partie \n");
                 break;
-
             case SIT_DOWN:
                 //Synchro place
                 System.out.println("Quelqu'n s'est assis");
                 sitDown(playerInfo.getPosition(),true);
                 // System.out.println("Quelqu'n s'est assis");
                 break;
-
             case MESSAGE:
                 //Affichage message
                 System.out.println("J'ecris un message");
@@ -75,9 +82,16 @@ public class TableFrame extends JFrame implements UserInterface {
                 showBoardCard(playerInfo);
                 break;
             case PHASE_MISE:
-                pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
-                tempPlayerInfo = playerInfo;
+                messageArea.append("je recois une phase mise et moi je suis en " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
+                if(isCurrentPlayer)  messageArea.append("Il est temps de miser \n" + "mon action est " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
+                //pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
+                //tempPlayerInfo = playerInfo;
                 //miserCheck(playerInfo);
+                break;
+            case END:
+                if(isCurrentPlayer){
+                    messageArea.append("La partie est terminé");
+                }
                 break;
             default:
                 System.out.println("Aucune action");
@@ -85,29 +99,14 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-    private void miserCheck(PlayerInfo playerInfo) {
+    private void miserCheck() {
 
-        if(isMisedOrChecked){
-            //System.out.println("VALEUR" + Double.valueOf(montant_mise.getText()));
-            // String montant = StringUtils.substringBefore(valueSlider.getText().su, "CHF");
-
-            //pokerPlayer.getPlayer().getPlayerInfo().setMise(666);
-
-
-            if(playerInfo.getPseudoEmetteur().equals(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur())) {
-                pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
-                pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
-            }
-            isMisedOrChecked = false;
-
-
-        }
-
+        //System.out.println("VALEUR" + Double.valueOf(montant_mise.getText()));
+        // String montant = StringUtils.substringBefore(valueSlider.getText().su, "CHF");
         //pokerPlayer.getPlayer().getPlayerInfo().setMise(666);
-
-
-
-
+            pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
+            messageArea.append("La mise est faite \n");
+            pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
 
     }
 
@@ -686,10 +685,12 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
         messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
-        System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
-        if(pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE){
-            isMisedOrChecked = true;
-            miserCheck(tempPlayerInfo);
+      //  System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
+        //System.out.println(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " J'ai appuyé sur miser ");
+        if(isCurrentPlayer && pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE){
+            miserCheck();
+        }else{
+            messageArea.append("Le joueur n'est pas en Action miser\n");
         }
 
     }

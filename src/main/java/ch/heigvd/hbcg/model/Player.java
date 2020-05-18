@@ -34,4 +34,8 @@ public class Player {
         playerInfo.setGenre(valueOf1);
     }
 
+    public void setPlayerInfo(PlayerInfo playerInfo) {
+        this.playerInfo = playerInfo;
+    }
+
 }

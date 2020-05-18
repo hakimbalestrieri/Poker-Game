@@ -20,6 +20,7 @@ public class Game {
     private static int i = 0;
     private STATE_GAME stageOfGame = STATE_GAME.DISTRIBUTION;
     private Timer timer;
+    private double pot;
 
     public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
@@ -28,6 +29,7 @@ public class Game {
         for(int i = 0; i < handlers.size(); i++){
             pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
+            currentPlayers.add(handlers.get(i).getPlayerInfo());
         }
         // new Thread(this).start();
         startGame();
@@ -36,13 +38,9 @@ public class Game {
 
     public void updateInfoOfPlayers(List<PlayerInfo> playerInfos){
 
-        System.out.println("TENTATIVE DE UPDATE avec size de : " + playerInfos.size());
-
-        currentPlayers.clear();
-
-        for(int i = 0; i< playerInfos.size(); i++){
-            currentPlayers.add(playerInfos.get(i));
-            System.out.println("UPDATE PLAYER : " + playerInfos.get(i));
+        for(int i = 0; i < playerInfos.size(); i++){
+          currentPlayers.set(i,playerInfos.get(i));
+            //System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
         }
 
     }
@@ -69,9 +67,9 @@ public class Game {
                                 break;
 
                             case FLOP:
-                                System.out.println("Mise P1 : " + currentPlayers.get(0).getMise());
-                                System.out.println("Mise P2 : " + currentPlayers.get(1).getMise());
-
+                                checkIfSomeoneHasFold();
+                             //   System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
+                               // System.out.println("Mise P2 : " + currentPlayers.get(1).getPseudoEmetteur() + " " + currentPlayers.get(1).getMise());
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
                                 }
@@ -103,7 +101,7 @@ public class Game {
                     timer.cancel();
                 }
             }
-        },0,3000);
+        },0,7000);
 
 
         //   if(!STATE_GAME.equals("END")) startGame();
@@ -117,6 +115,20 @@ public class Game {
             playerInfo.setBoardCards(boardCard);
         }
 
+    }
+
+    private void checkIfSomeoneHasFold() throws IOException {
+
+        for (int i = 0; i < currentPlayers.size();i++){
+            if(currentPlayers.get(i).getAction() == Actions.FOLD){
+                currentPlayers.remove(i);
+            }
+        }
+        if(currentPlayers.size() <= 1){
+            //Game plus possible.
+            setActionAllPlayers(Actions.END);
+            updatePlayers();
+        }
     }
 
     private void setActionAllPlayers(Actions action) throws IOException {

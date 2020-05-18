@@ -14,13 +14,11 @@ public class PokerServer {
 
     public static final int PORT = 6669;
     private Game game;
-    //private ExecutorService pool;
     private List<PokerClientHandler> listClients = new ArrayList<>();
     private List<PlayerInfo> currentPlayers = new ArrayList<>();
     private boolean started = false;
     private boolean updatePlayers = false;
     private double pot = 0;
-    // private List<Player> listPlayers = new ArrayList<>();
 
     public static void main(String[] args) {
         new PokerServer().runServer();
@@ -30,7 +28,6 @@ public class PokerServer {
 
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
 
-            //   pool = Executors.newFixedThreadPool(10);
             System.out.println("Server is listening on port " + PORT);
 
             while (true) {
@@ -39,6 +36,7 @@ public class PokerServer {
                 System.out.println("New client connected");
                 PokerClientHandler pokerClientHandler = new PokerClientHandler(socket,this);
                 listClients.add(pokerClientHandler);
+                currentPlayers.add(pokerClientHandler.getPlayerInfo());
                 pokerClientHandler.start();
             }
 
@@ -48,26 +46,32 @@ public class PokerServer {
         }
     }
 
-
     public void send(PlayerInfo playerInfo) throws IOException {
 
         //Est-ce que les infos sont à jour dans le handler ?
-        for(PokerClientHandler handler : listClients){
+     /*   for(PokerClientHandler handler : listClients){
             handler.sendOnHandler(playerInfo);
-            addUpdatePlayer(playerInfo);
+           //addUpdatePlayer(playerInfo);
+        }*/
+
+        for(int i=0 ; i< listClients.size(); i++){
+            listClients.get(i).sendOnHandler(playerInfo);
+            System.out.println("for " + i + " " + listClients.get(i).getPlayerInfo());
+            currentPlayers.set(i,listClients.get(i).getPlayerInfo());
         }
+
 
         if(updatePlayers){
             game.updateInfoOfPlayers(currentPlayers);
-            currentPlayers.clear();
+            //currentPlayers.clear();
         }
 
         if(!started && listClients.size() == 2 && checkPlayerAreSit(listClients)){
             started = true;
             System.out.println("GAME IS STARTED");
             startGame();
-            addUpdatePlayer(playerInfo);
-            currentPlayers.clear();
+            //addUpdatePlayer(playerInfo);
+           // currentPlayers.clear();
             updatePlayers = true;
         }
     }
@@ -81,6 +85,18 @@ public class PokerServer {
     }
 
     private void addUpdatePlayer(PlayerInfo playerInfo){
+
+     /*  if(currentPlayers.size() != 0){
+            for(int i = 0; i < listClients.size() ; i++) {
+                if(currentPlayers.get(i).getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())){
+                    currentPlayers.set(i,playerInfo);
+                }else{
+                    currentPlayers.add(playerInfo);
+                }
+            }
+        }else{
+            currentPlayers.add(playerInfo);
+        }*/
 
        /* if(currentPlayers.size() != 0){
 
@@ -96,8 +112,7 @@ public class PokerServer {
         }*/
        // currentPlayers.clear();
 
-        currentPlayers.add(playerInfo);
-
+      //  currentPlayers.add(playerInfo);
 
     }
 

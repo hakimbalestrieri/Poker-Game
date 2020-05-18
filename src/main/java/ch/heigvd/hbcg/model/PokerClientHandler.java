@@ -49,6 +49,10 @@ public class PokerClientHandler extends Thread {
 
     public void sendOnHandler(PlayerInfo playerInfo) throws IOException {
         System.out.println("SEND[HANDLER] : " + playerInfo.getPseudoEmetteur() + " " + playerInfo.getAction());
+
+        //Update info joueur si handler concerné
+        if(playerInfo.getPseudoEmetteur().equals(this.playerInfo.getPseudoEmetteur())) this.playerInfo = playerInfo;
+
         out.writeObject(new PlayerInfo(playerInfo));
     }
 
