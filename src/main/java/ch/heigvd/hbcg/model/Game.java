@@ -25,7 +25,7 @@ public class Game {
     public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
         pokerServer = server;
-
+        //t2.start();
         for(int i = 0; i < handlers.size(); i++){
             pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
@@ -33,7 +33,17 @@ public class Game {
         }
         // new Thread(this).start();
         startGame();
-        //t2.start();
+    }
+
+    private void resetGame(List<PokerClientHandler> handlers) throws IOException {
+        dealer = new Dealer(); //initialise un Dealer et son deck
+        for(int i = 0; i < handlers.size(); i++){
+            pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
+            System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
+            currentPlayers.add(handlers.get(i).getPlayerInfo());
+        }
+        // new Thread(this).start();
+        startGame();
     }
 
     public void updateInfoOfPlayers(List<PlayerInfo> playerInfos){
@@ -74,19 +84,36 @@ public class Game {
                                     drawBoardCardsAllPlayers(dealer.draw());
                                 }
                                 setActionAllPlayers(Actions.FLOP);
+                                stageOfGame = STATE_GAME.MISE_TURN;
+                                break;
+
+                            case MISE_TURN:
+                                setActionAllPlayers(Actions.PHASE_MISE);
                                 stageOfGame = STATE_GAME.TURN;
                                 break;
 
                             case TURN:
+                                checkIfSomeoneHasFold();
                                 drawBoardCardsAllPlayers(dealer.draw());
                                 setActionAllPlayers(Actions.TURN);
+                                stageOfGame = STATE_GAME.MISE_RIVER;
+                                break;
+
+                            case MISE_RIVER:
+                                setActionAllPlayers(Actions.PHASE_MISE);
                                 stageOfGame = STATE_GAME.RIVER;
                                 break;
 
                             case RIVER:
+                                checkIfSomeoneHasFold();
                                 drawBoardCardsAllPlayers(dealer.draw());
                                 setActionAllPlayers(Actions.RIVER);
                                 stageOfGame = STATE_GAME.END;
+                                break;
+
+                            case END:
+                                System.out.println("le pot est de " + pot);
+                                timer.cancel();
                                 break;
 
                         }
@@ -102,7 +129,6 @@ public class Game {
                 }
             }
         },0,7000);
-
 
         //   if(!STATE_GAME.equals("END")) startGame();
 
@@ -122,11 +148,15 @@ public class Game {
         for (int i = 0; i < currentPlayers.size();i++){
             if(currentPlayers.get(i).getAction() == Actions.FOLD){
                 currentPlayers.remove(i);
+            }else{
+                pot += currentPlayers.get(i).getMise();
             }
         }
         if(currentPlayers.size() <= 1){
             //Game plus possible.
             setActionAllPlayers(Actions.END);
+            stageOfGame = STATE_GAME.END;
+            pot = 0;
             updatePlayers();
         }
     }

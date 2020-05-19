@@ -66,7 +66,7 @@ public class PokerServer {
             //currentPlayers.clear();
         }
 
-        if(!started && listClients.size() == 2 && checkPlayerAreSit(listClients)){
+        if(!started && listClients.size() == 3 && checkPlayerAreSit(listClients)){
             started = true;
             System.out.println("GAME IS STARTED");
             startGame();

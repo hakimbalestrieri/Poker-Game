@@ -74,7 +74,7 @@ public class TableFrame extends JFrame implements UserInterface {
                 messageArea.append(playerInfo.toString() + "\n");
                 break;
             case START_GAME:
-                showCards(playerInfo);
+                showCards(playerInfo,true);
                 break;
             case FLOP:
             case TURN:
@@ -87,6 +87,9 @@ public class TableFrame extends JFrame implements UserInterface {
                 //pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
                 //tempPlayerInfo = playerInfo;
                 //miserCheck(playerInfo);
+                break;
+            case FOLD:
+                showCards(playerInfo,false);
                 break;
             case END:
                 if(isCurrentPlayer){
@@ -142,7 +145,7 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
     // public void showCards(){
-    public void showCards(PlayerInfo playerInfo){
+    public void showCards(PlayerInfo playerInfo, boolean fold){
 
         //int position = this.pokerPlayer.getPlayer().getPosition();
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
@@ -160,64 +163,66 @@ public class TableFrame extends JFrame implements UserInterface {
 
         switch (playerInfo.getPosition()){
             case 1:
+
                 jLabel10.setIcon(image1);
                 jLabel11.setIcon(image2);
-                jLabel10.setVisible(true);
-                jLabel11.setVisible(true);
+                jLabel10.setVisible(fold);
+                jLabel11.setVisible(fold);
+
                 break;
             case 2:
                 jLabel8.setIcon(image1);
                 jLabel9.setIcon(image2);
-                jLabel8.setVisible(true);
-                jLabel9.setVisible(true);
+                jLabel8.setVisible(fold);
+                jLabel9.setVisible(fold);
                 break;
             case 3:
                 jLabel6.setIcon(image1);
                 jLabel7.setIcon(image2);
-                jLabel6.setVisible(true);
-                jLabel7.setVisible(true);
+                jLabel6.setVisible(fold);
+                jLabel7.setVisible(fold);
                 break;
             case 4:
                 jLabel4.setIcon(image1);
                 jLabel5.setIcon(image2);
-                jLabel4.setVisible(true);
-                jLabel5.setVisible(true);
+                jLabel4.setVisible(fold);
+                jLabel5.setVisible(fold);
                 break;
             case 5:
                 jLabel2.setIcon(image1);
                 jLabel3.setIcon(image2);
-                jLabel2.setVisible(true);
-                jLabel3.setVisible(true);
+                jLabel2.setVisible(fold);
+                jLabel3.setVisible(fold);
                 break;
             case 6:
                 jLabel12.setIcon(image1);
                 jLabel13.setIcon(image2);
-                jLabel12.setVisible(true);
-                jLabel13.setVisible(true);
+                jLabel12.setVisible(fold);
+                jLabel13.setVisible(fold);
                 break;
             case 7:
                 jLabel14.setIcon(image1);
                 jLabel15.setIcon(image2);
-                jLabel14.setVisible(true);
-                jLabel15.setVisible(true);
+                jLabel14.setVisible(fold);
+                jLabel15.setVisible(fold);
                 break;
             case 8:
                 jLabel16.setIcon(image1);
                 jLabel17.setIcon(image2);
-                jLabel16.setVisible(true);
-                jLabel17.setVisible(true);
+                jLabel16.setVisible(fold);
+                jLabel17.setVisible(fold);
                 break;
             case 9:
                 jLabel18.setIcon(image1);
                 jLabel19.setIcon(image2);
-                jLabel18.setVisible(true);
-                jLabel19.setVisible(true);
+                jLabel18.setVisible(fold);
+                jLabel19.setVisible(fold);
                 break;
             case 10:
                 jLabel20.setIcon(image1);
                 jLabel21.setIcon(image2);
-                jLabel20.setVisible(true);
-                jLabel21.setVisible(true);
+                jLabel20.setVisible(fold);
+                jLabel21.setVisible(fold);
                 break;
             default:
         }
@@ -680,7 +685,13 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
     private void b_seCoucherActionPerformed(java.awt.event.ActionEvent evt) {
-        System.out.print("Je me couche par terre!");
+        //System.out.print("Je me couche par terre!");
+        if(isCurrentPlayer){
+            if(pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
+                pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.FOLD);
+                pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
+            }
+        }
     }
 
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
