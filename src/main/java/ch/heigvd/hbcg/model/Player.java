@@ -1,8 +1,7 @@
 package ch.heigvd.hbcg.model;
 
+import ch.heigvd.hbcg.network.PokerClientHandler;
 import ch.heigvd.hbcg.view.TableFrame;
-
-import java.io.Serializable;
 
 public class Player {
 

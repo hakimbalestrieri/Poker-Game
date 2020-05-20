@@ -1,6 +1,7 @@
 package ch.heigvd.hbcg.view;
 
 import ch.heigvd.hbcg.model.*;
+import ch.heigvd.hbcg.network.PokerClient;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +19,6 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private PokerClient pokerPlayer;
     private Set<Integer> positions = new HashSet();
-    private Game game;
     private boolean isMisedOrChecked = false;
     private boolean isCurrentPlayer = false;
 
@@ -53,7 +53,8 @@ public class TableFrame extends JFrame implements UserInterface {
             }
         }
 
-        if(isCurrentPlayer) messageArea.append("ACTION ACTUELLE : " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
+       //
+        //if(isCurrentPlayer) messageArea.append("ACTION ACTUELLE : " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
         System.out.println(playerInfo.getAction() + "display");
 
 
@@ -82,8 +83,8 @@ public class TableFrame extends JFrame implements UserInterface {
                 showBoardCard(playerInfo);
                 break;
             case PHASE_MISE:
-                messageArea.append("je recois une phase mise et moi je suis en " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
-                if(isCurrentPlayer)  messageArea.append("Il est temps de miser \n" + "mon action est " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
+             //   messageArea.append("je recois une phase mise et moi je suis en " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
+                if(isCurrentPlayer)  messageArea.append("Vous pouvez miser");
                 //pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
                 //tempPlayerInfo = playerInfo;
                 //miserCheck(playerInfo);

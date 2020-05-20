@@ -1,11 +1,16 @@
-package ch.heigvd.hbcg.model;
+package ch.heigvd.hbcg.network;
+
+import ch.heigvd.hbcg.model.PlayerInfo;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
+/**
+ * Represente le thread d'un joueur
+ * @authors Balestrieri & Gomes
+ */
 public class PokerClientHandler extends Thread {
 
     private Socket socket;
@@ -26,7 +31,6 @@ public class PokerClientHandler extends Thread {
 
             PlayerInfo playerInfo;
 
-            //TODO : Verifier while utilité
             while ((playerInfo = (PlayerInfo) in.readObject()) != null){
                 System.out.println("[HANDLERCLIENT] : Lecture des infos de " + playerInfo.getPseudoEmetteur());
                 //out.writeObject(playerInfo); //va sur pokerclient

@@ -2,7 +2,7 @@ package ch.heigvd.hbcg.view;
 
 import ch.heigvd.hbcg.controller.ControllerLogin;
 import ch.heigvd.hbcg.model.Actions;
-import ch.heigvd.hbcg.model.PokerClient;
+import ch.heigvd.hbcg.network.PokerClient;
 import ch.heigvd.hbcg.utils.UtilsFileReader;
 
 import javax.swing.*;

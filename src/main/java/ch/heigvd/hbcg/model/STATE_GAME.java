@@ -1,7 +1,6 @@
 package ch.heigvd.hbcg.model;
 
 public enum STATE_GAME {
-
     DISTRIBUTION,
     FLOP,
     MISE_FLOP,

@@ -1,4 +1,8 @@
-package ch.heigvd.hbcg.model;
+package ch.heigvd.hbcg.network;
+import ch.heigvd.hbcg.model.Player;
+import ch.heigvd.hbcg.model.PlayerInfo;
+import ch.heigvd.hbcg.model.UserInterface;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

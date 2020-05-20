@@ -1,14 +1,13 @@
 package ch.heigvd.hbcg.model;
 
-import java.beans.EventHandler;
+import ch.heigvd.hbcg.network.PokerClientHandler;
+import ch.heigvd.hbcg.network.PokerServer;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.Timer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Game {
 

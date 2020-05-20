@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represente les informations d'un joueur
+ * @authors Balestrieri & Gomes
+ */
 public class PlayerInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
