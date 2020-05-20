@@ -115,7 +115,7 @@ public class Game {
                                 System.out.println("le pot est de " + pot);
                                 setActionAllPlayers(Actions.END);
                                 //TODO : Prevoir gagnant partie ici avec affichage de son pot gagnant
-                                stageOfGame = STATE_GAME.END;
+                                stageOfGame = STATE_GAME.END; //END pour demo sinon restart pour (tenter) le reset de la partie
                                 break;
 
                             case RESTART:
