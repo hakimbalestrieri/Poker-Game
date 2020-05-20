@@ -842,10 +842,6 @@ public class TableFrame extends JFrame implements UserInterface {
         }
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
     private javax.swing.JButton b_miser;
     private javax.swing.JButton b_seCoucher;
     private javax.swing.JLabel b_sendMessage;
