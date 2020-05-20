@@ -8,5 +8,7 @@ public enum STATE_GAME {
     MISE_TURN,
     RIVER,
     MISE_RIVER,
-    END
+    END,
+    FINISH,
+    RESTART
 }

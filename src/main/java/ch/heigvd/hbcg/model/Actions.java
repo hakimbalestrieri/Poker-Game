@@ -14,5 +14,6 @@ public enum Actions implements Serializable {
     CALL,
     CHECK,
     FOLD,
-    END
+    END,
+    RESTART
 }

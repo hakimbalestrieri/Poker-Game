@@ -67,6 +67,14 @@ public class PokerServer {
             currentPlayers.set(i,listHandlers.get(i).getPlayerInfo());
         }
 
+        if(checkActionPlayer(Actions.RESTART)){
+            started = false;
+            isUpdatable = false;
+            game.resetGame(listHandlers);
+            isUpdatable = true;
+            started = true;
+        }
+
         //Update des joueurs dès que la partie est lancée
         if(isUpdatable){
             game.updateInfoOfPlayers(currentPlayers);
@@ -74,11 +82,12 @@ public class PokerServer {
 
         //Lancement de la partie à partir de 3 joueurs
         //TODO : Ajouter un moyen de démarrage au lieu d'un nombre fixe de joueurs
-        if(!started && listHandlers.size() == 3 && checkPlayerAreSit(listHandlers)){
+        if(!started && listHandlers.size() == 3 && checkActionPlayer(Actions.SIT_DOWN)){
             started = true;
             startGame();
             isUpdatable = true;
         }
+
     }
 
 
@@ -100,14 +109,14 @@ public class PokerServer {
 
 
     /**
-     * Permet de savoir si tous les joueurs connectés sont assis à la table
-     * @param handlers liste de handlers
+     * Permet de savoir si tous les joueurs connectés sont sur une action précise
+     * @param action action à verifier
      * @return vrai/faux
      */
-    private boolean checkPlayerAreSit(List<PokerClientHandler> handlers){
+    private boolean checkActionPlayer(Actions action){
 
-        for(PokerClientHandler handler : handlers){
-            if(handler.getPlayerInfo().getAction() != Actions.SIT_DOWN){
+        for(PokerClientHandler handler : listHandlers){
+            if(handler.getPlayerInfo().getAction() != action){
                 return false;
             }
         }

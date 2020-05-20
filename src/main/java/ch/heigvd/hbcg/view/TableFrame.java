@@ -80,7 +80,7 @@ public class TableFrame extends JFrame implements UserInterface {
             case FLOP:
             case TURN:
             case RIVER:
-                showBoardCard(playerInfo);
+                showBoardCard(playerInfo,true);
                 break;
             case PHASE_MISE:
              //   messageArea.append("je recois une phase mise et moi je suis en " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
@@ -96,6 +96,11 @@ public class TableFrame extends JFrame implements UserInterface {
                 if(isCurrentPlayer){
                     messageArea.append("La partie est terminé");
                 }
+                break;
+            case RESTART:
+                showCards(playerInfo,false);
+                showBoardCard(playerInfo,false);
+                //Voir pour reset ses parametres (mise etc) si besoin.
                 break;
             default:
                 System.out.println("Aucune action");
@@ -114,7 +119,7 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-    private void showBoardCard(PlayerInfo playerInfo) {
+    private void showBoardCard(PlayerInfo playerInfo,boolean isRunning) {
 
         ImageIcon fold1, fold2, fold3, turn, river;
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
@@ -127,20 +132,20 @@ public class TableFrame extends JFrame implements UserInterface {
                 carte1.setIcon(fold1);
                 carte2.setIcon(fold2);
                 carte3.setIcon(fold3);
-                carte1.setVisible(true);
-                carte2.setVisible(true);
-                carte3.setVisible(true);
+                carte1.setVisible(isRunning);
+                carte2.setVisible(isRunning);
+                carte3.setVisible(isRunning);
                 break;
             case TURN :
                 turn = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(3).toString() + ".png");
                 carte4.setIcon(turn);
-                carte4.setVisible(true);
+                carte4.setVisible(isRunning);
                 break;
 
             case RIVER:
                 river = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(4).toString() + ".png");
                 carte5.setIcon(river);
-                carte5.setVisible(true);
+                carte5.setVisible(isRunning);
                 break;
         }
     }
