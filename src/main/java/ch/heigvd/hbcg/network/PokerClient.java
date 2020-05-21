@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class PokerClient implements Runnable {
 
     private UserInterface userInterface;
@@ -19,6 +20,10 @@ public class PokerClient implements Runnable {
 
     public static void main(String[] args){};
 
+    /**
+     * Constructeur
+     * @param player
+     */
     public PokerClient(Player player){
 
         if(player != null){
@@ -40,25 +45,21 @@ public class PokerClient implements Runnable {
 
     }
 
+    /**
+     * Reception du playerInfo
+     */
     public void clientRun() {
 
         PlayerInfo playerInfo = null;
 
         try {
-
-            System.out.println("Je tente de display");
             while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
-                System.out.println("receive[player] : " + playerInfo.getAction());
-                // System.out.println("son message est : " + p);
-
                 if(!playerInfo.getPseudoEmetteur().equals(player.getPlayerInfo().getPseudoEmetteur())){
                     playerInfo.setShowCard(false);
                 }else{
                     playerInfo.setShowCard(true);
                 }
-
                 userInterface.display(playerInfo);
-                System.out.println("DISPLAY un truc");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,9 +68,11 @@ public class PokerClient implements Runnable {
         }
 
     }
-    public void setUserInterface(UserInterface userInterface) {
-        this.userInterface = userInterface;
-    }
+
+    /**
+     * Ecriture du playerInfo
+     * @param playerInfo
+     */
 
     public void sendByClient(PlayerInfo playerInfo){
 
@@ -80,22 +83,27 @@ public class PokerClient implements Runnable {
         }
     }
 
-    public void display(PlayerInfo playerinfo){
-
-        userInterface.display(playerinfo);
-    }
-
-    //public String getPseudo() {
-    //    return player.getPseudoEmetteur();
-    // }
-
+    /**
+     * lance le client
+     */
     @Override
     public void run() {
         this.clientRun();
     }
 
+    /**
+     * Retourne le player actuel
+     * @return player
+     */
     public Player getPlayer(){
         return player;
     }
 
+    /**
+     * set l'interface utilisateur
+     * @param userInterface
+     */
+    public void setUserInterface(UserInterface userInterface) {
+        this.userInterface = userInterface;
+    }
 }

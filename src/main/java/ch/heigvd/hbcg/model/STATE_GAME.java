@@ -1,5 +1,11 @@
 package ch.heigvd.hbcg.model;
 
+/**
+ * Enumeration STATE_GAME, représentant les états possibles
+ *
+ * @authors Hakim Balestrieri, Christian Gomes
+ */
+
 public enum STATE_GAME {
     DISTRIBUTION,
     FLOP,

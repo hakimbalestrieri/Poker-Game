@@ -14,21 +14,24 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 /**
- *
  * @author Hakim
  */
 public class ConnexionFrame extends javax.swing.JFrame {
 
     private PokerClient pokerClient;
 
+    /**
+     * Constructeur
+     */
     public ConnexionFrame() {
         initComponents();
     }
 
-    @SuppressWarnings("unchecked")
+    /**
+     * Initialisation des composants de la GUI
+     */
     private void initComponents() {
 
-        //Définition de l'icone de l'application
         Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Large.PNG"));
         ImageIcon icon = new ImageIcon(image);
         setIconImage(icon.getImage());
@@ -118,32 +121,33 @@ public class ConnexionFrame extends javax.swing.JFrame {
         pack();
     }
 
-
+    /**
+     * Evenement de connexion au niveau du mot de passe
+     *
+     * @param evt
+     * @throws IOException
+     */
     private void passwordKeyPressed(KeyEvent evt) throws IOException {
-        if (evt.getKeyCode()== KeyEvent.VK_ENTER){
-            System.out.println("te");
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login(null);
         }
     }
 
+    /**
+     * Connexion du joueur
+     * @param event
+     * @throws IOException
+     */
     private void login(MouseEvent event) throws IOException {
         boolean result = ControllerLogin.logUser(username.getText(), password.getPassword());
-        if(result) {
+        if (result) {
             JOptionPane.showMessageDialog(this, "Connexion réussie");
             dispose();
-            //dans le futur cela ne vas pas directement ouvrir la table de jeu mais un espèce de "salon" dans lequel on pourra choisir la table
-
-            //Mettre à jour les infos du playerInfo avec le fichier sauvegardé en local
             pokerClient = new PokerClient(UtilsFileReader.getPlayerInfo(username.getText()));
             pokerClient.getPlayer().getPlayerInfo().setAction(Actions.CONNECTION);
             new TableFrame(pokerClient);
             pokerClient.sendByClient(pokerClient.getPlayer().getPlayerInfo());
-
-            //pokerPlayer.send(pokerPlayer.getPlayer());
-            //pokerPlayer.receive();
-
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(this, "Identifiants incorrects", "Connexion", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -8,6 +8,12 @@ import java.io.IOException;
 
 public class UtilsFileReader {
 
+    /**
+     * Lecture et retour des informations stockées dans le fichiers users.txt
+     * @param username
+     * @return Player
+     * @throws IOException
+     */
     public static Player getPlayerInfo(String username) throws IOException {
 
         //Recuperation des informations d'un joueur

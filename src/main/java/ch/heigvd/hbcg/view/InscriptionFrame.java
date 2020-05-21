@@ -36,7 +36,9 @@ class InscriptionFrame extends JFrame {
     private JTextArea resadd;
     private JLabel background;
 
-
+    /**
+     * Constructeur
+     */
     public InscriptionFrame() {
         setTitle("Registration Form");
         setBounds(300, 90, 450, 550);
@@ -249,11 +251,14 @@ class InscriptionFrame extends JFrame {
         setVisible(true);
     }
 
-
+    /**
+     * Retourne le texte du bouton sélectionné
+     * @param buttonGroup
+     * @return
+     */
     public String getSelectedButtonText(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements(); ) {
             AbstractButton button = buttons.nextElement();
-
             if (button.isSelected()) {
                 return button.getText();
             }
@@ -263,10 +268,3 @@ class InscriptionFrame extends JFrame {
     }
 
 }
-
-class Inscription {
-
-    public static void main(String[] args) {
-        InscriptionFrame f = new InscriptionFrame();
-    }
-} 

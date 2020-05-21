@@ -19,6 +19,12 @@ public class PokerClientHandler extends Thread {
     private ObjectOutputStream out;
     private PlayerInfo playerInfo;
 
+    /**
+     * Constructeur
+     * @param socket
+     * @param server
+     * @throws IOException
+     */
     public PokerClientHandler(Socket socket,PokerServer server) throws IOException {
         this.socket = socket;
         this.server = server;
@@ -26,6 +32,9 @@ public class PokerClientHandler extends Thread {
         out = new ObjectOutputStream(socket.getOutputStream());
     }
 
+    /**
+     * Thread de réception du handler
+     */
     public void run() {
         try {
 
@@ -50,7 +59,11 @@ public class PokerClientHandler extends Thread {
         }
     }
 
-
+    /**
+     * Envoi du playerInfo
+     * @param playerInfo
+     * @throws IOException
+     */
     public void sendOnHandler(PlayerInfo playerInfo) throws IOException {
         System.out.println("SEND[HANDLER] : " + playerInfo.getPseudoEmetteur() + " " + playerInfo.getAction());
 

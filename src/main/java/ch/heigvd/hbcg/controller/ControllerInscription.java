@@ -13,7 +13,19 @@ import java.util.Calendar;
 
 public class ControllerInscription {
 
-
+    /**
+     * Réalisation de l'inscription d'un joueur, inscription des données dans le fichier texte gérant les utilisateurs.
+     * @param username
+     * @param address
+     * @param password
+     * @param termsConditions
+     * @param day
+     * @param month
+     * @param year
+     * @param gender
+     * @return
+     * @throws IOException
+     */
     public static int createInscription(String username, String address, String password, boolean termsConditions, Object day,
                                         Object month, Object year, String gender) throws IOException {
 
@@ -70,6 +82,12 @@ public class ControllerInscription {
         return 1;
     }
 
+    /**
+     * Vérifie si l'utilisateur existe
+     * @param name
+     * @return
+     * @throws IOException
+     */
     public static boolean checkIfUserExist(String name) throws IOException {
 
         final String FILE_NAME = "users.txt";

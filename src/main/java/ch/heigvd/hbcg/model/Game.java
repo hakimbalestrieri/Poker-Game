@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Classe Game
+ *
+ * @authors Hakim Balestrieri, Christian Gomes
+ */
 public class Game {
 
     private List<Card> boardCard = new ArrayList<>();
-    //private List<PlayerInfo> pokerPlayers = new ArrayList<>();
     private List<PlayerInfo> currentPlayers = new ArrayList<>();
-
     private Dealer dealer;
     private PokerServer pokerServer;
     private static int i = 0;
@@ -20,48 +23,62 @@ public class Game {
     private Timer timer;
     private double pot;
 
+    /**
+     * Constructeur
+     *
+     * @param handlers
+     * @param server
+     * @throws IOException
+     */
     public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
         pokerServer = server;
-        //t2.start();
-        for(int i = 0; i < handlers.size(); i++){
-            //pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
+        for (int i = 0; i < handlers.size(); i++) {
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
             currentPlayers.add(handlers.get(i).getPlayerInfo());
         }
-        // new Thread(this).start();
         startGame();
     }
 
+    /**
+     * Création d'un nouveau dealer et lancement du début de partie
+     *
+     * @param handlers
+     * @throws IOException
+     */
     public void resetGame(List<PokerClientHandler> handlers) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
         currentPlayers.clear();
-        for(int i = 0; i < handlers.size(); i++){
-            //pokerPlayers.add(i, handlers.get(i).getPlayerInfo());
+        for (int i = 0; i < handlers.size(); i++) {
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
             currentPlayers.add(handlers.get(i).getPlayerInfo());
         }
-        // new Thread(this).start();
         stageOfGame = STATE_GAME.DISTRIBUTION;
         startGame();
     }
 
-    public void updateInfoOfPlayers(List<PlayerInfo> playerInfos){
-
-        for(int i = 0; i < currentPlayers.size(); i++){
-          currentPlayers.set(i,playerInfos.get(i));
-            //System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
+    /**
+     * Mise à jour des playerInfos
+     *
+     * @param playerInfos
+     */
+    public void updateInfoOfPlayers(List<PlayerInfo> playerInfos) {
+        for (int i = 0; i < currentPlayers.size(); i++) {
+            currentPlayers.set(i, playerInfos.get(i));
         }
-
     }
 
+    /**
+     * Lancement de la partie
+     *
+     * @throws IOException
+     */
     private void startGame() throws IOException {
-
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(pokerServer.getGameStarted()){
+                if (pokerServer.getGameStarted()) {
                     try {
                         switch (stageOfGame) {
 
@@ -78,8 +95,8 @@ public class Game {
 
                             case FLOP:
                                 checkIfSomeoneHasFold();
-                             //   System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
-                               // System.out.println("Mise P2 : " + currentPlayers.get(1).getPseudoEmetteur() + " " + currentPlayers.get(1).getMise());
+                                //   System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
+                                // System.out.println("Mise P2 : " + currentPlayers.get(1).getPseudoEmetteur() + " " + currentPlayers.get(1).getMise());
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
                                 }
@@ -126,45 +143,51 @@ public class Game {
                         }
 
                         updatePlayers();
-                        if(stageOfGame == STATE_GAME.FINISH) {
+                        if (stageOfGame == STATE_GAME.FINISH) {
                             timer.purge();
                             timer.cancel();
                         }
 
 
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     timer.cancel();
                 }
             }
-        },0,5000);
-
-        //   if(!STATE_GAME.equals("END")) startGame();
+        }, 0, 5000);
 
     }
 
-    private void drawBoardCardsAllPlayers(Card boardCard){
+    /**
+     * Affichage du board pour tous les joueurs
+     *
+     * @param boardCard
+     */
+    private void drawBoardCardsAllPlayers(Card boardCard) {
 
         this.boardCard.add(boardCard);
-        for(PlayerInfo playerInfo : currentPlayers){
+        for (PlayerInfo playerInfo : currentPlayers) {
             playerInfo.setBoardCards(boardCard);
         }
-
     }
 
+    /**
+     * Vérification des personnes encore présentes dans la partie
+     *
+     * @throws IOException
+     */
     private void checkIfSomeoneHasFold() throws IOException {
 
-        for (int i = 0; i < currentPlayers.size();i++){
-            if(currentPlayers.get(i).getAction() == Actions.FOLD){
+        for (int i = 0; i < currentPlayers.size(); i++) {
+            if (currentPlayers.get(i).getAction() == Actions.FOLD) {
                 currentPlayers.remove(i);
-            }else{
+            } else {
                 pot += currentPlayers.get(i).getMise();
             }
         }
-        if(currentPlayers.size() <= 1){
+        if (currentPlayers.size() <= 1) {
             //Game plus possible.
             setActionAllPlayers(Actions.END);
             stageOfGame = STATE_GAME.END;
@@ -173,28 +196,34 @@ public class Game {
         }
     }
 
+    /**
+     * Affectation d'une action donnée aux joueurs
+     *
+     * @param action
+     * @throws IOException
+     */
     private void setActionAllPlayers(Actions action) throws IOException {
 
-        for(PlayerInfo playerInfo : currentPlayers){
+        for (PlayerInfo playerInfo : currentPlayers) {
             playerInfo.setAction(action);
         }
-
     }
 
+    /**
+     * Mise à jour des joueurs
+     * @throws IOException
+     */
     private void updatePlayers() throws IOException {
 
+        //Création d'une copie car problème de modification concurrente
+        List<PlayerInfo> myList = new CopyOnWriteArrayList<>(currentPlayers);
 
 
+        Iterator<PlayerInfo> iterator = myList.iterator();
 
-            //Création d'une copie car problème de modification concurrente
-            List<PlayerInfo> myList = new CopyOnWriteArrayList<>(currentPlayers);
-
-
-            Iterator<PlayerInfo> iterator = myList.iterator();
-
-            while(iterator.hasNext()){
-                pokerServer.send(iterator.next());
-            }
+        while (iterator.hasNext()) {
+            pokerServer.send(iterator.next());
+        }
     }
 
 }

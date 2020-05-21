@@ -22,15 +22,17 @@ public class TableFrame extends JFrame implements UserInterface {
     private boolean isMisedOrChecked = false;
     private boolean isCurrentPlayer = false;
 
+    /**
+     * Constructeur
+     *
+     * @param pokerPlayer
+     */
     public TableFrame(PokerClient pokerPlayer) {
 
-        if(pokerPlayer != null){
+        if (pokerPlayer != null) {
             initComponents();
-            //game = PokerServer.getGame();
-            // game.addPlayerToGame(pokerPlayer);
             this.pokerPlayer = pokerPlayer;
             pokerPlayer.setUserInterface(this);
-            //   pokerPlayer.getPlayer().setJFrame(this);
             this.setVisible(true);
             System.out.println("New frame de " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur());
             setTitle(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur());
@@ -38,69 +40,57 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-
+    /**
+     * Affichage du playerInfo
+     *
+     * @param playerInfo
+     */
     @Override
-    public void display(PlayerInfo playerInfo){
+    public void display(PlayerInfo playerInfo) {
 
-        if(playerInfo == null) System.out.println("Tu es nul");
+        if (playerInfo == null) System.out.println("Tu es nul");
 
-        if(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())){
+        if (pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())) {
             pokerPlayer.getPlayer().setPlayerInfo(playerInfo);
             isCurrentPlayer = true;
-        }else{
-            if(pokerPlayer.getPlayer().getPlayerInfo().getAction() != Actions.PHASE_MISE){
+        } else {
+            if (pokerPlayer.getPlayer().getPlayerInfo().getAction() != Actions.PHASE_MISE) {
                 isCurrentPlayer = false;
             }
         }
 
-       //
-        //if(isCurrentPlayer) messageArea.append("ACTION ACTUELLE : " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
-        System.out.println(playerInfo.getAction() + "display");
-
-
-        //Attention - Action du joueur reçu en paramètre et non de celui à qui est la Jframe actuelle
-        switch (playerInfo.getAction()){
+        switch (playerInfo.getAction()) {
             case CONNECTION:
                 messageArea.append("Le joueur " + playerInfo.getPseudoEmetteur() + " rejoint la partie \n");
                 break;
             case SIT_DOWN:
-                //Synchro place
-                System.out.println("Quelqu'n s'est assis");
-                sitDown(playerInfo.getPosition(),true);
-                // System.out.println("Quelqu'n s'est assis");
+                sitDown(playerInfo.getPosition(), true);
                 break;
             case MESSAGE:
-                //Affichage message
-                System.out.println("J'ecris un message");
                 messageArea.append(playerInfo.toString() + "\n");
                 break;
             case START_GAME:
-                showCards(playerInfo,true);
+                showCards(playerInfo, true);
                 break;
             case FLOP:
             case TURN:
             case RIVER:
-                showBoardCard(playerInfo,true);
+                showBoardCard(playerInfo, true);
                 break;
             case PHASE_MISE:
-             //   messageArea.append("je recois une phase mise et moi je suis en " + pokerPlayer.getPlayer().getPlayerInfo().getAction());
-                if(isCurrentPlayer)  messageArea.append("Vous pouvez miser");
-                //pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.PHASE_MISE);
-                //tempPlayerInfo = playerInfo;
-                //miserCheck(playerInfo);
+                if (isCurrentPlayer) messageArea.append("Vous pouvez miser");
                 break;
             case FOLD:
-                showCards(playerInfo,false);
+                showCards(playerInfo, false);
                 break;
             case END:
-                if(isCurrentPlayer){
+                if (isCurrentPlayer) {
                     messageArea.append("La partie est terminé");
                 }
                 break;
             case RESTART:
-                showCards(playerInfo,false);
-                showBoardCard(playerInfo,false);
-                //Voir pour reset ses parametres (mise etc) si besoin.
+                showCards(playerInfo, false);
+                showBoardCard(playerInfo, false);
                 break;
             default:
                 System.out.println("Aucune action");
@@ -108,24 +98,29 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
+    /**
+     * Gestion de l'événement de mise
+     */
     private void miserCheck() {
-
-        //System.out.println("VALEUR" + Double.valueOf(montant_mise.getText()));
-        // String montant = StringUtils.substringBefore(valueSlider.getText().su, "CHF");
-        //pokerPlayer.getPlayer().getPlayerInfo().setMise(666);
-            pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
-            messageArea.append("La mise est faite \n");
-            pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
+        pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
+        messageArea.append("La mise est faite \n");
+        pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
 
     }
 
-    private void showBoardCard(PlayerInfo playerInfo,boolean isRunning) {
+    /**
+     * Affichage des cartes du board
+     *
+     * @param playerInfo
+     * @param isRunning
+     */
+    private void showBoardCard(PlayerInfo playerInfo, boolean isRunning) {
 
         ImageIcon fold1, fold2, fold3, turn, river;
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
 
-        switch (playerInfo.getAction()){
-            case FLOP :
+        switch (playerInfo.getAction()) {
+            case FLOP:
                 fold1 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(0).toString() + ".png");
                 fold2 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(1).toString() + ".png");
                 fold3 = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(2).toString() + ".png");
@@ -136,7 +131,7 @@ public class TableFrame extends JFrame implements UserInterface {
                 carte2.setVisible(isRunning);
                 carte3.setVisible(isRunning);
                 break;
-            case TURN :
+            case TURN:
                 turn = new javax.swing.ImageIcon(file + playerInfo.getBoardCard().get(3).toString() + ".png");
                 carte4.setIcon(turn);
                 carte4.setVisible(isRunning);
@@ -150,8 +145,13 @@ public class TableFrame extends JFrame implements UserInterface {
         }
     }
 
-    // public void showCards(){
-    public void showCards(PlayerInfo playerInfo, boolean fold){
+    /**
+     * Affichage des cartes de la table
+     *
+     * @param playerInfo
+     * @param fold
+     */
+    public void showCards(PlayerInfo playerInfo, boolean fold) {
 
         //int position = this.pokerPlayer.getPlayer().getPosition();
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
@@ -159,15 +159,15 @@ public class TableFrame extends JFrame implements UserInterface {
         ImageIcon image1;
         ImageIcon image2;
 
-        if(playerInfo.getShowCard()){
+        if (playerInfo.getShowCard()) {
             image1 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard1() + ".png");
             image2 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard2() + ".png");
-        }else{
+        } else {
             image1 = new javax.swing.ImageIcon(file2 + ".png");
             image2 = new javax.swing.ImageIcon(file2 + ".png");
         }
 
-        switch (playerInfo.getPosition()){
+        switch (playerInfo.getPosition()) {
             case 1:
 
                 jLabel10.setIcon(image1);
@@ -235,8 +235,9 @@ public class TableFrame extends JFrame implements UserInterface {
 
     }
 
-
-    @SuppressWarnings("unchecked")
+    /**
+     * Initialisation des composants
+     */
     private void initComponents() {
 
         carte1 = new javax.swing.JLabel();
@@ -291,8 +292,8 @@ public class TableFrame extends JFrame implements UserInterface {
         background_frame = new javax.swing.JLabel();
 
         setResizable(false);
-        setMaximumSize(new Dimension(1500,1500));
-        setPreferredSize(new Dimension(1003,1000));
+        setMaximumSize(new Dimension(1500, 1500));
+        setPreferredSize(new Dimension(1003, 1000));
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -600,7 +601,6 @@ public class TableFrame extends JFrame implements UserInterface {
             }
         });
         valueSlider.addActionListener(evt -> valueSliderActionPerformed(evt));
-        valueSlider.addPropertyChangeListener(evt -> valueSliderPropertyChange(evt));
         getContentPane().add(valueSlider);
         valueSlider.setBounds(720, 830, 100, 30);
 
@@ -638,80 +638,148 @@ public class TableFrame extends JFrame implements UserInterface {
         pack();
     }
 
-
-
+    /**
+     * Gestion du changement d'état du slider
+     *
+     * @param evt
+     */
     private void slider_miserStateChanged(javax.swing.event.ChangeEvent evt) {
         //@TODO on est obligé de miser au moins 1 fois la big blind, il faut vérifier cela sur le Slider
         valueSlider.setText(String.valueOf(slider_miser.getValue()));
-        if(slider_miser.getValue() > 0)
+        if (slider_miser.getValue() > 0)
             b_miser.setEnabled(true);
         else
             b_miser.setEnabled(false);
 
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos1MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(1,false);
+        sitDown(1, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos2MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(2,false);
+        sitDown(2, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos3MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(3,false);
+        sitDown(3, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos4MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(4,false);
+        sitDown(4, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos5MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(5,false);
+        sitDown(5, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos6MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(6,false);
+        sitDown(6, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos7MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(7,false);
+        sitDown(7, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos8MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(8,false);
+        sitDown(8, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos9MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(9,false);
+        sitDown(9, false);
     }
 
+    /**
+     * Evenement prise de place d'un joueur
+     *
+     * @param evt
+     */
     private void pos10MouseReleased(java.awt.event.MouseEvent evt) {
-        sitDown(10,false);
+        sitDown(10, false);
     }
 
+    /**
+     * Evenement "couché" d'un joueur
+     *
+     * @param evt
+     */
     private void b_seCoucherActionPerformed(java.awt.event.ActionEvent evt) {
         //System.out.print("Je me couche par terre!");
-        if(isCurrentPlayer){
-            if(pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
+        if (isCurrentPlayer) {
+            if (pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
                 pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.FOLD);
                 pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
             }
         }
     }
 
+    /**
+     * Evenement "mise" d'un joueur
+     *
+     * @param evt
+     */
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
         messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
-      //  System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
+        //  System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
         //System.out.println(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " J'ai appuyé sur miser ");
-        if(isCurrentPlayer && pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE){
+        if (isCurrentPlayer && pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
             miserCheck();
-        }else{
+        } else {
             messageArea.append("Le joueur n'est pas en Action miser\n");
         }
 
     }
 
+    /**
+     * Ouverture de la fenetre, initialisation des variables
+     *
+     * @param evt
+     */
     private void formWindowOpened(java.awt.event.WindowEvent evt) {
         jScrollBar1.setValue(100);
         messageArea.setText("Croupier : Bienvenue à la table !\n");
@@ -721,52 +789,80 @@ public class TableFrame extends JFrame implements UserInterface {
         b_miser.setEnabled(false);
     }
 
+    /**
+     * Saisie du message à envoyer
+     *
+     * @param evt
+     */
     private void messageToSendMouseReleased(java.awt.event.MouseEvent evt) {
-        if(messageToSend.getText().equals("Saisissez votre texte ici..."))
+        if (messageToSend.getText().equals("Saisissez votre texte ici..."))
             messageToSend.setText("");
     }
 
+    /**
+     * Focus sur l'arrière plan
+     *
+     * @param evt
+     */
     private void background_frameMouseReleased(java.awt.event.MouseEvent evt) {
         background_frame.requestFocusInWindow();
     }
 
-    private void valueSliderPropertyChange(java.beans.PropertyChangeEvent evt) {
-
-    }
-
+    /**
+     * Activation / Désactivation du bouton miser
+     *
+     * @param evt
+     */
     private void valueSliderActionPerformed(java.awt.event.ActionEvent evt) {
-        if(!valueSlider.getText().equals("")) {
+        if (!valueSlider.getText().equals("")) {
             slider_miser.setValue(Integer.valueOf(valueSlider.getText()));
-            if(Integer.valueOf(valueSlider.getText()) > 0)
+            if (Integer.valueOf(valueSlider.getText()) > 0)
                 b_miser.setEnabled(true);
             else
                 b_miser.setEnabled(false);
             System.out.print(Integer.valueOf(valueSlider.getText()));
 
-        }    }
+        }
+    }
 
+    /**
+     * Affectation du slider
+     *
+     * @param evt
+     */
     private void valueSliderFocusLost(java.awt.event.FocusEvent evt) {
-        if(!valueSlider.getText().equals("")) {
+        if (!valueSlider.getText().equals("")) {
             slider_miser.setValue(Integer.valueOf(valueSlider.getText()));
-
-            System.out.print(Integer.valueOf(valueSlider.getText()));
 
         }
     }
 
+    /**
+     * Contrôle de la touche d'envoi
+     *
+     * @param evt
+     */
     private void messageToSendKeyPressed(java.awt.event.KeyEvent evt) {
-        if (evt.getKeyCode()== KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             submitMessage();
         }
     }
 
+    /**
+     * Contrôle du clic
+     *
+     * @param evt
+     */
     private void b_sendMessageMouseClicked(java.awt.event.MouseEvent evt) {
         submitMessage();
     }
 
+    /**
+     * envoi d'un message dans la chatbox
+     */
     public void submitMessage() {
         String message = messageToSend.getText();
-        if(!message.isEmpty()) {
+        if (!message.isEmpty()) {
             messageToSend.setText("");
             pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.MESSAGE);
             pokerPlayer.getPlayer().getPlayerInfo().setMessage(message);
@@ -775,16 +871,21 @@ public class TableFrame extends JFrame implements UserInterface {
         }
     }
 
+    /**
+     * Participation à la partie en cours
+     *
+     * @param position
+     * @param placeAdversaire
+     */
     public void sitDown(int position, boolean placeAdversaire) {
 
         final String filenameIcon = "src\\main\\resources\\user_male.png";
 
-        if(placeAdversaire|| !positions.contains(position) && pokerPlayer.getPlayer().getPlayerInfo().getPosition() == 0) {
+        if (placeAdversaire || !positions.contains(position) && pokerPlayer.getPlayer().getPlayerInfo().getPosition() == 0) {
             positions.add(position);
             pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.SIT_DOWN);
-            if(!placeAdversaire){
-                pokerPlayer.getPlayer().getPlayerInfo().setPosition(position); //si joueur quitte partie (remove position)
-                //pokerPlayer.getPlayer().setAction(Actions.SIT_DOWN);
+            if (!placeAdversaire) {
+                pokerPlayer.getPlayer().getPlayerInfo().setPosition(position);
                 pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
             }
             switch (position) {
@@ -821,8 +922,6 @@ public class TableFrame extends JFrame implements UserInterface {
             }
 
         }
-
-        //System.out.print(position);
     }
 
     /**
@@ -847,6 +946,9 @@ public class TableFrame extends JFrame implements UserInterface {
         }
     }
 
+    /**
+     * Déclarations des variables
+     */
     private javax.swing.JButton b_miser;
     private javax.swing.JButton b_seCoucher;
     private javax.swing.JLabel b_sendMessage;

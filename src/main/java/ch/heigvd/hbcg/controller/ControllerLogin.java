@@ -6,6 +6,13 @@ import java.io.IOException;
 
 public class ControllerLogin {
 
+    /**
+     * Connexion d'un joueur
+     * @param username
+     * @param password
+     * @return
+     * @throws IOException
+     */
     public static boolean logUser(String username, char[] password) throws IOException {
 
         final String FILE_NAME = "users.txt";

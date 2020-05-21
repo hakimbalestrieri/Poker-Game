@@ -11,10 +11,16 @@ public class Deck {
 
     private List<Card> cards;
 
+    /**
+     * Constructeur
+     */
     public Deck(){
         randomDeck();
     }
 
+    /**
+     * Création d'un deck aléatoire et mélange du deck
+     */
     private void randomDeck() {
 
         cards = new ArrayList<>();
@@ -27,6 +33,10 @@ public class Deck {
         Collections.shuffle(cards);
     }
 
+    /**
+     * Retire la première carte du deck
+     * @return
+     */
     public Card draw(){
 
         Card card;
@@ -35,6 +45,11 @@ public class Deck {
         return card;
     }
 
+    /**
+     * Retourne le nombre de cartes
+     * @brief utilisé à des fins de test
+     * @return
+     */
     public int size(){
         return cards.size();
     }
