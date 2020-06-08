@@ -25,6 +25,7 @@ public class PlayerInfo implements Serializable {
     private boolean showCard = true;
     private List<Card> boardCard = new ArrayList<>(5);
     private RankingCards rankingCards = null;
+    private boolean isWinner = false;
 
     /**
      * Constructeur par défaut
@@ -56,6 +57,12 @@ public class PlayerInfo implements Serializable {
                 boardCard.add(playerInfo.getBoardCard().get(i));
             }
         }
+    }
+
+    public void setWinner(boolean win){ this.isWinner = win;}
+
+    public boolean getWinner(){
+        return isWinner;
     }
 
     /**

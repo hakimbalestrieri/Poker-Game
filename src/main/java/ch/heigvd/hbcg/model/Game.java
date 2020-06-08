@@ -2,6 +2,7 @@ package ch.heigvd.hbcg.model;
 
 import ch.heigvd.hbcg.network.PokerClientHandler;
 import ch.heigvd.hbcg.network.PokerServer;
+import ch.heigvd.hbcg.utilsPoker.UtilsPoker;
 
 import java.io.IOException;
 import java.util.*;
@@ -16,6 +17,7 @@ public class Game {
 
     private List<Card> boardCard = new ArrayList<>();
     private List<PlayerInfo> currentPlayers = new ArrayList<>();
+    private List<PlayerInfo> winners = new ArrayList<>();
     private Dealer dealer;
     private PokerServer pokerServer;
     private static int i = 0;
@@ -132,7 +134,20 @@ public class Game {
                                 System.out.println("le pot est de " + pot);
                                 setActionAllPlayers(Actions.END);
                                 //TODO : Prevoir gagnant partie ici avec affichage de son pot gagnant
-                                stageOfGame = STATE_GAME.END; //END pour demo sinon restart pour (tenter) le reset de la partie
+                               // timer.cancel();
+                                winners = UtilsPoker.isWinner(currentPlayers,boardCard);
+                                System.out.println(winners.size());
+
+                                for (PlayerInfo playerInfo : winners){
+                                    System.out.println("Winner : " + playerInfo.getPseudoEmetteur());
+                                }
+                                stageOfGame = STATE_GAME.FINISH; //END pour demo sinon restart pour (tenter) le reset de la partie
+                                break;
+
+                            case FINISH:
+                                setActionAllPlayers(Actions.FINISH);
+                                stageOfGame = STATE_GAME.FINISH;
+                                timer.cancel();
                                 break;
 
                             case RESTART:
@@ -206,6 +221,13 @@ public class Game {
 
         for (PlayerInfo playerInfo : currentPlayers) {
             playerInfo.setAction(action);
+            if(action == Actions.FINISH){
+                for(PlayerInfo winner : winners){
+                    if(winner.getPseudoEmetteur() == playerInfo.getPseudoEmetteur()){
+                        playerInfo.setWinner(true);
+                    }
+                }
+            }
         }
     }
 

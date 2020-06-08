@@ -13,6 +13,22 @@ class UtilsPokerTest {
     Card[] cardsTab = new Card[7];
 
     @Test
+    public void higherRanking(){
+
+        cardsTab[0] = new Card(Colors.coeur, Numbers.eight);
+        cardsTab[1] = new Card(Colors.carreau, Numbers.two);
+        //board
+        cardsTab[2] = new Card(Colors.carreau, Numbers.nine);
+        cardsTab[3] = new Card(Colors.coeur, Numbers.nine);
+        cardsTab[4] = new Card(Colors.pique, Numbers.nine);
+        cardsTab[5] = new Card(Colors.carreau, Numbers.four);
+        cardsTab[6] = new Card(Colors.carreau, Numbers.k);
+
+        assertEquals(RankingCards.THREE_OF_A_KIND, UtilsPoker.higherRanking(cardsTab));
+
+    }
+
+    @Test
     public void isOnePair(){
         //main
         cardsTab[0] = new Card(Colors.coeur, Numbers.eight);
@@ -24,7 +40,7 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.PAIR, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.PAIR, UtilsPoker.isOnePair(cardsTab));
 
     }
 
@@ -40,11 +56,11 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.TWO_PAIR, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.TWO_PAIR, UtilsPoker.isTwoPair(cardsTab));
     }
 
     @Test
-    public void threeOfAKind(){
+    public void isthreeOfAKind(){
         //main
         cardsTab[0] = new Card(Colors.coeur, Numbers.eight);
         cardsTab[1] = new Card(Colors.carreau, Numbers.eight);
@@ -55,11 +71,11 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.THREE_OF_A_KIND, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.THREE_OF_A_KIND, UtilsPoker.isThreeOfAKind(cardsTab));
     }
 
     @Test
-    public void straight(){
+    public void isStraight(){
         //main
         cardsTab[0] = new Card(Colors.coeur, Numbers.eight);
         cardsTab[1] = new Card(Colors.carreau, Numbers.seven);
@@ -70,22 +86,37 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.STRAIGHT, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.STRAIGHT, UtilsPoker.isStraight(cardsTab));
+
+        cardsTab[6] = new Card(Colors.carreau, Numbers.five);
+
+        assertEquals(RankingCards.STRAIGHT, UtilsPoker.isStraight(cardsTab));
+
+        cardsTab[2] = new Card(Colors.carreau, Numbers.three);
+        cardsTab[3] = new Card(Colors.coeur, Numbers.two);
+        cardsTab[4] = new Card(Colors.pique, Numbers.one);
+        cardsTab[5] = new Card(Colors.carreau, Numbers.four);
+        cardsTab[6] = new Card(Colors.carreau, Numbers.five);
+
+        assertEquals(RankingCards.STRAIGHT, UtilsPoker.isStraight(cardsTab));
     }
 
     @Test
     public void flush() {
+
         //main
-        cardsTab[0] = new Card(Colors.carreau, Numbers.eight);
+        cardsTab[0] = new Card(Colors.pique, Numbers.eight);
         cardsTab[1] = new Card(Colors.carreau, Numbers.eight);
         //board
         cardsTab[2] = new Card(Colors.carreau, Numbers.six);
         cardsTab[3] = new Card(Colors.coeur, Numbers.three);
-        cardsTab[4] = new Card(Colors.pique, Numbers.nine);
+        cardsTab[4] = new Card(Colors.carreau, Numbers.nine);
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.FLUSH, UtilsPoker.isFullHouse(cardsTab));
+        UtilsPoker.sortByColor(cardsTab);
+
+        assertEquals(RankingCards.FLUSH, UtilsPoker.isFlush(cardsTab));
     }
 
     @Test
@@ -116,26 +147,30 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.four);
         cardsTab[6] = new Card(Colors.carreau, Numbers.k);
 
-        assertEquals(RankingCards.FOUR_OF_A_KIND, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.FOUR_OF_A_KIND, UtilsPoker.isFour(cardsTab));
     }
 
+
     @Test
-    public void straightFlush() {
-        //main
-        cardsTab[0] = new Card(Colors.carreau, Numbers.nine);
-        cardsTab[1]= new Card(Colors.carreau, Numbers.eight);
+    public void isStraightFlush(){
+
+        cardsTab[0] = new Card(Colors.carreau, Numbers.two);
+        cardsTab[1]= new Card(Colors.carreau, Numbers.four);
         //board
-        cardsTab[2] = new Card(Colors.carreau, Numbers.seven);
+        cardsTab[2] = new Card(Colors.carreau, Numbers.three);
         cardsTab[3] = new Card(Colors.coeur, Numbers.eight);
         cardsTab[4] = new Card(Colors.pique, Numbers.nine);
         cardsTab[5] = new Card(Colors.carreau, Numbers.six);
         cardsTab[6] = new Card(Colors.carreau, Numbers.five);
 
-        assertEquals(RankingCards.STRAIGHT_FLUSH, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.STRAIGHT_FLUSH, UtilsPoker.isStraightFlush(cardsTab));
+
     }
 
     @Test
-    public void royalFlush() {
+    public void isRoyalFlush() {
+
+        //TODO : A voir si l'on l'implemente - Pose problème avec AS qui vaut 1 et la carte la plus forte
         //main
         cardsTab[0] = new Card(Colors.carreau, Numbers.one);
         cardsTab[1]= new Card(Colors.carreau, Numbers.k);
@@ -146,6 +181,6 @@ class UtilsPokerTest {
         cardsTab[5] = new Card(Colors.carreau, Numbers.j);
         cardsTab[6] = new Card(Colors.carreau, Numbers.ten);
 
-        assertEquals(RankingCards.ROYAL_FLUSH, UtilsPoker.isFullHouse(cardsTab));
+        assertEquals(RankingCards.ROYAL_FLUSH, UtilsPoker.isRoyalFlush(cardsTab));
     }
 }

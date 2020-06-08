@@ -21,6 +21,7 @@ public class TableFrame extends JFrame implements UserInterface {
     private Set<Integer> positions = new HashSet();
     private boolean isMisedOrChecked = false;
     private boolean isCurrentPlayer = false;
+    private Set<String> winnersName = new HashSet<>();
 
     /**
      * Constructeur
@@ -75,10 +76,14 @@ public class TableFrame extends JFrame implements UserInterface {
             case FLOP:
             case TURN:
             case RIVER:
+                phaseGame.setText("Distribution...");
                 showBoardCard(playerInfo, true);
                 break;
             case PHASE_MISE:
-                if (isCurrentPlayer) messageArea.append("Vous pouvez miser");
+                if (isCurrentPlayer) {
+                    messageArea.append("Vous pouvez miser");
+                    phaseGame.setText("Phase de MISE...");
+                }
                 break;
             case FOLD:
                 showCards(playerInfo, false);
@@ -91,6 +96,20 @@ public class TableFrame extends JFrame implements UserInterface {
             case RESTART:
                 showCards(playerInfo, false);
                 showBoardCard(playerInfo, false);
+                break;
+
+            case FINISH:
+                if(playerInfo.getWinner()) winnersName.add(playerInfo.getPseudoEmetteur());
+
+                phaseGame.setText("Les winners sont : ");
+                for(String name : winnersName){
+                    phaseGame.setText(phaseGame.getText() + name + " ");
+                }
+
+                //Afficher et clear
+
+                winnersName.clear();
+
                 break;
             default:
                 System.out.println("Aucune action");
@@ -276,6 +295,7 @@ public class TableFrame extends JFrame implements UserInterface {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         croupier = new javax.swing.JLabel();
+        phaseGame = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         jScrollBar1 = new javax.swing.JScrollBar();
         background_table = new javax.swing.JLabel();
@@ -522,6 +542,14 @@ public class TableFrame extends JFrame implements UserInterface {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(550, 530, 70, 70);
         jLabel3.setVisible(false);
+
+        getContentPane().add(phaseGame);
+
+        phaseGame.setForeground(Color.white);
+        phaseGame.setBounds(450,400,300,100);
+        phaseGame.setText("En attente de joueurs ...");
+        phaseGame.setVisible(true);
+
 
         croupier.setForeground(new java.awt.Color(255, 255, 255));
         croupier.setIcon(new javax.swing.ImageIcon("src\\main\\resources\\croupier.png"));
@@ -999,5 +1027,6 @@ public class TableFrame extends JFrame implements UserInterface {
     private javax.swing.JLabel pos9;
     private javax.swing.JSlider slider_miser;
     private javax.swing.JTextField valueSlider;
+    private javax.swing.JLabel phaseGame;
 
 }
