@@ -10,7 +10,7 @@ public enum Numbers {
 
     //Force de la carte , déterminer par la position de l'enum.
 
-    one,
+    /*one,
     k,
     q,
     j,
@@ -22,5 +22,18 @@ public enum Numbers {
     five,
     four,
     three,
-    two
+    two*/
+    one,
+    two,
+    three,
+    four,
+    five,
+    six,
+    seven,
+    eight,
+    nine,
+    ten,
+    j,
+    q,
+    k
 }

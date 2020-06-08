@@ -24,6 +24,7 @@ public class PlayerInfo implements Serializable {
     private boolean actif = true;
     private boolean showCard = true;
     private List<Card> boardCard = new ArrayList<>(5);
+    private RankingCards rankingCards = null;
 
     /**
      * Constructeur par défaut
@@ -224,5 +225,13 @@ public class PlayerInfo implements Serializable {
      */
     public double getMise() {
         return mise;
+    }
+
+    public RankingCards getRankingCards() {
+        return rankingCards;
+    }
+
+    public void setRankingCards(RankingCards rankingCards) {
+        this.rankingCards = rankingCards;
     }
 }
