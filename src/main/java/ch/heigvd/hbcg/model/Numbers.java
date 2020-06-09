@@ -1,5 +1,7 @@
 package ch.heigvd.hbcg.model;
 
+import java.io.Serializable;
+
 /**
  * Enumeration Numbers, représentant les nombres possibles
  *

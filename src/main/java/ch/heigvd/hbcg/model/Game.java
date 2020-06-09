@@ -26,7 +26,6 @@ public class Game {
     private Timer timer;
     private double pot;
 
-
     /**
      * Constructeur
      *
@@ -52,6 +51,8 @@ public class Game {
      */
     public void resetGame(List<PokerClientHandler> handlers) throws IOException {
         dealer = new Dealer(); //initialise un Dealer et son deck
+        winnersGame.clear();
+        winners.clear();
         currentPlayers.clear();
         for (int i = 0; i < handlers.size(); i++) {
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
@@ -77,7 +78,7 @@ public class Game {
      *
      * @throws IOException
      */
-    private void startGame() throws IOException {
+    synchronized private void startGame() throws IOException {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -99,7 +100,7 @@ public class Game {
 
                             case FLOP:
                                 checkIfSomeoneHasFold();
-                                //   System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
+                                // System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
                                 // System.out.println("Mise P2 : " + currentPlayers.get(1).getPseudoEmetteur() + " " + currentPlayers.get(1).getMise());
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
@@ -177,7 +178,7 @@ public class Game {
                     timer.cancel();
                 }
             }
-        }, 0, 5000);
+        }, 0, 6000);
 
     }
 
@@ -210,8 +211,8 @@ public class Game {
         }
         if (currentPlayers.size() <= 1) {
             //Game plus possible.
-            setActionAllPlayers(Actions.END);
-            stageOfGame = STATE_GAME.END;
+            setActionAllPlayers(Actions.RESTART);
+            stageOfGame = STATE_GAME.RESTART;
             pot = 0;
             updatePlayers();
         }

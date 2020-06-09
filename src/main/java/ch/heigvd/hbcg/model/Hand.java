@@ -11,9 +11,8 @@ import java.util.List;
  */
 public class Hand implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     private List<Card> twoCards;
-    private RankingCards rankingCard;
 
     /**
      * Constructeur
@@ -46,13 +45,7 @@ public class Hand implements Serializable {
         return twoCards.size();
     }
 
-    /**
-     * Retourne la force de la main
-     * @return rankingCard
-     */
-    public RankingCards getRankingCard() {
-        return rankingCard;
-    }
+
 
     /**
      * Ajout d'une carte dans une main

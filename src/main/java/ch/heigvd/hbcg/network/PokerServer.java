@@ -61,7 +61,6 @@ public class PokerServer {
      */
     public void send(PlayerInfo playerInfo) throws IOException {
 
-
         for(int i=0 ; i< listHandlers.size(); i++){
             listHandlers.get(i).sendOnHandler(playerInfo);
             currentPlayers.set(i,listHandlers.get(i).getPlayerInfo());
@@ -70,6 +69,7 @@ public class PokerServer {
         if(checkActionPlayer(Actions.RESTART)){
             started = false;
             isUpdatable = false;
+            cleanInfoHandlers();
             game.resetGame(listHandlers);
             isUpdatable = true;
             started = true;
@@ -82,7 +82,7 @@ public class PokerServer {
 
         //Lancement de la partie à partir de 3 joueurs
         //TODO : Ajouter un moyen de démarrage au lieu d'un nombre fixe de joueurs
-        if(!started && listHandlers.size() == 3 && checkActionPlayer(Actions.SIT_DOWN)){
+        if(!started && listHandlers.size() == 2 && checkActionPlayer(Actions.SIT_DOWN)){
             started = true;
             startGame();
             isUpdatable = true;
@@ -90,6 +90,13 @@ public class PokerServer {
 
     }
 
+    private void cleanInfoHandlers(){
+
+        for(int i=0 ; i< listHandlers.size(); i++){
+            listHandlers.get(i).resetGame();
+        }
+
+    }
 
     /**
      * Permet le lancement de la partie avec les handlers

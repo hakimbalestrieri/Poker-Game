@@ -12,6 +12,7 @@ import java.util.List;
 public class PlayerInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     private String pseudoEmetteur;
     private String message;
     private double credit;
@@ -24,9 +25,9 @@ public class PlayerInfo implements Serializable {
     private boolean actif = true;
     private boolean showCard = true;
     private List<Card> boardCard = new ArrayList<>(5);
-    private RankingCards rankingCards = null;
-    private boolean isWinner = false;
 
+    private boolean isWinner = false;
+    private RankingCards rankingCards = null;
     /**
      * Constructeur par défaut
      */
@@ -38,6 +39,7 @@ public class PlayerInfo implements Serializable {
      */
     public PlayerInfo(PlayerInfo playerInfo) {
 
+
         this.pseudoEmetteur = playerInfo.getPseudoEmetteur();
         this.message = playerInfo.getMessage();
         this.position = playerInfo.getPosition();
@@ -45,7 +47,7 @@ public class PlayerInfo implements Serializable {
         this.mise = playerInfo.getMise();
         this.showCard = playerInfo.getShowCard();
         this.isWinner = playerInfo.getWinner();
-
+        this.rankingCards = playerInfo.getRankingCards();
 
         if(playerInfo.getPlayerHand().size() != 0){
             for (int i = 0; i < playerInfo.getPlayerHand().size(); i++){
@@ -59,6 +61,16 @@ public class PlayerInfo implements Serializable {
             }
         }
     }
+
+    public void resetInfo(){
+        isWinner = false;
+        playerHand = new Hand();
+        showCard = true;
+        rankingCards = null;
+        boardCard = new ArrayList<>(5);
+        mise = 0;
+    }
+
 
     public void setWinner(boolean win){ this.isWinner = win;}
 

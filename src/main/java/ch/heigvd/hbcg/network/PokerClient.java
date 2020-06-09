@@ -53,7 +53,7 @@ public class PokerClient implements Runnable {
         PlayerInfo playerInfo = null;
 
         try {
-            while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
+             while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
                 if(!playerInfo.getPseudoEmetteur().equals(player.getPlayerInfo().getPseudoEmetteur())){
                     playerInfo.setShowCard(false);
                 }else{
@@ -77,7 +77,12 @@ public class PokerClient implements Runnable {
     public void sendByClient(PlayerInfo playerInfo){
 
         try {
+
             out.writeObject(new PlayerInfo(playerInfo));
+          //  out.flush();
+            out.flush();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

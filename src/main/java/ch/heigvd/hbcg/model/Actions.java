@@ -15,8 +15,6 @@ public enum Actions implements Serializable {
     TURN,
     RIVER,
     PHASE_MISE,
-    CALL,
-    CHECK,
     FOLD,
     END,
     RESTART,

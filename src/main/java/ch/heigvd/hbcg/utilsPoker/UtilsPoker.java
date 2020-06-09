@@ -29,6 +29,7 @@ public class UtilsPoker {
                 temp[j] = cardsToCheck[j];
             }
 
+
             playerInfo.setRankingCards(higherRanking(temp));
             rankings.add(higherRanking(temp).ordinal());
         }
@@ -264,12 +265,12 @@ public class UtilsPoker {
 
     public static RankingCards isRoyalFlush (Card[] cards){
 
-        if(isFlush(cards) == RankingCards.FLUSH && isStraight(cards) == RankingCards.STRAIGHT) {
+  /*      if(isFlush(cards) == RankingCards.FLUSH && isStraight(cards) == RankingCards.STRAIGHT) {
 
             sortByRank(cards);
-            if (cards[6].getNumber() == Numbers.k && cards[0].getNumber() == Numbers.one) return RankingCards.ROYAL_FLUSH;
+            if (cards[6].getNumber() == Numbers.one && cards[2].getNumber() == Numbers.ten) return RankingCards.ROYAL_FLUSH;
         }
-
+*/
             return null;
 
     }

@@ -97,9 +97,10 @@ public class TableFrame extends JFrame implements UserInterface {
                 break;
 
             case RESTART:
-               // showCards(playerInfo, false);
+                //showCards(playerInfo, false);
                 //showBoardCard(playerInfo, false);
-                if(isCurrentPlayer) resetGame();
+                resetGame(playerInfo);
+                isFinish = false;
                 phaseGame.setText("Redemarrage d'une partie..");
                 break;
 
@@ -131,7 +132,7 @@ public class TableFrame extends JFrame implements UserInterface {
     }
 
 
-    private void resetGame(){
+    private void resetGame(PlayerInfo playerInfo){
 
         carte1.setVisible(false);
         carte2.setVisible(false);
@@ -167,6 +168,9 @@ public class TableFrame extends JFrame implements UserInterface {
 
         jLabel20.setVisible(false);
         jLabel21.setVisible(false);
+
+
+        //showCards(playerInfo, false);
 
     }
 
