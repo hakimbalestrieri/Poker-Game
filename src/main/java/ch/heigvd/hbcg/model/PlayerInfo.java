@@ -44,6 +44,7 @@ public class PlayerInfo implements Serializable {
         this.action = playerInfo.getAction();
         this.mise = playerInfo.getMise();
         this.showCard = playerInfo.getShowCard();
+        this.isWinner = playerInfo.getWinner();
 
 
         if(playerInfo.getPlayerHand().size() != 0){

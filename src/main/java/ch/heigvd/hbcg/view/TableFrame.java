@@ -8,7 +8,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -19,9 +21,9 @@ public class TableFrame extends JFrame implements UserInterface {
 
     private PokerClient pokerPlayer;
     private Set<Integer> positions = new HashSet();
-    private boolean isMisedOrChecked = false;
+    private boolean isFinish = false;
+
     private boolean isCurrentPlayer = false;
-    private Set<String> winnersName = new HashSet<>();
 
     /**
      * Constructeur
@@ -93,24 +95,25 @@ public class TableFrame extends JFrame implements UserInterface {
                     messageArea.append("La partie est terminé");
                 }
                 break;
+
             case RESTART:
-                showCards(playerInfo, false);
-                showBoardCard(playerInfo, false);
+               // showCards(playerInfo, false);
+                //showBoardCard(playerInfo, false);
+                if(isCurrentPlayer) resetGame();
+                phaseGame.setText("Redemarrage d'une partie..");
                 break;
 
             case FINISH:
-                if(playerInfo.getWinner()) winnersName.add(playerInfo.getPseudoEmetteur());
 
-                phaseGame.setText("Les winners sont : ");
-                for(String name : winnersName){
-                    phaseGame.setText(phaseGame.getText() + name + " ");
+                if(isCurrentPlayer && playerInfo.getWinner()){
+                    isFinish = true;
+                    phaseGame.setText("Vous avez gagnée");
+                }else{
+                    if(!isFinish) phaseGame.setText("Vous n'avez pas gagnée");
                 }
 
-                //Afficher et clear
-
-                winnersName.clear();
-
                 break;
+
             default:
                 System.out.println("Aucune action");
         }
@@ -126,6 +129,47 @@ public class TableFrame extends JFrame implements UserInterface {
         pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
 
     }
+
+
+    private void resetGame(){
+
+        carte1.setVisible(false);
+        carte2.setVisible(false);
+        carte3.setVisible(false);
+        carte4.setVisible(false);
+        carte5.setVisible(false);
+        jLabel10.setVisible(false);
+        jLabel11.setVisible(false);
+
+        jLabel8.setVisible(false);
+        jLabel9.setVisible(false);
+
+        jLabel6.setVisible(false);
+        jLabel7.setVisible(false);
+
+        jLabel4.setVisible(false);
+        jLabel5.setVisible(false);
+
+        jLabel2.setVisible(false);
+        jLabel3.setVisible(false);
+
+        jLabel12.setVisible(false);
+        jLabel13.setVisible(false);
+
+        jLabel14.setVisible(false);
+        jLabel15.setVisible(false);
+
+        jLabel16.setVisible(false);
+        jLabel17.setVisible(false);
+
+        jLabel18.setVisible(false);
+        jLabel19.setVisible(false);
+
+        jLabel20.setVisible(false);
+        jLabel21.setVisible(false);
+
+    }
+
 
     /**
      * Affichage des cartes du board
@@ -161,6 +205,14 @@ public class TableFrame extends JFrame implements UserInterface {
                 carte5.setIcon(river);
                 carte5.setVisible(isRunning);
                 break;
+        }
+
+        if(!isRunning){
+            carte1.setVisible(false);
+            carte2.setVisible(false);
+            carte3.setVisible(false);
+            carte4.setVisible(false);
+            carte5.setVisible(false);
         }
     }
 

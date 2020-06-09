@@ -16,6 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Game {
 
     private List<Card> boardCard = new ArrayList<>();
+    private List<String> winnersGame = new ArrayList<>();
     private List<PlayerInfo> currentPlayers = new ArrayList<>();
     private List<PlayerInfo> winners = new ArrayList<>();
     private Dealer dealer;
@@ -24,6 +25,7 @@ public class Game {
     private STATE_GAME stageOfGame = STATE_GAME.DISTRIBUTION;
     private Timer timer;
     private double pot;
+
 
     /**
      * Constructeur
@@ -134,11 +136,13 @@ public class Game {
                                 System.out.println("le pot est de " + pot);
                                 setActionAllPlayers(Actions.END);
                                 //TODO : Prevoir gagnant partie ici avec affichage de son pot gagnant
-                               // timer.cancel();
+                                // timer.cancel();
                                 winners = UtilsPoker.isWinner(currentPlayers,boardCard);
                                 System.out.println(winners.size());
 
                                 for (PlayerInfo playerInfo : winners){
+
+                                    winnersGame.add(playerInfo.getPseudoEmetteur());
                                     System.out.println("Winner : " + playerInfo.getPseudoEmetteur());
                                 }
                                 stageOfGame = STATE_GAME.FINISH; //END pour demo sinon restart pour (tenter) le reset de la partie
@@ -146,21 +150,23 @@ public class Game {
 
                             case FINISH:
                                 setActionAllPlayers(Actions.FINISH);
-                                stageOfGame = STATE_GAME.FINISH;
-                                timer.cancel();
+                                stageOfGame = STATE_GAME.RESTART;
+                               // timer.cancel();
                                 break;
 
                             case RESTART:
                                 setActionAllPlayers(Actions.RESTART);
-                                stageOfGame = STATE_GAME.FINISH;
+                                timer.purge();
+                                timer.cancel();
+                                stageOfGame = STATE_GAME.RESTART;
                                 break;
 
                         }
 
                         updatePlayers();
-                        if (stageOfGame == STATE_GAME.FINISH) {
-                            timer.purge();
-                            timer.cancel();
+                        if (stageOfGame == STATE_GAME.RESTART) {
+                            //timer.purge();
+                          //  timer.cancel();
                         }
 
 
@@ -220,13 +226,17 @@ public class Game {
     private void setActionAllPlayers(Actions action) throws IOException {
 
         for (PlayerInfo playerInfo : currentPlayers) {
+
             playerInfo.setAction(action);
+
             if(action == Actions.FINISH){
+
                 for(PlayerInfo winner : winners){
                     if(winner.getPseudoEmetteur() == playerInfo.getPseudoEmetteur()){
                         playerInfo.setWinner(true);
                     }
                 }
+
             }
         }
     }
@@ -239,7 +249,6 @@ public class Game {
 
         //Création d'une copie car problème de modification concurrente
         List<PlayerInfo> myList = new CopyOnWriteArrayList<>(currentPlayers);
-
 
         Iterator<PlayerInfo> iterator = myList.iterator();
 
