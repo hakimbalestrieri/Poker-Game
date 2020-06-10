@@ -35,12 +35,14 @@ public class Game {
      * @throws IOException
      */
     public Game(List<PokerClientHandler> handlers, PokerServer server) throws IOException {
+
         dealer = new Dealer(); //initialise un Dealer et son deck
         pokerServer = server;
         for (int i = 0; i < handlers.size(); i++) {
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
             currentPlayers.add(handlers.get(i).getPlayerInfo());
         }
+
         startGame();
     }
 
@@ -55,11 +57,13 @@ public class Game {
         winnersGame.clear();
         winners.clear();
         currentPlayers.clear();
+        boardCard.clear();
         for (int i = 0; i < handlers.size(); i++) {
             System.out.println(handlers.get(i).getPlayerInfo().getPseudoEmetteur());
             currentPlayers.add(handlers.get(i).getPlayerInfo());
         }
         stageOfGame = STATE_GAME.DISTRIBUTION;
+
         startGame();
     }
 
@@ -78,8 +82,8 @@ public class Game {
      * Lancement de la partie
      *
      */
-    synchronized private void startGame() {
-        timer = new Timer();
+     private void startGame() {
+         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -90,6 +94,7 @@ public class Game {
                             case DISTRIBUTION:
                                 dealer.distribue(currentPlayers);
                                 setActionAllPlayers(Actions.START_GAME);
+                                Thread.sleep(100);
                                 stageOfGame = STATE_GAME.MISE_FLOP;
                                 break;
 
@@ -133,12 +138,11 @@ public class Game {
 
                             case WINNER_IS:
                                 System.out.println("le pot est de " + pot);
-                                setActionAllPlayers(Actions.WINNER_IS);
                                 winners = UtilsPoker.isWinner(currentPlayers,boardCard);
+                                setActionAllPlayers(Actions.WINNER_IS);
                                 System.out.println(winners.size());
 
                                 for (PlayerInfo playerInfo : winners){
-
                                     winnersGame.add(playerInfo.getPseudoEmetteur());
                                     System.out.println("Winner : " + playerInfo.getPseudoEmetteur());
                                 }
@@ -153,6 +157,7 @@ public class Game {
                             case RESTART:
                                 setActionAllPlayers(Actions.RESTART);
                                 timer.cancel();
+                                cancel();
                                 stageOfGame = STATE_GAME.RESTART;
                                 break;
 
@@ -160,7 +165,7 @@ public class Game {
 
                         updatePlayers();
 
-                    } catch (IOException e) {
+                    } catch (IOException | InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else {
@@ -168,6 +173,7 @@ public class Game {
                 }
             }
         }, 0, 6000);
+
 
     }
 

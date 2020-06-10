@@ -47,7 +47,7 @@ public class PlayerInfo implements Serializable {
         this.isWinner = playerInfo.getWinner();
         this.rankingCards = playerInfo.getRankingCards();
 
-        synchronized (this){
+
             if(playerInfo.getPlayerHand().size() != 0){
                 System.out.println("size du joueur à ajouter" +  playerInfo.getPlayerHand().size());
                 for (int i = 0; i < playerInfo.getPlayerHand().size(); i++){
@@ -60,7 +60,7 @@ public class PlayerInfo implements Serializable {
                     boardCard.add(playerInfo.getBoardCard().get(i));
                 }
             }
-        }
+
 
     }
 

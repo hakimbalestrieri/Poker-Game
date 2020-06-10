@@ -11,7 +11,6 @@ import java.io.Serializable;
 public enum RankingCards implements Serializable {
 
     //Force de la carte , déterminer par la position de l'enum.
-    ROYAL_FLUSH,
     STRAIGHT_FLUSH,
     FOUR_OF_A_KIND,
     FULL_HOUSE,

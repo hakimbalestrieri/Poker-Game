@@ -1,6 +1,7 @@
 package ch.heigvd.hbcg.utilsPoker;
 
 import ch.heigvd.hbcg.model.*;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.*;
 
@@ -23,10 +24,17 @@ public class UtilsPoker {
             cardsToCheck[1] = playerInfo.getPlayerHand().getCard(1);
 
             Card[] temp = new Card[7];
-
             System.arraycopy(cardsToCheck, 0, temp, 0, cardsToCheck.length);
+            System.out.println("Les cartes de : " + playerInfo.getPseudoEmetteur() + "");
+            for (int i = 0; i < temp.length; i++) {
+                System.out.print((temp[i].getNumber().ordinal() + 1 ) + " ");
+            }
+            System.out.println();
+
+
 
             playerInfo.setRankingCards(higherRanking(temp));
+            System.out.println(playerInfo.getPseudoEmetteur() + " ::: " + playerInfo.getRankingCards());
             rankings.add(higherRanking(temp).ordinal());
         }
 
@@ -36,6 +44,7 @@ public class UtilsPoker {
             if (playerInfo.getRankingCards().ordinal() == minimum) {
                 winners.add(playerInfo);
             }
+
         }
 
         return winners;
@@ -135,14 +144,13 @@ public class UtilsPoker {
         for(Card c : cards) {
             intList.add(c.getNumber().ordinal() + 1);
         }
-        Set<Integer> mySet = new HashSet<Integer>(intList);
+        Set<Integer> mySet = new HashSet<>(intList);
         int countPair = 0;
         for(Integer integer: mySet){
             if(Collections.frequency(intList,integer) == 2) {
                 ++countPair;
             }
         }
-
         return countPair == 2 ? RankingCards.TWO_PAIR : null;
 
     }

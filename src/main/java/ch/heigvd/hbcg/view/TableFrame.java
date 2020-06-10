@@ -223,7 +223,7 @@ public class TableFrame extends JFrame implements UserInterface {
         ImageIcon image1;
         ImageIcon image2;
 
-        if (playerInfo.getShowCard()) {
+        if (playerInfo.getShowCard() && isCurrentPlayer) {
             image1 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard1() + ".png");
             image2 = new javax.swing.ImageIcon(file + playerInfo.getPlayerHand().getCard2() + ".png");
         } else {
@@ -233,7 +233,6 @@ public class TableFrame extends JFrame implements UserInterface {
 
         switch (playerInfo.getPosition()) {
             case 1:
-
                 jLabel10.setIcon(image1);
                 jLabel11.setIcon(image2);
                 jLabel10.setVisible(fold);
