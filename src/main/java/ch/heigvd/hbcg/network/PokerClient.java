@@ -47,7 +47,7 @@ public class PokerClient implements Runnable {
     }
 
     /**
-     * Reception du playerInfo
+     * Réception du playerInfo
      */
     public void clientRun() {
 
@@ -90,7 +90,7 @@ public class PokerClient implements Runnable {
     }
 
     /**
-     * lance le client
+     * Lance le client
      */
     @Override
     public void run() {

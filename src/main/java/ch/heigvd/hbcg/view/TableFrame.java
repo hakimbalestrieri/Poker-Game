@@ -49,8 +49,6 @@ public class TableFrame extends JFrame implements UserInterface {
     @Override
     public void display(PlayerInfo playerInfo) {
 
-        if (playerInfo == null) System.out.println("Tu es nul");
-
         if (pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())) {
             pokerPlayer.getPlayer().setPlayerInfo(playerInfo);
             isCurrentPlayer = true;
@@ -94,16 +92,16 @@ public class TableFrame extends JFrame implements UserInterface {
             case RESTART:
                 resetGame(playerInfo);
                 isFinish = false;
-                phaseGame.setText("Redemarrage d'une partie..");
+                phaseGame.setText("Redémarrage d'une partie...");
                 break;
 
             case FINISH:
 
                 if(isCurrentPlayer && playerInfo.getWinner()){
                     isFinish = true;
-                    phaseGame.setText("Vous avez gagnée");
+                    phaseGame.setText("Vous avez gagné");
                 }else{
-                    if(!isFinish) phaseGame.setText("Vous n'avez pas gagnée");
+                    if(!isFinish) phaseGame.setText("Vous n'avez pas gagné");
                 }
 
                 break;
@@ -701,7 +699,6 @@ public class TableFrame extends JFrame implements UserInterface {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                //@todo remove player
                 System.out.println("on ferme l'appli");
                 super.windowClosing(e);
             }
@@ -716,7 +713,6 @@ public class TableFrame extends JFrame implements UserInterface {
      * @param evt
      */
     private void slider_miserStateChanged(javax.swing.event.ChangeEvent evt) {
-        //@TODO on est obligé de miser au moins 1 fois la big blind, il faut vérifier cela sur le Slider
         valueSlider.setText(String.valueOf(slider_miser.getValue()));
         if (slider_miser.getValue() > 0)
             b_miser.setEnabled(true);
@@ -821,7 +817,6 @@ public class TableFrame extends JFrame implements UserInterface {
      * @param evt
      */
     private void b_seCoucherActionPerformed(java.awt.event.ActionEvent evt) {
-        //System.out.print("Je me couche par terre!");
         if (isCurrentPlayer) {
             if (pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
                 pokerPlayer.getPlayer().getPlayerInfo().setAction(Actions.FOLD);
@@ -855,7 +850,7 @@ public class TableFrame extends JFrame implements UserInterface {
         messageArea.setText("Croupier : Bienvenue à la table !\n");
         valueSlider.setText("0");
         slider_miser.setValue(0);
-        slider_miser.setMaximum(10000); //@TODO definir le maximum de mise pour chaque table
+        slider_miser.setMaximum(10000);
         b_miser.setEnabled(false);
     }
 

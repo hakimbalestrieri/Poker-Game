@@ -31,7 +31,6 @@ public class Deck {
         }
 
         Collections.shuffle(cards);
-        System.out.println("Random");
     }
 
     /**

@@ -64,6 +64,9 @@ public class PlayerInfo implements Serializable {
 
     }
 
+    /**
+     * réinitialisation des attributs
+     */
     public void resetInfo(){
         isWinner = false;
         playerHand = new Hand();
@@ -73,9 +76,16 @@ public class PlayerInfo implements Serializable {
         mise = 0;
     }
 
-
+    /**
+     * Définit le gagnant de la partie
+     * @param win
+     */
     public void setWinner(boolean win){ this.isWinner = win;}
 
+    /**
+     * Retourne le gagnant de la partie
+     * @return
+     */
     public boolean getWinner(){
         return isWinner;
     }
@@ -89,7 +99,7 @@ public class PlayerInfo implements Serializable {
     }
 
     /**
-     * Retounr les cartes du board
+     * Retourne les cartes du board
      * @return boardCard
      */
     public List<Card> getBoardCard() {
@@ -233,10 +243,18 @@ public class PlayerInfo implements Serializable {
         return mise;
     }
 
+    /**
+     * Retourne la combinaison du joueur
+     * @return
+     */
     public RankingCards getRankingCards() {
         return rankingCards;
     }
 
+    /**
+     * Initialise la combinaison du joueur
+     * @param rankingCards
+     */
     public void setRankingCards(RankingCards rankingCards) {
         this.rankingCards = rankingCards;
     }

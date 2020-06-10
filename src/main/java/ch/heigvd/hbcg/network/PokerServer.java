@@ -80,8 +80,7 @@ public class PokerServer {
             game.updateInfoOfPlayers(currentPlayers);
         }
 
-        //Lancement de la partie à partir de 3 joueurs
-        //TODO : Ajouter un moyen de démarrage au lieu d'un nombre fixe de joueurs
+        //Lancement de la partie à partir de 2 joueurs
         if(!started && listHandlers.size() == 2 && checkActionPlayer(Actions.SIT_DOWN)){
             started = true;
             startGame();
@@ -90,6 +89,9 @@ public class PokerServer {
 
     }
 
+    /**
+     * Permet d'effectuer un reset d'une partie
+     */
     private void cleanInfoHandlers(){
 
         for(int i=0 ; i< listHandlers.size(); i++){

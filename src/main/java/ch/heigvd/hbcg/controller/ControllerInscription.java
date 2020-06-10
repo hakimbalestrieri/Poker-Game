@@ -91,7 +91,6 @@ public class ControllerInscription {
         while ((ligne = br.readLine()) != null) {
             String[] dataTab = ligne.split(SPLITTER);
             if (name.equals(dataTab[0])) {
-                System.out.println("oui");
                 return true; //erreur , utilisateur existe deja
             }
         }

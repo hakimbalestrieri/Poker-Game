@@ -10,7 +10,6 @@ import ch.heigvd.hbcg.view.TableFrame;
  */
 public class Player {
 
-    private TableFrame tableFrame;
     private PlayerInfo playerInfo;
 
     /**
@@ -19,22 +18,6 @@ public class Player {
      */
     public PlayerInfo getPlayerInfo(){
         return playerInfo;
-    }
-
-    /**
-     * Liaison de la TableFrame à un joueur
-     * @param tableFrame
-     */
-    public void setJFrame(TableFrame tableFrame) {
-        this.tableFrame = tableFrame;
-    }
-
-    /**
-     * Retourne la TableFrame auquelle le joueur est lié
-     * @return tableFrame
-     */
-    public TableFrame getTableFrame(){
-        return tableFrame;
     }
 
     /**
