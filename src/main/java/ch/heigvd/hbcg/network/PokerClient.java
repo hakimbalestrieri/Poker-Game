@@ -18,7 +18,7 @@ public class PokerClient implements Runnable {
     private ObjectInputStream in;
     private Player player;
 
-    public static void main(String[] args){};
+    public static void main(String[] args){}
 
     /**
      * Constructeur
@@ -33,6 +33,7 @@ public class PokerClient implements Runnable {
             try {
                 socket = new Socket("localhost", 6669);
                 out = new ObjectOutputStream(socket.getOutputStream());
+                out.flush();
                 in = new ObjectInputStream(socket.getInputStream());
             } catch (UnknownHostException e) {
                 e.printStackTrace();
@@ -50,7 +51,7 @@ public class PokerClient implements Runnable {
      */
     public void clientRun() {
 
-        PlayerInfo playerInfo = null;
+        PlayerInfo playerInfo;
 
         try {
              while ((playerInfo = (PlayerInfo) in.readObject()) != null) {
@@ -74,7 +75,7 @@ public class PokerClient implements Runnable {
      * @param playerInfo
      */
 
-    public void sendByClient(PlayerInfo playerInfo){
+    synchronized public void sendByClient(PlayerInfo playerInfo){
 
         try {
 

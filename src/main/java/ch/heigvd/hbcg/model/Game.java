@@ -23,6 +23,7 @@ public class Game {
     private PokerServer pokerServer;
     private static int i = 0;
     private STATE_GAME stageOfGame = STATE_GAME.DISTRIBUTION;
+
     private Timer timer;
     private double pot;
 
@@ -76,9 +77,8 @@ public class Game {
     /**
      * Lancement de la partie
      *
-     * @throws IOException
      */
-    synchronized private void startGame() throws IOException {
+    synchronized private void startGame() {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -100,8 +100,6 @@ public class Game {
 
                             case FLOP:
                                 checkIfSomeoneHasFold();
-                                // System.out.println("Mise P1 de : " + currentPlayers.get(0).getPseudoEmetteur() + " " + currentPlayers.get(0).getMise());
-                                // System.out.println("Mise P2 : " + currentPlayers.get(1).getPseudoEmetteur() + " " + currentPlayers.get(1).getMise());
                                 for (int i = 0; i < 3; i++) {
                                     drawBoardCardsAllPlayers(dealer.draw());
                                 }
@@ -130,14 +128,12 @@ public class Game {
                                 checkIfSomeoneHasFold();
                                 drawBoardCardsAllPlayers(dealer.draw());
                                 setActionAllPlayers(Actions.RIVER);
-                                stageOfGame = STATE_GAME.END;
+                                stageOfGame = STATE_GAME.WINNER_IS;
                                 break;
 
-                            case END:
+                            case WINNER_IS:
                                 System.out.println("le pot est de " + pot);
-                                setActionAllPlayers(Actions.END);
-                                //TODO : Prevoir gagnant partie ici avec affichage de son pot gagnant
-                                // timer.cancel();
+                                setActionAllPlayers(Actions.WINNER_IS);
                                 winners = UtilsPoker.isWinner(currentPlayers,boardCard);
                                 System.out.println(winners.size());
 
@@ -146,18 +142,16 @@ public class Game {
                                     winnersGame.add(playerInfo.getPseudoEmetteur());
                                     System.out.println("Winner : " + playerInfo.getPseudoEmetteur());
                                 }
-                                stageOfGame = STATE_GAME.FINISH; //END pour demo sinon restart pour (tenter) le reset de la partie
+                                stageOfGame = STATE_GAME.FINISH;
                                 break;
 
                             case FINISH:
                                 setActionAllPlayers(Actions.FINISH);
                                 stageOfGame = STATE_GAME.RESTART;
-                               // timer.cancel();
                                 break;
 
                             case RESTART:
                                 setActionAllPlayers(Actions.RESTART);
-                                timer.purge();
                                 timer.cancel();
                                 stageOfGame = STATE_GAME.RESTART;
                                 break;
@@ -165,11 +159,6 @@ public class Game {
                         }
 
                         updatePlayers();
-                        if (stageOfGame == STATE_GAME.RESTART) {
-                            //timer.purge();
-                          //  timer.cancel();
-                        }
-
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -222,9 +211,8 @@ public class Game {
      * Affectation d'une action donnée aux joueurs
      *
      * @param action
-     * @throws IOException
      */
-    private void setActionAllPlayers(Actions action) throws IOException {
+    private void setActionAllPlayers(Actions action) {
 
         for (PlayerInfo playerInfo : currentPlayers) {
 
@@ -233,7 +221,7 @@ public class Game {
             if(action == Actions.FINISH){
 
                 for(PlayerInfo winner : winners){
-                    if(winner.getPseudoEmetteur() == playerInfo.getPseudoEmetteur()){
+                    if(winner.getPseudoEmetteur().equals(playerInfo.getPseudoEmetteur())){
                         playerInfo.setWinner(true);
                     }
                 }

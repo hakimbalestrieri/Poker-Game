@@ -10,6 +10,9 @@ import java.util.Enumeration;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 
+/**
+ * @author Balestrieri & Gomes
+ */
 class InscriptionFrame extends JFrame {
 
     private Container c;

@@ -3,9 +3,6 @@ package ch.heigvd.hbcg.utilsPoker;
 import ch.heigvd.hbcg.model.*;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class UtilsPokerTest {
@@ -167,20 +164,4 @@ class UtilsPokerTest {
 
     }
 
-    @Test
-    public void isRoyalFlush() {
-
-        //TODO : A voir si l'on l'implemente - Pose problème avec AS qui vaut 1 et la carte la plus forte
-        //main
-        cardsTab[0] = new Card(Colors.carreau, Numbers.one);
-        cardsTab[1]= new Card(Colors.carreau, Numbers.k);
-        //board
-        cardsTab[2] = new Card(Colors.carreau, Numbers.q);
-        cardsTab[3] = new Card(Colors.coeur, Numbers.eight);
-        cardsTab[4] = new Card(Colors.pique, Numbers.nine);
-        cardsTab[5] = new Card(Colors.carreau, Numbers.j);
-        cardsTab[6] = new Card(Colors.carreau, Numbers.ten);
-
-        assertEquals(RankingCards.ROYAL_FLUSH, UtilsPoker.isRoyalFlush(cardsTab));
-    }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public class Dealer {
 
     private Deck deck;
-    private static int count = 0;
 
     /**
      * Constructeur

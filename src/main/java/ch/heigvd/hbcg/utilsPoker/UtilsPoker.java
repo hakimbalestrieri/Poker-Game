@@ -6,7 +6,6 @@ import java.util.*;
 
 public class UtilsPoker {
 
-
     public static List<PlayerInfo> isWinner (List<PlayerInfo> currentPlayers, List<Card> boardCard){
 
         Card[] cardsToCheck = new Card[7];
@@ -25,10 +24,7 @@ public class UtilsPoker {
 
             Card[] temp = new Card[7];
 
-            for (int j = 0; j < cardsToCheck.length; j++) {
-                temp[j] = cardsToCheck[j];
-            }
-
+            System.arraycopy(cardsToCheck, 0, temp, 0, cardsToCheck.length);
 
             playerInfo.setRankingCards(higherRanking(temp));
             rankings.add(higherRanking(temp).ordinal());
@@ -52,35 +48,31 @@ public class UtilsPoker {
 
         int countRanking = 0;
 
-
         do{
             switch(countRanking){
 
                 case 0:
-                    rankingOfPlayer = isRoyalFlush(cards);
-                    break;
-                case 1:
                     rankingOfPlayer = isStraightFlush(cards);
                     break;
-                case 2:
+                case 1:
                     rankingOfPlayer = isFour(cards);
                     break;
-                case 3:
+                case 2:
                     rankingOfPlayer = isFullHouse(cards);
                     break;
-                case 4:
+                case 3:
                     rankingOfPlayer = isFlush(cards);
                     break;
-                case 5:
+                case 4:
                     rankingOfPlayer = isThreeOfAKind(cards);
                     break;
-                case 6:
+                case 5:
                     rankingOfPlayer = isTwoPair(cards);
                     break;
-                case 7:
+                case 6:
                     rankingOfPlayer = isOnePair(cards);
                     break;
-                case 8:
+                case 7:
                     rankingOfPlayer = RankingCards.HIGH_CARD;
                     break;
             }
@@ -203,10 +195,6 @@ public class UtilsPoker {
 
     public static RankingCards isStraight(Card[] cards){
 
-
-         /* ===========================================
-            General case: check for increasing values
-            =========================================== */
          sortByRank(cards);
          int valueTest = 0;
          int isStraight = 0;
@@ -238,13 +226,11 @@ public class UtilsPoker {
 
              for ( int i = 1; i < 5; i++ )
              {
-                 if (mainCards.get(i) != testRank ){
-                     //return null;
-                 }else{
-                     if(++isStraight == 4) return RankingCards.STRAIGHT;
+                 if (mainCards.get(i) == testRank ){
+                     if(++isStraight == 4)
+                         return RankingCards.STRAIGHT;
                  }
-
-                 testRank++;   // Next card in hand
+                 testRank++;
              }
 
              isStraight = 0;
@@ -252,7 +238,7 @@ public class UtilsPoker {
 
          if(isStraight != 5) return null;
 
-        return RankingCards.STRAIGHT;        // Straight found !
+        return RankingCards.STRAIGHT;
     }
 
     public static RankingCards isStraightFlush(Card[] cards){
@@ -263,40 +249,20 @@ public class UtilsPoker {
 
     }
 
-    public static RankingCards isRoyalFlush (Card[] cards){
-
-  /*      if(isFlush(cards) == RankingCards.FLUSH && isStraight(cards) == RankingCards.STRAIGHT) {
-
-            sortByRank(cards);
-            if (cards[6].getNumber() == Numbers.one && cards[2].getNumber() == Numbers.ten) return RankingCards.ROYAL_FLUSH;
-        }
-*/
-            return null;
-
-    }
-
     public static void sortByRank(Card[] h) {
         int i, j, min_j;
 
-      /* ---------------------------------------------------
-         The selection sort algorithm
-         --------------------------------------------------- */
+
         for (i = 0; i < h.length; i++) {
-         /* ---------------------------------------------------
-            Find array element with min. value among
-            h[i], h[i+1], ..., h[n-1]
-            --------------------------------------------------- */
-            min_j = i;   // Assume elem i (h[i]) is the minimum
+
+            min_j = i;
 
             for (j = i + 1; j < h.length; j++) {
                 if (h[j].getNumber().ordinal() < h[min_j].getNumber().ordinal()) {
-                    min_j = j;    // We found a smaller minimum, update min_j
+                    min_j = j;
                 }
             }
 
-         /* ---------------------------------------------------
-            Swap a[i] and a[min_j]
-            --------------------------------------------------- */
             Card help = h[i];
             h[i] = h[min_j];
             h[min_j] = help;
@@ -306,28 +272,19 @@ public class UtilsPoker {
     public static void sortByColor(Card[] cards){
         int i, j, min_j;
 
-      /* ---------------------------------------------------
-         The selection sort algorithm
-         --------------------------------------------------- */
         for ( i = 0 ; i < cards.length ; i ++ )
         {
-         /* ---------------------------------------------------
-            Find array element with min. value among
-            h[i], h[i+1], ..., h[n-1]
-            --------------------------------------------------- */
-            min_j = i;   // Assume elem i (h[i]) is the minimum
+
+            min_j = i;
 
             for ( j = i+1 ; j < cards.length ; j++ )
             {
                 if ( cards[j].getColor().ordinal() < cards[min_j].getColor().ordinal() )
                 {
-                    min_j = j;    // We found a smaller suit value, update min_j
+                    min_j = j;
                 }
             }
 
-         /* ---------------------------------------------------
-            Swap a[i] and a[min_j]
-            --------------------------------------------------- */
             Card help = cards[i];
             cards[i] = cards[min_j];
             cards[min_j] = help;

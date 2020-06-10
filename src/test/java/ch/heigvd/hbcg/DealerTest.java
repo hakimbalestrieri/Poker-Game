@@ -16,11 +16,4 @@ class DealerTest {
         dealer = new Dealer();
     }
 
-    @Test
-    void distribue() {
-    }
-
-    @Test
-    void draw() {
-    }
 }

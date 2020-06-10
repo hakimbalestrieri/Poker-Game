@@ -8,9 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -83,22 +81,17 @@ public class TableFrame extends JFrame implements UserInterface {
                 break;
             case PHASE_MISE:
                 if (isCurrentPlayer) {
-                    messageArea.append("Vous pouvez miser");
                     phaseGame.setText("Phase de MISE...");
                 }
                 break;
             case FOLD:
                 showCards(playerInfo, false);
                 break;
-            case END:
-                if (isCurrentPlayer) {
-                    messageArea.append("La partie est terminé");
-                }
+            case WINNER_IS:
+                //Attente
                 break;
 
             case RESTART:
-                //showCards(playerInfo, false);
-                //showBoardCard(playerInfo, false);
                 resetGame(playerInfo);
                 isFinish = false;
                 phaseGame.setText("Redemarrage d'une partie..");
@@ -126,7 +119,6 @@ public class TableFrame extends JFrame implements UserInterface {
      */
     private void miserCheck() {
         pokerPlayer.getPlayer().getPlayerInfo().setMise(Double.parseDouble(valueSlider.getText()));
-        messageArea.append("La mise est faite \n");
         pokerPlayer.sendByClient(pokerPlayer.getPlayer().getPlayerInfo());
 
     }
@@ -169,8 +161,6 @@ public class TableFrame extends JFrame implements UserInterface {
         jLabel20.setVisible(false);
         jLabel21.setVisible(false);
 
-
-        //showCards(playerInfo, false);
 
     }
 
@@ -226,9 +216,8 @@ public class TableFrame extends JFrame implements UserInterface {
      * @param playerInfo
      * @param fold
      */
-    public void showCards(PlayerInfo playerInfo, boolean fold) {
+     public void showCards(PlayerInfo playerInfo, boolean fold) {
 
-        //int position = this.pokerPlayer.getPlayer().getPosition();
         String file = "src\\main\\resources\\resizedEtArrondie\\final\\";
         String file2 = "src\\main\\resources\\resizedEtArrondie\\output-onlinepngtools";
         ImageIcon image1;
@@ -849,8 +838,6 @@ public class TableFrame extends JFrame implements UserInterface {
      */
     private void b_miserActionPerformed(java.awt.event.ActionEvent evt) {
         messageArea.setText(messageArea.getText() + "Croupier : Mise de " + valueSlider.getText() + " de l'utilisateur : " + pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " \n");
-        //  System.out.println("Bouton press " + Double.parseDouble(valueSlider.getText()));
-        //System.out.println(pokerPlayer.getPlayer().getPlayerInfo().getPseudoEmetteur() + " J'ai appuyé sur miser ");
         if (isCurrentPlayer && pokerPlayer.getPlayer().getPlayerInfo().getAction() == Actions.PHASE_MISE) {
             miserCheck();
         } else {

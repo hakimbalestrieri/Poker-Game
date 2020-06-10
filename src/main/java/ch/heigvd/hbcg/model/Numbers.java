@@ -1,7 +1,5 @@
 package ch.heigvd.hbcg.model;
 
-import java.io.Serializable;
-
 /**
  * Enumeration Numbers, représentant les nombres possibles
  *
@@ -11,20 +9,6 @@ import java.io.Serializable;
 public enum Numbers {
 
     //Force de la carte , déterminer par la position de l'enum.
-
-    /*one,
-    k,
-    q,
-    j,
-    ten,
-    nine,
-    eight,
-    seven,
-    six,
-    five,
-    four,
-    three,
-    two*/
     one,
     two,
     three,

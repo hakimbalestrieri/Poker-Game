@@ -21,8 +21,6 @@ public class PlayerInfo implements Serializable {
     private Actions action;
     private double mise = 0;
     private Hand playerHand = new Hand();
-    private boolean bigBlind = false;
-    private boolean actif = true;
     private boolean showCard = true;
     private List<Card> boardCard = new ArrayList<>(5);
 
@@ -37,7 +35,7 @@ public class PlayerInfo implements Serializable {
      * Constructeur
      * @param playerInfo
      */
-    public PlayerInfo(PlayerInfo playerInfo) {
+     public PlayerInfo(PlayerInfo playerInfo) {
 
 
         this.pseudoEmetteur = playerInfo.getPseudoEmetteur();
@@ -49,17 +47,21 @@ public class PlayerInfo implements Serializable {
         this.isWinner = playerInfo.getWinner();
         this.rankingCards = playerInfo.getRankingCards();
 
-        if(playerInfo.getPlayerHand().size() != 0){
-            for (int i = 0; i < playerInfo.getPlayerHand().size(); i++){
-                playerHand.add(playerInfo.getPlayerHand().getCard(i));
+        synchronized (this){
+            if(playerInfo.getPlayerHand().size() != 0){
+                System.out.println("size du joueur à ajouter" +  playerInfo.getPlayerHand().size());
+                for (int i = 0; i < playerInfo.getPlayerHand().size(); i++){
+                    playerHand.add(playerInfo.getPlayerHand().getCard(i));
+                }
+            }
+
+            if(playerInfo.getBoardCard().size() != 0){
+                for (int i = 0; i < playerInfo.getBoardCard().size(); i++){
+                    boardCard.add(playerInfo.getBoardCard().get(i));
+                }
             }
         }
 
-        if(playerInfo.getBoardCard().size() != 0){
-            for (int i = 0; i < playerInfo.getBoardCard().size(); i++){
-                boardCard.add(playerInfo.getBoardCard().get(i));
-            }
-        }
     }
 
     public void resetInfo(){
@@ -106,7 +108,7 @@ public class PlayerInfo implements Serializable {
      * Retourne la main courante du joueur
      * @return playerHand
      */
-    public Hand getPlayerHand() {
+    synchronized public Hand getPlayerHand() {
         return playerHand;
     }
 
@@ -205,22 +207,6 @@ public class PlayerInfo implements Serializable {
      */
     public void setGenre(boolean genre) {
         this.genre = genre;
-    }
-
-    /**
-     * Retourne le crédit du joueur
-     * @return credit
-     */
-    public double getCredit() {
-        return credit;
-    }
-
-    /**
-     * Retourne le genre du joueur
-     * @return genre
-     */
-    public boolean getGenre(){
-        return genre;
     }
 
     /**

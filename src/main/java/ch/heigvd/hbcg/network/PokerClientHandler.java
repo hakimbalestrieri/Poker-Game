@@ -5,7 +5,6 @@ import ch.heigvd.hbcg.model.PlayerInfo;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
 import java.net.Socket;
 
 /**
@@ -30,6 +29,7 @@ public class PokerClientHandler extends Thread {
         this.socket = socket;
         this.server = server;
         out = new ObjectOutputStream(socket.getOutputStream());
+        out.flush();
         in = new ObjectInputStream(socket.getInputStream());
     }
 
@@ -47,8 +47,6 @@ public class PokerClientHandler extends Thread {
 
             while ((playerInfo = (PlayerInfo) in.readObject()) != null){
                 System.out.println("[HANDLERCLIENT] : Lecture des infos de " + playerInfo.getPseudoEmetteur());
-                //out.writeObject(playerInfo); //va sur pokerclient
-
                 this.playerInfo = playerInfo;
                 server.send(playerInfo);
             }
@@ -70,7 +68,7 @@ public class PokerClientHandler extends Thread {
      * @param playerInfo
      * @throws IOException
      */
-    public void sendOnHandler(PlayerInfo playerInfo) throws IOException {
+    synchronized public void sendOnHandler(PlayerInfo playerInfo) throws IOException {
         System.out.println("SEND[HANDLER] : " + playerInfo.getPseudoEmetteur() + " " + playerInfo.getAction());
 
         //Update info joueur si handler concerné
@@ -81,7 +79,7 @@ public class PokerClientHandler extends Thread {
 
     }
 
-    public PlayerInfo getPlayerInfo() {
+    synchronized public PlayerInfo getPlayerInfo() {
         return playerInfo;
     }
 

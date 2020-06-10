@@ -12,7 +12,6 @@ public class Player {
 
     private TableFrame tableFrame;
     private PlayerInfo playerInfo;
-    private PokerClientHandler pokerClientHandler;
 
     /**
      * Retourne les informations d'un joueur

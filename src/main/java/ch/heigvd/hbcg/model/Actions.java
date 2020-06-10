@@ -16,7 +16,7 @@ public enum Actions implements Serializable {
     RIVER,
     PHASE_MISE,
     FOLD,
-    END,
+    WINNER_IS,
     RESTART,
-    FINISH;
+    FINISH
 }

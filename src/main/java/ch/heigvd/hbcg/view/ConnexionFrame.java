@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 /**
- * @author Hakim
+ * @author Balestrieri & Gomes
  */
 public class ConnexionFrame extends javax.swing.JFrame {
 

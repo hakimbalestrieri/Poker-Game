@@ -1,14 +1,7 @@
 package ch.heigvd.hbcg.controller;
-
-import javax.swing.*;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
 
 
 public class ControllerInscription {

@@ -14,7 +14,7 @@ public enum STATE_GAME {
     MISE_TURN,
     RIVER,
     MISE_RIVER,
-    END,
+    WINNER_IS,
     FINISH,
     RESTART
 }

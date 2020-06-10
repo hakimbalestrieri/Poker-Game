@@ -15,6 +15,7 @@ public class Deck {
      * Constructeur
      */
     public Deck(){
+        cards = new ArrayList<>();
         randomDeck();
     }
 
@@ -23,7 +24,6 @@ public class Deck {
      */
     private void randomDeck() {
 
-        cards = new ArrayList<>();
         for (Colors color : Colors.values()) {
             for (Numbers number : Numbers.values()) {
                 cards.add(new Card(color, number));
@@ -38,7 +38,7 @@ public class Deck {
      * Retire la première carte du deck
      * @return
      */
-    public Card draw(){
+     public Card draw(){
 
         Card card;
         card = cards.get(0);

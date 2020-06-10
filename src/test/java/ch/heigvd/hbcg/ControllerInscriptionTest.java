@@ -11,10 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerInscriptionTest {
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void createInscription() {
         try {
