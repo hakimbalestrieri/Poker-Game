@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Dans le cadre du cours de Génie logiciel, nous devons développer un projet qui sera évalué tout au long de sa conception. Celui-ci est basé sur différents aspects et technologies à utiliser : 
+Ceci est une conception d'un jeu de poker. Le projet est basé sur différents aspects et technologies tels que : 
 - Travis CI
 - Github
 - IceScrum 
